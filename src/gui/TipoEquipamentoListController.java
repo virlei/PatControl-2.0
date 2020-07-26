@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,9 +15,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.entities.Equipamento;
+import model.services.EquipamentoService;
 
 public class TipoEquipamentoListController implements Initializable {
 
+	private EquipamentoService service;
+	//devemos evitar o comando abaixo, pois faz um acoplamento forte.
+	//private EquipamentoService service = new EquipamentoService();
+	//Para injetar a dependência evitando o acoplamento forte acima, devemos utilizar o set
+	//Assim podemos criar o setEquipamentoService
+		
 	@FXML
 	private TableView<Equipamento> tableViewEquipamento;
 	
@@ -27,13 +37,17 @@ public class TipoEquipamentoListController implements Initializable {
 	@FXML
 	private Button btNew;
 	
+	private ObservableList<Equipamento> obsList;
+	
 	@FXML
 	public void onBtNewAction() {
 		System.out.println("onBtNewAction");
 	}
-	
-	
-	
+		
+	//Evitando o acoplamento forte, com injeção de dependência
+	public void setEquipamentoService (EquipamentoService service) {
+		this.service = service;
+	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -42,12 +56,21 @@ public class TipoEquipamentoListController implements Initializable {
 
 	private void initializeNodes() {
 
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("PK_Equipamento"));
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("TXT_Descricao"));
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEquipamento.prefHeightProperty().bind(stage.heightProperty());
 		
+	}
+	
+	public void updateTableView() {
+		if (service == null) {
+			throw new IllegalStateException("Serviço nulo");
+		}
+		List<Equipamento> list = service.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewEquipamento.setItems(obsList);
 	}
 
 }

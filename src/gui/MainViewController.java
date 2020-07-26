@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.EquipamentoService;
 
 public class MainViewController implements Initializable {
 
@@ -40,7 +41,8 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemTipoEquipamentoAction() {
-		loadView("/gui/TipoEquipamentoList.fxml");
+		//loadView("/gui/TipoEquipamentoList.fxml");
+		loadView2("/gui/TipoEquipamentoList.fxml");
 	}
 	
 	@FXML
@@ -100,5 +102,38 @@ public class MainViewController implements Initializable {
 		}
 		
 	}
+
+	private synchronized void loadView2 (String absoluteName) {
+		try {
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			
+			//Obtendo o 1o elemento da minha view principal através do getRoot:
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			//Guardando referencia para o MainMenu: get(0) é o 1º filho do VBox da Janela principal. 
+			Node mainMenu = mainVBox.getChildren().get(0);
+			
+			//Limpando todos os filhos do MainVbox - Retirando o mainMenu
+			mainVBox.getChildren().clear();
+			
+			//adicionando o MainMenu e os filhos do newVBox
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			TipoEquipamentoListController controller = loader.getController();
+			controller.setEquipamentoService(new EquipamentoService());
+			controller.updateTableView();
+			
+		}
+		catch (IOException e) {
+			Alerts.showAlert("Exceção de E/S", "Erro ao carregar tela", e.getMessage(), AlertType.ERROR);
+		}
+		
+	}
+
 
 }
