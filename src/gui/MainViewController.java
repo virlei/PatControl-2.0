@@ -40,7 +40,7 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemTipoEquipamentoAction() {
-		System.out.println("onMenuItemTipoEquipamentoAction");
+		loadView("/gui/TipoEquipamentoList.fxml");
 	}
 	
 	@FXML
