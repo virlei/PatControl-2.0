@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Main;
 import gui.util.Alerts;
@@ -41,8 +42,12 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemTipoEquipamentoAction() {
-		//loadView("/gui/TipoEquipamentoList.fxml");
-		loadView2("/gui/TipoEquipamentoList.fxml");
+		//loadView2("/gui/TipoEquipamentoList.fxml");
+		loadView("/gui/TipoEquipamentoList.fxml", (TipoEquipamentoListController controller) -> {
+			controller.setEquipamentoService(new EquipamentoService());
+			controller.updateTableView();
+			
+		});
 	}
 	
 	@FXML
@@ -67,7 +72,7 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemAjudaAction() {
-		loadView("/gui/About.fxml");
+		loadView("/gui/About.fxml", x->{});
 	}
 	
 	@Override
@@ -75,7 +80,7 @@ public class MainViewController implements Initializable {
 		
 	}
 	
-	private synchronized void loadView (String absoluteName) {
+	private synchronized <T> void loadView (String absoluteName, Consumer<T> initializingAction ) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -96,44 +101,14 @@ public class MainViewController implements Initializable {
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
+			T controller = loader.getController();
+			initializingAction.accept(controller);
+						
 		}
 		catch (IOException e) {
 			Alerts.showAlert("Exceção de E/S", "Erro ao carregar tela", e.getMessage(), AlertType.ERROR);
 		}
 		
 	}
-
-	private synchronized void loadView2 (String absoluteName) {
-		try {
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			VBox newVBox = loader.load();
-			
-			Scene mainScene = Main.getMainScene();
-			
-			//Obtendo o 1o elemento da minha view principal através do getRoot:
-			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
-			//Guardando referencia para o MainMenu: get(0) é o 1º filho do VBox da Janela principal. 
-			Node mainMenu = mainVBox.getChildren().get(0);
-			
-			//Limpando todos os filhos do MainVbox - Retirando o mainMenu
-			mainVBox.getChildren().clear();
-			
-			//adicionando o MainMenu e os filhos do newVBox
-			mainVBox.getChildren().add(mainMenu);
-			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
-			TipoEquipamentoListController controller = loader.getController();
-			controller.setEquipamentoService(new EquipamentoService());
-			controller.updateTableView();
-			
-		}
-		catch (IOException e) {
-			Alerts.showAlert("Exceção de E/S", "Erro ao carregar tela", e.getMessage(), AlertType.ERROR);
-		}
-		
-	}
-
 
 }
