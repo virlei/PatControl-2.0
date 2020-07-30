@@ -22,4 +22,13 @@ public class EquipamentoService {
 		//return list;
 		return dao.findAll();
 	}
+	
+	public void saveOrUpdate(Equipamento obj) {
+		if (obj.getId() == null) {
+			dao.insert(obj);
+		}
+		else {
+			dao.update(obj);
+		}
+	}
 }

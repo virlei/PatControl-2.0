@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import db.DB;
 import db.DbException;
 import model.dao.EquipamentoDao;
 import model.entities.Equipamento;
-import model.entities.Patrimonio;
 
 public class EquipamentoDaoJDBC implements EquipamentoDao{
 	
@@ -21,12 +21,60 @@ public class EquipamentoDaoJDBC implements EquipamentoDao{
 		this.conn = conn;
 	}
 	
+	@Override
 	public void insert (Equipamento obj) {
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"INSERT INTO TB_EQUIPAMENTO " +
+				"(Txt_Descricao) " +
+				"VALUES " +
+				"(?)", 
+				Statement.RETURN_GENERATED_KEYS);
+
+			st.setString(1, obj.getDescricao());
+
+			int rowsAffected = st.executeUpdate();
+			
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+			}
+			else {
+				throw new DbException("Unexpected error! No rows affected!");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} 
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 	
+	@Override
 	public void update(Equipamento obj) {
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"UPDATE TB_EQUIPAMENTO " +
+				"SET TXT_Descricao = ? " +
+				"WHERE PK_Equipamento = ?");
+
+			st.setString(1, obj.getDescricao());
+			st.setInt(2, obj.getId());
+
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} 
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 	
 	public void deleteById(Integer id) {

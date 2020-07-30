@@ -90,7 +90,12 @@ public class TipoEquipamentoListController implements Initializable {
 			Pane pane = loader.load();
 			
 			TipoEquipamentoFormController controller = loader.getController();
+			//Injetando o Equipamento no form
 			controller.setEquipamento(obj);
+			
+			//Injetando o EquipamentoService no form
+			controller.setEquipamentoService(new EquipamentoService());
+						
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
