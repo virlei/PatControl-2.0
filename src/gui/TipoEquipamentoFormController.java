@@ -9,9 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.entities.Equipamento;
 
 public class TipoEquipamentoFormController implements Initializable {
 
+	private Equipamento entity;
+	
 	@FXML
 	private TextField txtId;
 	
@@ -26,6 +29,10 @@ public class TipoEquipamentoFormController implements Initializable {
 	
 	@FXML
 	private Button btCancel;
+	
+	public void setEquipamento(Equipamento entity) {
+		this.entity = entity;
+	}
 	
 	@FXML
 	public void onBtSaveAction () {
@@ -45,6 +52,15 @@ public class TipoEquipamentoFormController implements Initializable {
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtName, 30);
+	}
+	
+	public void updateFormData() {
+		if (entity == null) {
+			throw new IllegalStateException ("Entidade está vazia");
+		}
+		
+		txtId.setText(String.valueOf(entity.getId()));
+		txtName.setText(entity.getDescricao());
 	}
 
 }

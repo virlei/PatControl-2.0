@@ -51,7 +51,8 @@ public class TipoEquipamentoListController implements Initializable {
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/TipoEquipamentoForm.fxml", parentStage);
+		Equipamento obj = new Equipamento();
+		createDialogForm(obj, "/gui/TipoEquipamentoForm.fxml", parentStage);
 	}
 		
 	//Evitando o acoplamento forte, com injeção de dependência
@@ -83,10 +84,14 @@ public class TipoEquipamentoListController implements Initializable {
 		tableViewEquipamento.setItems(obsList);
 	}
 
-	private void createDialogForm(String absoluteName, Stage parentStage ) {
+	private void createDialogForm(Equipamento obj, String absoluteName, Stage parentStage ) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			TipoEquipamentoFormController controller = loader.getController();
+			controller.setEquipamento(obj);
+			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Entre com os dados de Tipo de Equipamento:");
