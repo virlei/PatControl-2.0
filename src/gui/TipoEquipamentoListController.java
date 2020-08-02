@@ -3,9 +3,11 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
+import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -19,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +52,9 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 
 	@FXML
 	private TableColumn<Equipamento, Equipamento> tableColumnEDIT;
+
+	@FXML
+	private TableColumn<Equipamento, Equipamento> tableColumnREMOVE;
 
 	@FXML
 	private Button btNew;
@@ -90,6 +96,7 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 		obsList = FXCollections.observableArrayList(list);
 		tableViewEquipamento.setItems(obsList);
 		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void createDialogForm(Equipamento obj, String absoluteName, Stage parentStage) {
@@ -131,7 +138,7 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEDIT.setCellFactory(param -> new TableCell<Equipamento, Equipamento>() {
-			private final Button button = new Button("editar");
+			private final Button button = new Button("Editar");
 
 			@Override
 			protected void updateItem(Equipamento obj, boolean empty) {
@@ -145,5 +152,41 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 						event -> createDialogForm(obj, "/gui/TipoEquipamentoForm.fxml", Utils.currentStage(event)));
 			}
 		});
+	}
+
+	private void initRemoveButtons() {
+		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Equipamento, Equipamento>() {
+			private final Button button = new Button("Remover");
+
+			@Override
+			protected void updateItem(Equipamento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
+		});
+	}
+
+	private void removeEntity(Equipamento obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir?");
+		
+		if (result.get() == ButtonType.OK) {
+			if (service == null) {
+				throw new IllegalStateException("Serviço Nulo");
+			}
+			try {
+				service.remove(obj);
+				updateTableView();
+			}
+			catch (DbIntegrityException e) {
+				Alerts.showAlert("Erro ao remover o registro", null, e.getMessage(), AlertType.ERROR);
+			}
+			
+		}
 	}
 }

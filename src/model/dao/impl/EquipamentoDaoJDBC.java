@@ -10,6 +10,7 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.EquipamentoDao;
 import model.entities.Equipamento;
 
@@ -78,7 +79,21 @@ public class EquipamentoDaoJDBC implements EquipamentoDao{
 	}
 	
 	public void deleteById(Integer id) {
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"DELETE FROM TB_EQUIPAMENTO WHERE PK_Equipamento = ?");
+
+			st.setInt(1, id);
+
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		} 
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 	
 	public Equipamento findById(Integer id) {
