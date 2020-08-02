@@ -139,6 +139,11 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 		pat.setDescricao(rs.getString("TXT_Descricao"));
 		pat.setCondicaoUso(rs.getByte("INT_condicaoUso"));
 		pat.setTipEquip(equip);
+		
+//		if (obj.getAnyDate != null) {
+//			obj.setAnyDate(new java.util.Date(rs.getTimestamp("AnyDate").getTime()));
+//		}
+		
 		return pat;
 	}
 

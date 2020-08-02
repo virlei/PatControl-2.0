@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Patrimonio;
@@ -32,13 +33,25 @@ public class PatrimonioFormController implements Initializable {
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
 	@FXML
-	private TextField txtId;
+	private TextField txtNrPatrimonio;
 	
 	@FXML
-	private TextField txtName;
+	private TextField txtDescricao;
 	
 	@FXML
-	private Label labelErrorName;
+	private TextField txtFabricante;
+	
+	@FXML
+	private TextField txtMarca;
+	
+	@FXML
+	private TextField txtCondicaoUso;
+
+//	@FXML
+//	private DatePicker dpAnyDate;
+	
+	@FXML
+	private Label labelErrorDescricao;
 	
 	@FXML
 	private Button btSave;
@@ -91,12 +104,12 @@ public class PatrimonioFormController implements Initializable {
 		
 		ValidationException exception = new ValidationException("Erro de Validação");
 		
-		obj.setNumero(Utils.tryParseToLong(txtId.getText()));
+		obj.setNumero(Utils.tryParseToLong(txtNrPatrimonio.getText()));
 		
-		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
-			exception.addError("name", "Campo não pode estar vazio");
+		if (txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
+			exception.addError("description", "Campo não pode estar vazio");
 		}
-		obj.setDescricao(txtName.getText());
+		obj.setDescricao(txtDescricao.getText());
 		
 		if (exception.getErrors().size()>0) {
 			throw exception;
@@ -117,8 +130,10 @@ public class PatrimonioFormController implements Initializable {
 	}
 	
 	private void initializeNodes() {
-		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtName, 30);
+		Constraints.setTextFieldInteger(txtNrPatrimonio);
+		Constraints.setTextFieldMaxLength(txtDescricao, 50);
+		
+		//Utils.formatDatePicker(dpAnyDate, "dd/MM/yyyy");
 	}
 	
 	public void updateFormData() {
@@ -126,18 +141,24 @@ public class PatrimonioFormController implements Initializable {
 			throw new IllegalStateException ("Entidade está vazia");
 		}
 		
-		//txtId.setText(String.valueOf(entity.getId()));
+		//txtNrPatrimonio.setText(String.valueOf(entity.getId()));
 		
-		txtId.setText(String.valueOf(entity.getNumero()));
+		txtNrPatrimonio.setText(String.valueOf(entity.getNumero()));
 				
-		txtName.setText(entity.getDescricao());
+		txtDescricao.setText(entity.getDescricao());
+		
+		txtFabricante.setText(entity.getFabricante());
+		
+		txtMarca.setText(entity.getMarca());
+		
+		//dpAnyDate.setValue( LocalDate.ofinstant(entity.getAnyDate(), ZoneId.systemdfault()));
 	}
 	
 	private void setErrorMessages(Map<String, String> errors ) {
 		Set<String> fields = errors.keySet();
 		
-		if (fields.contains("name")) {
-			labelErrorName.setText(errors.get("name"));
+		if (fields.contains("description")) {
+			labelErrorDescricao.setText(errors.get("description"));
 		}
 	}
 
