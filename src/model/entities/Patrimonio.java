@@ -10,14 +10,14 @@ public class Patrimonio implements Serializable {
 	private String fabricante;
 	private String marca;
 	private String descricao;
-	private byte condicaoUso;
+	private Byte condicaoUso;
 	
 	private Equipamento TipEquip;
 	
 	public Patrimonio() {
 	}
 
-	public Patrimonio(long numero, String fabricante, String marca, String descricao, byte i,
+	public Patrimonio(long numero, String fabricante, String marca, String descricao, Byte i,
 			Equipamento tipEquip) {
 		this.numero = numero;
 		this.fabricante = fabricante;
@@ -31,7 +31,7 @@ public class Patrimonio implements Serializable {
 		return numero;
 	}
 
-	public void setNumero(long numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
 
@@ -59,11 +59,11 @@ public class Patrimonio implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public byte getCondicaoUso() {
+	public Byte getCondicaoUso() {
 		return condicaoUso;
 	}
 
-	public void setCondicaoUso(byte condicaoUso) {
+	public void setCondicaoUso(Byte condicaoUso) {
 		this.condicaoUso = condicaoUso;
 	}
 

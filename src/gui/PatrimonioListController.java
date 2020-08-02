@@ -40,10 +40,19 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	private TableView<Patrimonio> tableViewPatrimonio;
 
 	@FXML
-	private TableColumn<Patrimonio, Long> tableColumnId;
+	private TableColumn<Patrimonio, Long> tableColumnNumero;
 
 	@FXML
-	private TableColumn<Patrimonio, String> tableColumnName;
+	private TableColumn<Patrimonio, String> tableColumnFabricante;
+	
+	@FXML
+	private TableColumn<Patrimonio, String> tableColumnMarca;
+
+	@FXML
+	private TableColumn<Patrimonio, String> tableColumnDescricao;
+
+	@FXML
+	private TableColumn<Patrimonio, Byte> tableColumnCondicaoUso;
 
 	@FXML
 	private TableColumn<Patrimonio, Patrimonio> tableColumnEDIT;
@@ -75,9 +84,12 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 
 	private void initializeNodes() {
 
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("numero"));
-		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-
+		tableColumnNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
+		tableColumnFabricante.setCellValueFactory(new PropertyValueFactory<>("fabricante"));
+		tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+		tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		tableColumnCondicaoUso.setCellValueFactory(new PropertyValueFactory<>("condicaoUso"));
+		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPatrimonio.prefHeightProperty().bind(stage.heightProperty());
 
