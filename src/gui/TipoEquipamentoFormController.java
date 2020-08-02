@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Equipamento;
+import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
 
 public class TipoEquipamentoFormController implements Initializable {
@@ -69,6 +72,9 @@ public class TipoEquipamentoFormController implements Initializable {
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		}
+		catch (ValidationException e) {
+			setErrorMessages(e.getErrors());
+		}
 		catch (DbException e) {
 			Alerts.showAlert("Erro ao salvar objeto", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -83,8 +89,18 @@ public class TipoEquipamentoFormController implements Initializable {
 	private Equipamento getFormData() {
 		Equipamento obj = new Equipamento();
 		
+		ValidationException exception = new ValidationException("Erro de Validação");
+		
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		
+		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+			exception.addError("name", "Campo não pode estar vazio");
+		}
 		obj.setDescricao(txtName.getText());
+		
+		if (exception.getErrors().size()>0) {
+			throw exception;
+		}
 		
 		return obj;
 		
@@ -112,6 +128,14 @@ public class TipoEquipamentoFormController implements Initializable {
 		
 		txtId.setText(String.valueOf(entity.getId()));
 		txtName.setText(entity.getDescricao());
+	}
+	
+	private void setErrorMessages(Map<String, String> errors ) {
+		Set<String> fields = errors.keySet();
+		
+		if (fields.contains("name")) {
+			labelErrorName.setText(errors.get("name"));
+		}
 	}
 
 }
