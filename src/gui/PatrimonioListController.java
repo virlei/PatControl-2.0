@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -23,6 +26,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Patrimonio;
 import model.services.PatrimonioService;
@@ -107,34 +112,34 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	}
 
 	private void createDialogForm(Patrimonio obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//
-//			TipoPatrimonioFormController controller = loader.getController();
-//			// Injetando dependência do Patrimonio no form
-//			controller.setPatrimonio(obj);
-//
-//			// Injetando dependência do PatrimonioService no form
-//			controller.setPatrimonioService(new PatrimonioService());
-//
-//			// Inscrevendo-se no subject TipoPatrimonioFormController para receber os
-//			// eventos de mudança
-//			controller.subscribeDataChangeListener(this);
-//
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Entre com os dados de Tipo de Patrimonio:");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//
-//		} catch (IOException e) {
-//			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
+
+			PatrimonioFormController controller = loader.getController();
+			// Injetando dependência do Patrimonio no form
+			controller.setPatrimonio(obj);
+
+			// Injetando dependência do PatrimonioService no form
+			controller.setPatrimonioService(new PatrimonioService());
+
+			// Inscrevendo-se no subject TipoPatrimonioFormController para receber os
+			// eventos de mudança
+			controller.subscribeDataChangeListener(this);
+
+			controller.updateFormData();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entre com os dados de Patrimônio:");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	@Override
@@ -156,7 +161,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/TipoPatrimonioForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/PatrimonioForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}

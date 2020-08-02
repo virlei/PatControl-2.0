@@ -24,6 +24,13 @@ public class Utils {
 		}
 	}
 
+	public static Long tryParseToLong(String str) {
+		try {
+			return Long.parseLong(str);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
 	public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Date> cell = new TableCell<T, Date>() {
