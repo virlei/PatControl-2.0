@@ -9,6 +9,7 @@ import application.Main;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,37 +32,41 @@ import model.services.EquipamentoService;
 public class TipoEquipamentoListController implements Initializable, DataChangeListener {
 
 	private EquipamentoService service;
-	//devemos evitar o comando abaixo, pois faz um acoplamento forte.
-	//private EquipamentoService service = new EquipamentoService();
-	//Para injetar a dependência evitando o acoplamento forte acima, devemos utilizar o set
-	//Assim podemos criar o setEquipamentoService
-		
+	// devemos evitar o comando abaixo, pois faz um acoplamento forte.
+	// private EquipamentoService service = new EquipamentoService();
+	// Para injetar a dependência evitando o acoplamento forte acima, devemos
+	// utilizar o set
+	// Assim podemos criar o setEquipamentoService
+
 	@FXML
 	private TableView<Equipamento> tableViewEquipamento;
-	
+
 	@FXML
 	private TableColumn<Equipamento, Integer> tableColumnId;
-	
+
 	@FXML
 	private TableColumn<Equipamento, String> tableColumnName;
-	
+
+	@FXML
+	private TableColumn<Equipamento, Equipamento> tableColumnEDIT;
+
 	@FXML
 	private Button btNew;
-	
+
 	private ObservableList<Equipamento> obsList;
-	
+
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Equipamento obj = new Equipamento();
 		createDialogForm(obj, "/gui/TipoEquipamentoForm.fxml", parentStage);
 	}
-		
-	//Evitando o acoplamento forte, com injeção de dependência
-	public void setEquipamentoService (EquipamentoService service) {
+
+	// Evitando o acoplamento forte, com injeção de dependência
+	public void setEquipamentoService(EquipamentoService service) {
 		this.service = service;
 	}
-	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
@@ -70,12 +76,12 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-		
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEquipamento.prefHeightProperty().bind(stage.heightProperty());
-		
+
 	}
-	
+
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Serviço nulo");
@@ -83,25 +89,27 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 		List<Equipamento> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewEquipamento.setItems(obsList);
+		initEditButtons();
 	}
 
-	private void createDialogForm(Equipamento obj, String absoluteName, Stage parentStage ) {
+	private void createDialogForm(Equipamento obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-			
+
 			TipoEquipamentoFormController controller = loader.getController();
-			//Injetando dependência do Equipamento no form
+			// Injetando dependência do Equipamento no form
 			controller.setEquipamento(obj);
-			
-			//Injetando dependência do EquipamentoService no form
+
+			// Injetando dependência do EquipamentoService no form
 			controller.setEquipamentoService(new EquipamentoService());
-			
-			//Inscrevendo-se no subject TipoEquipamentoFormController para receber os eventos de mudança
+
+			// Inscrevendo-se no subject TipoEquipamentoFormController para receber os
+			// eventos de mudança
 			controller.subscribeDataChangeListener(this);
-						
+
 			controller.updateFormData();
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Entre com os dados de Tipo de Equipamento:");
 			dialogStage.setScene(new Scene(pane));
@@ -109,9 +117,8 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
-						
-		}
-		catch (IOException e) {
+
+		} catch (IOException e) {
 			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -119,5 +126,24 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 	@Override
 	public void onDataChanged() {
 		updateTableView();
+	}
+
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Equipamento, Equipamento>() {
+			private final Button button = new Button("editar");
+
+			@Override
+			protected void updateItem(Equipamento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/TipoEquipamentoForm.fxml", Utils.currentStage(event)));
+			}
+		});
 	}
 }
