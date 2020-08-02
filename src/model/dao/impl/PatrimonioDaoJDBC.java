@@ -84,7 +84,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 
 	@Override
-	public void deleteById(long id) {
+	public void deleteById(Long id) {
 			
 		PreparedStatement st = null;
 		try {
@@ -101,7 +101,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 
 	@Override
-	public Patrimonio findById(long id) {
+	public Patrimonio findById(Long id) {
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -157,10 +157,6 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-/*					"SELECT TB_PATRIMONIO.*, TB_EQUIPAMENTO.PK_Equipamento, TB_EQUIPAMENTO.TXT_Descricao AS TipEquip "
-					+ "FROM TB_PATRIMONIO INNER JOIN TB_EQUIPAMENTO "
-					+ "ON TB_PATRIMONIO.FK_Equipamento = TB_EQUIPAMENTO.PK_Equipamento;");
-*/
 					"SELECT TB_PATRIMONIO.*,TB_EQUIPAMENTO.PK_Equipamento, TB_EQUIPAMENTO.TXT_Descricao AS TipEquip "
 					+ "FROM TB_PATRIMONIO, TB_EQUIPAMENTO "
 					+ "WHERE TB_PATRIMONIO.FK_Equipamento = TB_EQUIPAMENTO.PK_Equipamento;");

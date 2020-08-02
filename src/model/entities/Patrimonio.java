@@ -6,7 +6,7 @@ public class Patrimonio implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private long numero;
+	private Long numero;
 	private String fabricante;
 	private String marca;
 	private String descricao;
@@ -27,7 +27,7 @@ public class Patrimonio implements Serializable {
 		TipEquip = tipEquip;
 	}
 
-	public long getNumero() {
+	public Long getNumero() {
 		return numero;
 	}
 

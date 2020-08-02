@@ -8,8 +8,8 @@ public interface PatrimonioDao {
 	
 	void insert(Patrimonio obj);
 	void update (Patrimonio obj);
-	void deleteById (long id);
-	Patrimonio findById(long id);
+	void deleteById (Long id);
+	Patrimonio findById(Long id);
 	List<Patrimonio> findAll();
 	
 }

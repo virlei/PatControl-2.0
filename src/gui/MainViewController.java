@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
+import model.services.PatrimonioService;
 
 public class MainViewController implements Initializable {
 
@@ -37,16 +38,18 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemPatrimonioAction() {
-		System.out.println("onMenuItemPatrimonioAction");
+		loadView("/gui/PatrimonioList.fxml", (PatrimonioListController controller) -> {
+			controller.setPatrimonioService(new PatrimonioService());
+			controller.updateTableView();
+			
+		});
 	}
 	
 	@FXML
 	public void onMenuItemTipoEquipamentoAction() {
-		//loadView2("/gui/TipoEquipamentoList.fxml");
 		loadView("/gui/TipoEquipamentoList.fxml", (TipoEquipamentoListController controller) -> {
 			controller.setEquipamentoService(new EquipamentoService());
 			controller.updateTableView();
-			
 		});
 	}
 	
