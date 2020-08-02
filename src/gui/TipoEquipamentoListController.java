@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 import model.entities.Equipamento;
 import model.services.EquipamentoService;
 
-public class TipoEquipamentoListController implements Initializable {
+public class TipoEquipamentoListController implements Initializable, DataChangeListener {
 
 	private EquipamentoService service;
 	//devemos evitar o comando abaixo, pois faz um acoplamento forte.
@@ -90,11 +91,14 @@ public class TipoEquipamentoListController implements Initializable {
 			Pane pane = loader.load();
 			
 			TipoEquipamentoFormController controller = loader.getController();
-			//Injetando o Equipamento no form
+			//Injetando dependência do Equipamento no form
 			controller.setEquipamento(obj);
 			
-			//Injetando o EquipamentoService no form
+			//Injetando dependência do EquipamentoService no form
 			controller.setEquipamentoService(new EquipamentoService());
+			
+			//Inscrevendo-se no subject TipoEquipamentoFormController para receber os eventos de mudança
+			controller.subscribeDataChangeListener(this);
 						
 			controller.updateFormData();
 			
@@ -110,5 +114,10 @@ public class TipoEquipamentoListController implements Initializable {
 		catch (IOException e) {
 			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
 	}
 }
