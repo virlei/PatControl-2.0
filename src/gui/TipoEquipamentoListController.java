@@ -126,6 +126,7 @@ public class TipoEquipamentoListController implements Initializable, DataChangeL
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
 		}
 	}

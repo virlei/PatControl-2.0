@@ -32,7 +32,7 @@
             <Label text="Descrição:" GridPane.rowIndex="2" />
             <TextField fx:id="txtNrPatrimonio" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="txtDescricao" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="labelErrorName" prefHeight="17.0" prefWidth="23.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="labelErrorDescricao" prefHeight="17.0" prefWidth="0.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="Salvar" />
@@ -46,7 +46,7 @@
             <TextField fx:id="txtFabricante" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="txtMarca" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="txtCondicaoUso" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox prefHeight="25.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="comboBoxEquipamento" prefHeight="25.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

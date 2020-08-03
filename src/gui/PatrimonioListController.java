@@ -30,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Patrimonio;
+import model.services.EquipamentoService;
 import model.services.PatrimonioService;
 
 public class PatrimonioListController implements Initializable, DataChangeListener {
@@ -120,9 +121,12 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 			// Injetando dependência do Patrimonio no form
 			controller.setPatrimonio(obj);
 
-			// Injetando dependência do PatrimonioService no form
-			controller.setPatrimonioService(new PatrimonioService());
+			// Injetando dependência de Services no form
+			controller.setServices(new PatrimonioService(), new EquipamentoService());
 
+			// Carregando os tipos de equipamentos para a comboBox
+			controller.loadAssociatedObjects();
+			
 			// Inscrevendo-se no subject TipoPatrimonioFormController para receber os
 			// eventos de mudança
 			controller.subscribeDataChangeListener(this);
@@ -138,6 +142,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
 		}
 	}
