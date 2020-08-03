@@ -60,7 +60,7 @@ public class Equipamento implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Equipamento [id=" + id + ", descricao=" + descricao + "]";
+		return this.descricao;
 	}
 	
 }

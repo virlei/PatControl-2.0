@@ -47,6 +47,9 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 
 	@FXML
 	private TableColumn<Patrimonio, Long> tableColumnNumero;
+	
+	@FXML
+	private TableColumn<Patrimonio, String> tableColumnEquipamento;
 
 	@FXML
 	private TableColumn<Patrimonio, String> tableColumnFabricante;
@@ -91,6 +94,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	private void initializeNodes() {
 
 		tableColumnNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
+		tableColumnEquipamento.setCellValueFactory(new PropertyValueFactory<>("TipEquip"));
 		tableColumnFabricante.setCellValueFactory(new PropertyValueFactory<>("fabricante"));
 		tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
 		tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));

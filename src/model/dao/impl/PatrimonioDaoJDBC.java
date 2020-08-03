@@ -107,7 +107,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT TB_PATRIMONIO.*, TB_EQUIPAMENTO.TXT_Descricao as Equip "
+					"SELECT TB_PATRIMONIO.*, TB_EQUIPAMENTO.TXT_Descricao as txtEquip, TB_EQUIPAMENTO.PK_Equipamento as idEquip "
 					+ "FROM TB_PATRIMONIO INNER JOIN TB_EQUIPAMENTO "
 					+ "ON TB_PATRIMONIO.FK_EQUIPAMENTO = TB_EQUIPAMENTO.PK_Equipamento "
 					+ "where TB_PATRIMONIO.PK_Patrimonio = ?");
@@ -150,8 +150,8 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	private Equipamento instantiateEquipamento(ResultSet rs) throws SQLException {
 
 		Equipamento equip = new Equipamento();
-		equip.setId(rs.getInt("FK_Equipamento"));
-		equip.setDescricao(rs.getString("TXT_Descricao"));
+		equip.setId(rs.getInt("idEquip"));
+		equip.setDescricao(rs.getString("txtEquip"));
 		return equip;
 	}
 
@@ -162,7 +162,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT TB_PATRIMONIO.*,TB_EQUIPAMENTO.PK_Equipamento, TB_EQUIPAMENTO.TXT_Descricao AS TipEquip "
+					"SELECT TB_PATRIMONIO.*,TB_EQUIPAMENTO.PK_Equipamento as idEquip, TB_EQUIPAMENTO.TXT_Descricao AS txtEquip "
 					+ "FROM TB_PATRIMONIO, TB_EQUIPAMENTO "
 					+ "WHERE TB_PATRIMONIO.FK_Equipamento = TB_EQUIPAMENTO.PK_Equipamento;");
 					
@@ -177,11 +177,11 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 			
 			while (rs.next()) {
 				
-				Equipamento equip = map.get(rs.getInt("PK_Equipamento"));
+				Equipamento equip = map.get(rs.getInt("idEquip"));
 				
 				if (equip == null) {
 					equip = instantiateEquipamento(rs);
-					map.put(rs.getInt("PK_Equipamento"), equip);
+					map.put(rs.getInt("idEquip"), equip);
 				}
 				
 				Patrimonio pat = instantiatePatrimonio(rs, equip);

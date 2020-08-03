@@ -72,7 +72,7 @@ public class Patrimonio implements Serializable {
 	}
 
 	public void setTipEquip(Equipamento tipEquip) {
-		TipEquip = tipEquip;
+		this.TipEquip = tipEquip;
 	}
 
 
