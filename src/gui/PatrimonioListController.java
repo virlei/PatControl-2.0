@@ -75,7 +75,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Patrimonio obj = new Patrimonio();
-		createDialogForm(obj, "/gui/PatrimonioForm.fxml", parentStage);
+		createDialogForm(obj, "/gui/PatrimonioForm.fxml", parentStage, true);
 	}
 
 	// Evitando o acoplamento forte, com injeção de dependência
@@ -112,7 +112,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Patrimonio obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(Patrimonio obj, String absoluteName, Stage parentStage, boolean insert) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
@@ -122,8 +122,8 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 			controller.setPatrimonio(obj);
 
 			// Injetando dependência de Services no form
-			controller.setServices(new PatrimonioService(), new EquipamentoService());
-
+			controller.setServices(new PatrimonioService(), new EquipamentoService(),insert);
+			
 			// Carregando os tipos de equipamentos para a comboBox
 			controller.loadAssociatedObjects();
 			
@@ -166,7 +166,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/PatrimonioForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/PatrimonioForm.fxml", Utils.currentStage(event), false));
 			}
 		});
 	}

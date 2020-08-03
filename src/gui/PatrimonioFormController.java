@@ -64,6 +64,9 @@ public class PatrimonioFormController implements Initializable {
 
 	@FXML
 	private Label labelErrorDescricao;
+	
+	@FXML
+	private Label labelErrorNrPatrimonio;
 
 	@FXML
 	private Button btSave;
@@ -77,9 +80,10 @@ public class PatrimonioFormController implements Initializable {
 		this.entity = entity;
 	}
 
-	public void setServices(PatrimonioService service, EquipamentoService equipamentoService) {
+	public void setServices(PatrimonioService service, EquipamentoService equipamentoService, boolean insert) {
 		this.service = service;
 		this.equipamentoService = equipamentoService;
+		this.service.Insert = insert;
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -117,17 +121,28 @@ public class PatrimonioFormController implements Initializable {
 
 		ValidationException exception = new ValidationException("Erro de Validação");
 
+		if (txtNrPatrimonio.getText() == null || txtNrPatrimonio.getText().trim().equals("")) {
+			exception.addError("nrPatrimonio", "N° Patrimônio nulo");
+		}
 		obj.setNumero(Utils.tryParseToLong(txtNrPatrimonio.getText()));
 
 		if (txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
-			exception.addError("description", "Campo não pode estar vazio");
+			exception.addError("descricao", "Descrição nula");
 		}
 		obj.setDescricao(txtDescricao.getText());
 
+		obj.setFabricante(txtFabricante.getText());
+		
+		obj.setMarca(txtMarca.getText());
+		
+		obj.setCondicaoUso(Utils.tryParseToByte(txtCondicaoUso.getText()));
+		
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
-
+		
+		obj.setTipEquip(comboBoxEquipamento.getValue());
+		
 		return obj;
 
 	}
@@ -145,6 +160,7 @@ public class PatrimonioFormController implements Initializable {
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtNrPatrimonio);
 		Constraints.setTextFieldMaxLength(txtDescricao, 50);
+		Constraints.setTextFieldInteger(txtCondicaoUso);
 		
 		initializeComboBoxEquipamento();
 
@@ -156,15 +172,21 @@ public class PatrimonioFormController implements Initializable {
 			throw new IllegalStateException("Entidade está vazia");
 		}
 
-		// txtNrPatrimonio.setText(String.valueOf(entity.getId()));
-
 		txtNrPatrimonio.setText(String.valueOf(entity.getNumero()));
-
+		if (txtNrPatrimonio.getText() == null || txtNrPatrimonio.getText().trim().equals("")) {
+			txtNrPatrimonio.setEditable(true);
+		}
+		else {
+			txtNrPatrimonio.setEditable(false);
+		}
+		
 		txtDescricao.setText(entity.getDescricao());
 
 		txtFabricante.setText(entity.getFabricante());
 
 		txtMarca.setText(entity.getMarca());
+		
+		txtCondicaoUso.setText(String.valueOf(entity.getCondicaoUso()));
 		
 		if (entity.getTipEquip() == null) {
 			comboBoxEquipamento.getSelectionModel().selectFirst();
@@ -189,9 +211,9 @@ public class PatrimonioFormController implements Initializable {
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
 
-		if (fields.contains("description")) {
-			labelErrorDescricao.setText(errors.get("description"));
-		}
+		labelErrorNrPatrimonio.setText((fields.contains("nrPatrimonio") ? errors.get("nrPatrimonio") : "" ));
+		labelErrorDescricao.setText((fields.contains("descricao") ? errors.get("descricao") : "" ));
+		
 	}
 
 	private void initializeComboBoxEquipamento() {

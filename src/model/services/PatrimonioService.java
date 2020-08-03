@@ -8,14 +8,16 @@ import model.entities.Patrimonio;
 
 public class PatrimonioService {
 
-	private PatrimonioDao dao = DaoFactory.createPatrimonioDao();
+	public static boolean Insert = false;
 	
+	private PatrimonioDao dao = DaoFactory.createPatrimonioDao();
+		
 	public List<Patrimonio> findAll() {
 		return dao.findAll();
 	}
 	
 	public void saveOrUpdate(Patrimonio obj) {
-		if (obj.getNumero() == null) {
+		if (Insert) {
 			dao.insert(obj);
 		}
 		else {

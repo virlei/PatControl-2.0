@@ -36,6 +36,14 @@ public class Utils {
 		}
 	}
 
+	public static Byte tryParseToByte(String str) {
+		try {
+			return Byte.parseByte(str);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
 	public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Date> cell = new TableCell<T, Date>() {
