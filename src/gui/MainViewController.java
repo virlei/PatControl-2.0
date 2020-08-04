@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
 import model.services.PatrimonioService;
+import model.services.LocalService;
 
 public class MainViewController implements Initializable {
 
@@ -54,8 +55,12 @@ public class MainViewController implements Initializable {
 	}
 	
 	@FXML
-	public void onMenuItemLocalAction() {
-		System.out.println("onMenuItemLocalAction");
+	public void onMenuItemLocalAction() {		
+		loadView("/gui/LocalList.fxml", (LocalListController controller) -> {
+			controller.setLocalService(new LocalService());
+			controller.updateTableView();
+		});
+		
 	}
 	
 	@FXML

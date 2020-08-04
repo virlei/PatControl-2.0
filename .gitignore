@@ -33,3 +33,4 @@ nbdist/
 
 # Eclipse
 .settings/
+/.metadata/
