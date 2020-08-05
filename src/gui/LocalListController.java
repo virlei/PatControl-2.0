@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import db.DbIntegrityException;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -31,7 +32,7 @@ import javafx.stage.Stage;
 import model.entities.Local;
 import model.services.LocalService;
 
-public class LocalListController implements Initializable{
+public class LocalListController implements Initializable, DataChangeListener {
 	
 	private LocalService service;
 
@@ -101,7 +102,10 @@ public class LocalListController implements Initializable{
 			
 			controller.setLocal(obj);
 			controller.setLocalService(new LocalService());
-						
+	
+			//tinha faltado essa inscrição como observer na lista
+			controller.subscribeDataChangeListener(this);
+			
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();

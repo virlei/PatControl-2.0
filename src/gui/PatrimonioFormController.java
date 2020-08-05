@@ -83,7 +83,7 @@ public class PatrimonioFormController implements Initializable {
 	public void setServices(PatrimonioService service, EquipamentoService equipamentoService, boolean insert) {
 		this.service = service;
 		this.equipamentoService = equipamentoService;
-		this.service.Insert = insert;
+		PatrimonioService.Insert = insert;
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {

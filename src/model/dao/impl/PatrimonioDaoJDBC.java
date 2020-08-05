@@ -37,7 +37,12 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 			st.setString(3, obj.getFabricante());
 			st.setString(4, obj.getMarca());
 			st.setString(5, obj.getDescricao());
-			st.setInt(6, obj.getCondicaoUso());
+			if (obj.getCondicaoUso() == null) {
+				st.setInt(6, 0);
+			}
+			else {
+				st.setInt(6, obj.getCondicaoUso());
+			}
 			
 			int rowsAffected = st.executeUpdate();
 			
