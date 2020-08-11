@@ -1,6 +1,5 @@
 package model.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.DaoFactory;
@@ -24,7 +23,7 @@ public class LocalService {
 	}
 	
 	public void saveOrUpdate (Local obj) {
-		if (obj.getLocal() == null) {
+		if (obj.getIdLocal() == null) {
 			dao.insert(obj);
 		}
 		else {
@@ -33,7 +32,7 @@ public class LocalService {
 	}
 	
 	public void remove(Local obj) {
-		dao.deleteById(obj.getLocal());
+		dao.deleteById(obj.getIdLocal());
 	}
 
 }

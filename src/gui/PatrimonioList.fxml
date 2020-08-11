@@ -28,6 +28,7 @@
         <columns>
           <TableColumn fx:id="tableColumnNumero" maxWidth="75.0" prefWidth="75.0" text="Patrimônio" />
             <TableColumn fx:id="tableColumnEquipamento" prefWidth="133.0" text="Equipamento" />
+            <TableColumn fx:id="tableColumnLocal" prefWidth="75.0" text="Localização" />
           <TableColumn fx:id="tableColumnFabricante" prefWidth="169.0" text="Fabricante" />
             <TableColumn fx:id="tableColumnMarca" prefWidth="93.0" text="Marca" />
             <TableColumn fx:id="tableColumnDescricao" prefWidth="200.0" text="Descrição" />

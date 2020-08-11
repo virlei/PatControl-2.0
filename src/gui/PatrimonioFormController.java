@@ -26,9 +26,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import model.entities.Equipamento;
+import model.entities.Local;
 import model.entities.Patrimonio;
 import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
+import model.services.LocalService;
 import model.services.PatrimonioService;
 
 public class PatrimonioFormController implements Initializable {
@@ -38,6 +40,8 @@ public class PatrimonioFormController implements Initializable {
 	private PatrimonioService service;
 
 	private EquipamentoService equipamentoService;
+	
+	private LocalService localService;
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
@@ -58,6 +62,9 @@ public class PatrimonioFormController implements Initializable {
 
 	@FXML
 	private ComboBox<Equipamento> comboBoxEquipamento;
+	
+	@FXML
+	private ComboBox<Local> comboBoxLocal;
 
 //	@FXML
 //	private DatePicker dpAnyDate;
@@ -75,14 +82,17 @@ public class PatrimonioFormController implements Initializable {
 	private Button btCancel;
 
 	private ObservableList<Equipamento> obsList;
+	
+	private ObservableList<Local> obsLstLocal;
 
 	public void setPatrimonio(Patrimonio entity) {
 		this.entity = entity;
 	}
 
-	public void setServices(PatrimonioService service, EquipamentoService equipamentoService, boolean insert) {
+	public void setServices(PatrimonioService service, EquipamentoService equipamentoService, LocalService localService, boolean insert) {
 		this.service = service;
 		this.equipamentoService = equipamentoService;
+		this.localService = localService;
 		PatrimonioService.Insert = insert;
 	}
 
@@ -143,6 +153,8 @@ public class PatrimonioFormController implements Initializable {
 		
 		obj.setTipEquip(comboBoxEquipamento.getValue());
 		
+		obj.setLocal(comboBoxLocal.getValue());
+		
 		return obj;
 
 	}
@@ -163,6 +175,8 @@ public class PatrimonioFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtCondicaoUso);
 		
 		initializeComboBoxEquipamento();
+		
+		initializeComboBoxLocal();
 
 		// Utils.formatDatePicker(dpAnyDate, "dd/MM/yyyy");
 	}
@@ -195,6 +209,12 @@ public class PatrimonioFormController implements Initializable {
 			comboBoxEquipamento.setValue(entity.getTipEquip());
 		}
 
+		if (entity.getLocal() == null) {
+			comboBoxLocal.getSelectionModel().selectFirst();
+		}
+		else {
+			comboBoxLocal.setValue(entity.getLocal());
+		}
 		// dpAnyDate.setValue( LocalDate.ofinstant(entity.getAnyDate(),
 		// ZoneId.systemdfault()));
 	}
@@ -206,6 +226,13 @@ public class PatrimonioFormController implements Initializable {
 		List<Equipamento> list = equipamentoService.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		comboBoxEquipamento.setItems(obsList);
+		
+		if (localService == null ) {
+			throw new IllegalStateException("Lista de Locais está vazia");
+		}
+		List<Local> lstLocal = localService.findAll();
+		obsLstLocal = FXCollections.observableArrayList(lstLocal);
+		comboBoxLocal.setItems(obsLstLocal);
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -228,4 +255,16 @@ public class PatrimonioFormController implements Initializable {
 		comboBoxEquipamento.setButtonCell(factory.call(null));
 	}
 
+	private void initializeComboBoxLocal() {
+		Callback<ListView<Local>, ListCell<Local>> factory = lv -> new ListCell<Local>() {
+			@Override
+			protected void updateItem(Local item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescricaoLocal());
+			}
+		};
+		comboBoxLocal.setCellFactory(factory);
+		comboBoxLocal.setButtonCell(factory.call(null));
+	}	
+	
 }

@@ -17,7 +17,6 @@
                     <MenuItem fx:id="menuItemPatrimonio" mnemonicParsing="false" onAction="#onMenuItemPatrimonioAction" text="Patrimônio" />
                         <MenuItem fx:id="menuItemTipoEquipamento" mnemonicParsing="false" onAction="#onMenuItemTipoEquipamentoAction" text="Tipo de Equipamento" />
                         <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
-                        <MenuItem fx:id="menuItemLocalizacao" mnemonicParsing="false" onAction="#onMenuItemLocalizacaoAction" text="Localização" />
                         <MenuItem fx:id="menuItemMovimentacao" mnemonicParsing="false" onAction="#onMenuItemMovimentacaoAction" text="Movimentação" />
                   </items>
                 </Menu>

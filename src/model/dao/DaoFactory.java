@@ -18,10 +18,6 @@ public class DaoFactory {
 		return new LocalDaoJDBC(DB.getConnection());
 	}
 	
-	public static LocalizacaoDao createLocalizacaoDao() {
-		return new LocalizacaoDaoJDBC(DB.getConnection());
-	}
-	
 	public static MovimentacaoDao createMovimentacaoDao() {
 		return new MovimentacaoDaoJDBC(DB.getConnection());
 	}

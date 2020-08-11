@@ -6,39 +6,38 @@ public class Local implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer local;
-	private String descricao;
+	private Integer idLocal;
+	private String descricaoLocal;
 	
 	public Local() {
 	}
 
-	public Local(Integer local, String descricao) {
-		
-		this.local = local;
-		this.descricao = descricao;
+	public Local(Integer idLocal, String descricaoLocal) {
+		this.idLocal = idLocal;
+		this.descricaoLocal = descricaoLocal;
 	}
 
-	public Integer getLocal() {
-		return local;
+	public Integer getIdLocal() {
+		return idLocal;
 	}
 
-	public void setLocal(Integer local) {
-		this.local = local;
+	public void setIdLocal(Integer idLocal) {
+		this.idLocal = idLocal;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescricaoLocal() {
+		return descricaoLocal;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescricaoLocal(String descricaoLocal) {
+		this.descricaoLocal = descricaoLocal;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((local == null) ? 0 : local.hashCode());
+		result = prime * result + ((idLocal == null) ? 0 : idLocal.hashCode());
 		return result;
 	}
 
@@ -51,17 +50,16 @@ public class Local implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Local other = (Local) obj;
-		if (local == null) {
-			if (other.local != null)
+		if (idLocal == null) {
+			if (other.idLocal != null)
 				return false;
-		} else if (!local.equals(other.local))
+		} else if (!idLocal.equals(other.idLocal))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Local [local=" + local + ", descricao=" + descricao + "]";
+		return this.descricaoLocal;
 	}
-
 }

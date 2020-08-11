@@ -103,12 +103,12 @@ public class LocalFormController implements Initializable {
 		
 ValidationException exception = new ValidationException("Erro de Validação");
 		
-		obj.setLocal(Utils.tryParseToInt(txtLocal.getText()));
+		obj.setIdLocal(Utils.tryParseToInt(txtLocal.getText()));
 		
 		if (txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
 			exception.addError("name", "Campo não pode estar vazio");
 		}
-		obj.setDescricao(txtDescricao.getText());
+		obj.setDescricaoLocal(txtDescricao.getText());
 		
 		if (exception.getErrors().size()>0) {
 			throw exception;
@@ -135,8 +135,8 @@ ValidationException exception = new ValidationException("Erro de Validação");
 			throw new IllegalStateException ("Entidade está vazia");
 		}
 		
-		txtLocal.setText(String.valueOf(entity.getLocal()));
-		txtDescricao.setText(entity.getDescricao());
+		txtLocal.setText(String.valueOf(entity.getIdLocal()));
+		txtDescricao.setText(entity.getDescricaoLocal());
 	}
 	
 	private void setErrorMessages(Map<String, String> errors ) {

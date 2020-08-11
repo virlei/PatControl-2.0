@@ -14,17 +14,20 @@ public class Patrimonio implements Serializable {
 	
 	private Equipamento TipEquip;
 	
+	private Local PatrLocal;
+	
 	public Patrimonio() {
 	}
 
 	public Patrimonio(long numero, String fabricante, String marca, String descricao, Byte i,
-			Equipamento tipEquip) {
+			Equipamento tipEquip, Local local) {
 		this.numero = numero;
 		this.fabricante = fabricante;
 		this.marca = marca;
 		this.descricao = descricao;
 		this.condicaoUso = i;
 		TipEquip = tipEquip;
+		PatrLocal = local;
 	}
 
 	public Long getNumero() {
@@ -75,6 +78,13 @@ public class Patrimonio implements Serializable {
 		this.TipEquip = tipEquip;
 	}
 
+	public Local getLocal() {
+		return PatrLocal;
+	}
+	
+	public void setLocal(Local local) {
+		this.PatrLocal = local;
+	}
 
 	@Override
 	public int hashCode() {
@@ -101,7 +111,7 @@ public class Patrimonio implements Serializable {
 	@Override
 	public String toString() {
 		return "Patrimonio [numero=" + numero + ", fabricante=" + fabricante + ", marca=" + marca + ", descricao="
-				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + "]";
+				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + ", Localizacao=" + PatrLocal+ "]";
 	}
 
 }

@@ -29,8 +29,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemLocal;
 	@FXML
-	private MenuItem menuItemLocalizacao;
-	@FXML
 	private MenuItem menuItemMovimentacao;
 	@FXML
 	private MenuItem menuItemRelPatrXLocal;
@@ -63,11 +61,6 @@ public class MainViewController implements Initializable {
 		
 	}
 	
-	@FXML
-	public void onMenuItemLocalizacaoAction() {
-		System.out.println("onMenuItemLocalizacaoAction");
-	}
-
 	@FXML
 	public void onMenuItemMovimentacaoAction() {
 		System.out.println("onMenuItemMovimentacaoAction");

@@ -74,8 +74,8 @@ public class LocalListController implements Initializable, DataChangeListener {
 
 	private void initializeNodes() {
 
-		ColumnLocal.setCellValueFactory(new PropertyValueFactory<>("local"));
-		ColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		ColumnLocal.setCellValueFactory(new PropertyValueFactory<>("idLocal"));
+		ColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricaoLocal"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		TableViewLocal.prefHeightProperty().bind(stage.heightProperty());

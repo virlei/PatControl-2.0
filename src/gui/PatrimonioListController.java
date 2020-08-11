@@ -31,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Patrimonio;
 import model.services.EquipamentoService;
+import model.services.LocalService;
 import model.services.PatrimonioService;
 
 public class PatrimonioListController implements Initializable, DataChangeListener {
@@ -62,6 +63,9 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 
 	@FXML
 	private TableColumn<Patrimonio, Byte> tableColumnCondicaoUso;
+	
+	@FXML
+	private TableColumn<Patrimonio, String> tableColumnLocal;
 
 	@FXML
 	private TableColumn<Patrimonio, Patrimonio> tableColumnEDIT;
@@ -99,6 +103,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 		tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
 		tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 		tableColumnCondicaoUso.setCellValueFactory(new PropertyValueFactory<>("condicaoUso"));
+		//tableColumnLocal.setCellValueFactory(new PropertyValueFactory<>("PatrLocal"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPatrimonio.prefHeightProperty().bind(stage.heightProperty());
@@ -126,7 +131,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 			controller.setPatrimonio(obj);
 
 			// Injetando dependência de Services no form
-			controller.setServices(new PatrimonioService(), new EquipamentoService(),insert);
+			controller.setServices(new PatrimonioService(), new EquipamentoService(), new LocalService(), insert);
 			
 			// Carregando os tipos de equipamentos para a comboBox
 			controller.loadAssociatedObjects();

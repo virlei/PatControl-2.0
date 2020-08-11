@@ -62,5 +62,4 @@ public class Equipamento implements Serializable {
 	public String toString() {
 		return this.descricao;
 	}
-	
 }

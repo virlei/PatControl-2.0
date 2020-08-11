@@ -34,7 +34,7 @@ public class LocalDaoJDBC implements LocalDao{
 				"(?)", 
 				Statement.RETURN_GENERATED_KEYS);
 
-			st.setString(1, obj.getDescricao());
+			st.setString(1, obj.getDescricaoLocal());
 
 			int rowsAffected = st.executeUpdate();
 			
@@ -42,7 +42,7 @@ public class LocalDaoJDBC implements LocalDao{
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					int local = rs.getInt(1);
-					obj.setLocal(local);
+					obj.setIdLocal(local);
 				}
 			}
 			else {
@@ -66,8 +66,8 @@ public class LocalDaoJDBC implements LocalDao{
 				"SET TXT_Descricao = ? " +
 				"WHERE PK_Local = ?");
 
-			st.setString(1, obj.getDescricao());
-			st.setInt(2, obj.getLocal());
+			st.setString(1, obj.getDescricaoLocal());
+			st.setInt(2, obj.getIdLocal());
 
 			st.executeUpdate();
 		}
@@ -108,8 +108,8 @@ public class LocalDaoJDBC implements LocalDao{
 			rs = st.executeQuery();
 			if (rs.next()) {				
 				Local loc = new Local();
-				loc.setLocal(rs.getInt("Pk_Local"));
-				loc.setDescricao(rs.getString("TXT_Descricao"));
+				loc.setIdLocal(rs.getInt("Pk_Local"));
+				loc.setDescricaoLocal(rs.getString("TXT_Descricao"));
 				return loc;				
 			} 
 			return null;					
@@ -127,8 +127,8 @@ public class LocalDaoJDBC implements LocalDao{
 	private Local instantiateLocal(ResultSet rs) throws SQLException {
 
 		Local local = new Local();
-		local.setLocal(rs.getInt("PK_Local"));
-		local.setDescricao(rs.getString("TXT_Descricao"));
+		local.setIdLocal(rs.getInt("PK_Local"));
+		local.setDescricaoLocal(rs.getString("TXT_Descricao"));
 		return local;
 	}
 	
