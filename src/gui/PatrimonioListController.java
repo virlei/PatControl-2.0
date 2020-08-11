@@ -42,48 +42,50 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	// Para injetar a dependência evitando o acoplamento forte acima, devemos
 	// utilizar o set
 	// Assim podemos criar o setPatrimonioService
-
-	@FXML
-	private TableView<Patrimonio> tableViewPatrimonio;
-
-	@FXML
-	private TableColumn<Patrimonio, Long> tableColumnNumero;
 	
-	@FXML
-	private TableColumn<Patrimonio, String> tableColumnEquipamento;
 
-	@FXML
-	private TableColumn<Patrimonio, String> tableColumnFabricante;
-	
-	@FXML
-	private TableColumn<Patrimonio, String> tableColumnMarca;
+	 @FXML
+	    private Button btNew;
 
-	@FXML
-	private TableColumn<Patrimonio, String> tableColumnDescricao;
+	    @FXML
+	    private TableColumn<Patrimonio, Long> tableColumnNumero;
 
-	@FXML
-	private TableColumn<Patrimonio, Byte> tableColumnCondicaoUso;
-	
-	@FXML
-	private TableColumn<Patrimonio, String> tableColumnLocal;
+	    @FXML
+	    private TableColumn<Patrimonio, String> tableColumnFabricante;
 
-	@FXML
-	private TableColumn<Patrimonio, Patrimonio> tableColumnEDIT;
+	    @FXML
+	    private TableColumn<Patrimonio, Byte> tableColumnCondicaoUso;
 
-	@FXML
-	private TableColumn<Patrimonio, Patrimonio> tableColumnREMOVE;
+	    @FXML
+	    private TableColumn<Patrimonio, String> tableColumnMarca;
 
-	@FXML
-	private Button btNew;
+	    @FXML
+	    private TableView<Patrimonio> tableViewPatrimonio;
+
+	    @FXML
+	    private TableColumn<Patrimonio, Patrimonio> tableColumnEDIT;
+
+	    @FXML
+	    private TableColumn<Patrimonio, Patrimonio> tableColumnREMOVE;
+
+	    @FXML
+	    private TableColumn<Patrimonio, String> tableColumnLocal;
+
+	    @FXML
+	    private TableColumn<Patrimonio, String> tableColumnDescricao;
+
+	    @FXML
+	    private TableColumn<Patrimonio, String> tableColumnEquipamento;
+
+	    @FXML
+	    void onBtNewAction(ActionEvent event) {
+	    	Stage parentStage = Utils.currentStage(event);
+			Patrimonio obj = new Patrimonio();
+			createDialogForm(obj, "/gui/PatrimonioForm.fxml", parentStage, true);
+	    }
+
 
 	private ObservableList<Patrimonio> obsList;
-
-	@FXML
-	public void onBtNewAction(ActionEvent event) {
-		Stage parentStage = Utils.currentStage(event);
-		Patrimonio obj = new Patrimonio();
-		createDialogForm(obj, "/gui/PatrimonioForm.fxml", parentStage, true);
-	}
 
 	// Evitando o acoplamento forte, com injeção de dependência
 	public void setPatrimonioService(PatrimonioService service) {
@@ -103,7 +105,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 		tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
 		tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 		tableColumnCondicaoUso.setCellValueFactory(new PropertyValueFactory<>("condicaoUso"));
-		//tableColumnLocal.setCellValueFactory(new PropertyValueFactory<>("PatrLocal"));
+		tableColumnLocal.setCellValueFactory(new PropertyValueFactory<>("PatrLocal"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPatrimonio.prefHeightProperty().bind(stage.heightProperty());

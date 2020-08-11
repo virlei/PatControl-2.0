@@ -37,7 +37,7 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemPatrimonioAction() {
-		loadView("/gui/PatrimonioList.fxml", (PatrimonioListController controller) -> {
+		loadView("/gui/PatrimonioListTeste.fxml", (PatrimonioListController controller) -> {
 			controller.setPatrimonioService(new PatrimonioService());
 			controller.updateTableView();
 			

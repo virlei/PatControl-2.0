@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="320.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PatrimonioListController">
+   <children>
+      <Label text="Registro de Tipos de Equipamentos">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <padding>
+            <Insets left="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="tableViewPatrimonio" prefHeight="243.0" prefWidth="563.0">
+         <columns>
+            <TableColumn fx:id="tableColumnNumero" prefWidth="75.0" text="Patrimônio" />
+            <TableColumn fx:id="tableColumnEquipamento" prefWidth="97.0" text="Equipamento" />
+            <TableColumn fx:id="tableColumnLocal" prefWidth="75.0" text="Localização" />
+            <TableColumn fx:id="tableColumnFabricante" prefWidth="75.0" text="Fabricante" />
+            <TableColumn fx:id="tableColumnMarca" prefWidth="84.0" text="Marca" />
+            <TableColumn fx:id="tableColumnDescricao" prefWidth="75.0" text="Descriçao" />
+            <TableColumn fx:id="tableColumnCondicaoUso" prefWidth="78.0" text="Condição de uso" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="50.0" />
+            <TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" prefWidth="66.0" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>

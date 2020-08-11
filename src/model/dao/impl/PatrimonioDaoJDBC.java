@@ -31,13 +31,14 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO TB_PATRIMONIO "
-					+ "(pk_patrimonio, fk_equipamento, txt_fabricante, txt_marca, txt_descricao, int_condicaoUso) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)");
+					+ "(pk_patrimonio, fk_equipamento, txt_fabricante, txt_marca, txt_descricao, int_condicaoUso, fk_Local) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
 			st.setLong(1, obj.getNumero());
 			st.setInt(2, obj.getTipEquip().getId());
 			st.setString(3, obj.getFabricante());
 			st.setString(4, obj.getMarca());
 			st.setString(5, obj.getDescricao());
+			st.setInt(7, obj.getLocal().getIdLocal());
 			if (obj.getCondicaoUso() == null) {
 				st.setInt(6, 0);
 			}
@@ -187,7 +188,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 					+ "TB_LOCAL.PK_Local as idLocal, TB_LOCAL.TXT_Descricao as descricaoLocal "
 					+ "FROM TB_PATRIMONIO, TB_EQUIPAMENTO, TB_LOCAL "
 					+ "WHERE TB_PATRIMONIO.FK_Equipamento = TB_EQUIPAMENTO.PK_Equipamento "
-					+ "AND TB_PATRIMONIO.FK_local = TB_LOCAL.PK_local");
+					+ "AND TB_PATRIMONIO.FK_local = TB_LOCAL.PK_local ");
 					
 			rs = st.executeQuery();
 			

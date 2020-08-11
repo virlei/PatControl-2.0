@@ -17,8 +17,8 @@ public class DB {
 		if (conn == null) {
 			try {
 				Properties props = loadProperties();
-//				String url = props.getProperty ("dburl_gabriel");
-				String url = props.getProperty ("dburl_virlei");
+				String url = props.getProperty ("dburl_gabriel");
+//				String url = props.getProperty ("dburl_virlei");
 
 				conn = DriverManager.getConnection(url,props);
 			}
