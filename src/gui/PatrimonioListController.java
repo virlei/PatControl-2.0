@@ -29,7 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Patrimonio;
+import model.entities.PatrimonioNovo;
 import model.services.EquipamentoService;
 import model.services.LocalService;
 import model.services.PatrimonioService;
@@ -48,44 +48,44 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 	    private Button btNew;
 
 	    @FXML
-	    private TableColumn<Patrimonio, Long> tableColumnNumero;
+	    private TableColumn<PatrimonioNovo, Long> tableColumnNumero;
 
 	    @FXML
-	    private TableColumn<Patrimonio, String> tableColumnFabricante;
+	    private TableColumn<PatrimonioNovo, String> tableColumnFabricante;
 
 	    @FXML
-	    private TableColumn<Patrimonio, Byte> tableColumnCondicaoUso;
+	    private TableColumn<PatrimonioNovo, Byte> tableColumnCondicaoUso;
 
 	    @FXML
-	    private TableColumn<Patrimonio, String> tableColumnMarca;
+	    private TableColumn<PatrimonioNovo, String> tableColumnMarca;
 
 	    @FXML
-	    private TableView<Patrimonio> tableViewPatrimonio;
+	    private TableView<PatrimonioNovo> tableViewPatrimonio;
 
 	    @FXML
-	    private TableColumn<Patrimonio, Patrimonio> tableColumnEDIT;
+	    private TableColumn<PatrimonioNovo, PatrimonioNovo> tableColumnEDIT;
 
 	    @FXML
-	    private TableColumn<Patrimonio, Patrimonio> tableColumnREMOVE;
+	    private TableColumn<PatrimonioNovo, PatrimonioNovo> tableColumnREMOVE;
 
 	    @FXML
-	    private TableColumn<Patrimonio, String> tableColumnLocal;
+	    private TableColumn<PatrimonioNovo, String> tableColumnLocal;
 
 	    @FXML
-	    private TableColumn<Patrimonio, String> tableColumnDescricao;
+	    private TableColumn<PatrimonioNovo, String> tableColumnDescricao;
 
 	    @FXML
-	    private TableColumn<Patrimonio, String> tableColumnEquipamento;
+	    private TableColumn<PatrimonioNovo, String> tableColumnEquipamento;
 
 	    @FXML
 	    void onBtNewAction(ActionEvent event) {
 	    	Stage parentStage = Utils.currentStage(event);
-			Patrimonio obj = new Patrimonio();
+			PatrimonioNovo obj = new PatrimonioNovo();
 			createDialogForm(obj, "/gui/PatrimonioForm.fxml", parentStage, true);
 	    }
 
 
-	private ObservableList<Patrimonio> obsList;
+	private ObservableList<PatrimonioNovo> obsList;
 
 	// Evitando o acoplamento forte, com injeção de dependência
 	public void setPatrimonioService(PatrimonioService service) {
@@ -116,14 +116,14 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 		if (service == null) {
 			throw new IllegalStateException("Serviço nulo");
 		}
-		List<Patrimonio> list = service.findAll();
+		List<PatrimonioNovo> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewPatrimonio.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Patrimonio obj, String absoluteName, Stage parentStage, boolean insert) {
+	private void createDialogForm(PatrimonioNovo obj, String absoluteName, Stage parentStage, boolean insert) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
@@ -165,11 +165,11 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<Patrimonio, Patrimonio>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<PatrimonioNovo, PatrimonioNovo>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(Patrimonio obj, boolean empty) {
+			protected void updateItem(PatrimonioNovo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -184,11 +184,11 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<Patrimonio, Patrimonio>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<PatrimonioNovo, PatrimonioNovo>() {
 			private final Button button = new Button("Remover");
 
 			@Override
-			protected void updateItem(Patrimonio obj, boolean empty) {
+			protected void updateItem(PatrimonioNovo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -200,7 +200,7 @@ public class PatrimonioListController implements Initializable, DataChangeListen
 		});
 	}
 
-	private void removeEntity(Patrimonio obj) {
+	private void removeEntity(PatrimonioNovo obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir?");
 		
 		if (result.get() == ButtonType.OK) {

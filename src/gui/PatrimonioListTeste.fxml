@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="320.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PatrimonioListController">
+<VBox prefHeight="300.0" prefWidth="631.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PatrimonioListController">
    <children>
       <Label text="Registro de Tipos de Equipamentos">
          <font>
@@ -21,7 +21,7 @@
             <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
          </items>
       </ToolBar>
-      <TableView fx:id="tableViewPatrimonio" prefHeight="243.0" prefWidth="563.0">
+      <TableView fx:id="tableViewPatrimonio" prefHeight="243.0" prefWidth="657.0">
          <columns>
             <TableColumn fx:id="tableColumnNumero" prefWidth="75.0" text="Patrimônio" />
             <TableColumn fx:id="tableColumnEquipamento" prefWidth="97.0" text="Equipamento" />
@@ -30,8 +30,8 @@
             <TableColumn fx:id="tableColumnMarca" prefWidth="84.0" text="Marca" />
             <TableColumn fx:id="tableColumnDescricao" prefWidth="75.0" text="Descriçao" />
             <TableColumn fx:id="tableColumnCondicaoUso" prefWidth="78.0" text="Condição de uso" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="50.0" />
-            <TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" prefWidth="66.0" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="1.0" prefWidth="64.0" />
+            <TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" prefWidth="85.0" />
          </columns>
       </TableView>
    </children>

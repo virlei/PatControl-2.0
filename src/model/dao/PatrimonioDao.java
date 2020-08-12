@@ -2,14 +2,14 @@ package model.dao;
 
 import java.util.List;
 
-import model.entities.Patrimonio;
+import model.entities.PatrimonioNovo;
 
 public interface PatrimonioDao {
 	
-	void insert(Patrimonio obj);
-	void update (Patrimonio obj);
+	void insert(PatrimonioNovo obj);
+	void update (PatrimonioNovo obj);
 	void deleteById (Long id);
-	Patrimonio findById(Long id);
-	List<Patrimonio> findAll();
+	PatrimonioNovo findById(Long id);
+	List<PatrimonioNovo> findAll();
 	
 }

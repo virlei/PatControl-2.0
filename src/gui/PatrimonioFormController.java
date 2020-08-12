@@ -27,7 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import model.entities.Equipamento;
 import model.entities.Local;
-import model.entities.Patrimonio;
+import model.entities.PatrimonioNovo;
 import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
 import model.services.LocalService;
@@ -35,7 +35,7 @@ import model.services.PatrimonioService;
 
 public class PatrimonioFormController implements Initializable {
 
-	private Patrimonio entity;
+	private PatrimonioNovo entity;
 
 	private PatrimonioService service;
 
@@ -85,8 +85,8 @@ public class PatrimonioFormController implements Initializable {
 	
 	private ObservableList<Local> obsLstLocal;
 
-	public void setPatrimonio(Patrimonio entity) {
-		this.entity = entity;
+	public void setPatrimonio(PatrimonioNovo obj) {
+		this.entity = obj;
 	}
 
 	public void setServices(PatrimonioService service, EquipamentoService equipamentoService, LocalService localService, boolean insert) {
@@ -126,8 +126,8 @@ public class PatrimonioFormController implements Initializable {
 		}
 	}
 
-	private Patrimonio getFormData() {
-		Patrimonio obj = new Patrimonio();
+	private PatrimonioNovo getFormData() {
+		PatrimonioNovo obj = new PatrimonioNovo();
 
 		ValidationException exception = new ValidationException("Erro de Validação");
 
@@ -153,7 +153,7 @@ public class PatrimonioFormController implements Initializable {
 		
 		obj.setTipEquip(comboBoxEquipamento.getValue());
 		
-		obj.setLocal(comboBoxLocal.getValue());
+		obj.setPatrLocal(comboBoxLocal.getValue());
 		
 		return obj;
 
@@ -209,11 +209,11 @@ public class PatrimonioFormController implements Initializable {
 			comboBoxEquipamento.setValue(entity.getTipEquip());
 		}
 
-		if (entity.getLocal() == null) {
+		if (entity.getPatrLocal() == null) {
 			comboBoxLocal.getSelectionModel().selectFirst();
 		}
 		else {
-			comboBoxLocal.setValue(entity.getLocal());
+			comboBoxLocal.setValue(entity.getPatrLocal());
 		}
 		// dpAnyDate.setValue( LocalDate.ofinstant(entity.getAnyDate(),
 		// ZoneId.systemdfault()));
