@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.dao.DaoFactory;
 import model.dao.PatrimonioDao;
-import model.entities.PatrimonioNovo;
+import model.entities.Patrimonio;
 
 public class PatrimonioService {
 
@@ -12,11 +12,11 @@ public class PatrimonioService {
 	
 	private PatrimonioDao dao = DaoFactory.createPatrimonioDao();
 		
-	public List<PatrimonioNovo> findAll() {
+	public List<Patrimonio> findAll() {
 		return dao.findAll();
 	}
 	
-	public void saveOrUpdate(PatrimonioNovo obj) {
+	public void saveOrUpdate(Patrimonio obj) {
 		if (Insert) {
 			dao.insert(obj);
 		}
@@ -25,7 +25,7 @@ public class PatrimonioService {
 		}
 	}
 	
-	public void remove(PatrimonioNovo obj) {
+	public void remove(Patrimonio obj) {
 		dao.deleteById(obj.getNumero());
 	}
 }

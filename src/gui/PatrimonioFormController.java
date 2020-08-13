@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import db.DbException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -27,7 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import model.entities.Equipamento;
 import model.entities.Local;
-import model.entities.PatrimonioNovo;
+import model.entities.Patrimonio;
 import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
 import model.services.LocalService;
@@ -35,7 +34,7 @@ import model.services.PatrimonioService;
 
 public class PatrimonioFormController implements Initializable {
 
-	private PatrimonioNovo entity;
+	private Patrimonio entity;
 
 	private PatrimonioService service;
 
@@ -85,7 +84,7 @@ public class PatrimonioFormController implements Initializable {
 	
 	private ObservableList<Local> obsLstLocal;
 
-	public void setPatrimonio(PatrimonioNovo obj) {
+	public void setPatrimonio(Patrimonio obj) {
 		this.entity = obj;
 	}
 
@@ -126,8 +125,8 @@ public class PatrimonioFormController implements Initializable {
 		}
 	}
 
-	private PatrimonioNovo getFormData() {
-		PatrimonioNovo obj = new PatrimonioNovo();
+	private Patrimonio getFormData() {
+		Patrimonio obj = new Patrimonio();
 
 		ValidationException exception = new ValidationException("Erro de Validação");
 

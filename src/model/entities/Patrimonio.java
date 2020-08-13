@@ -20,14 +20,14 @@ public class Patrimonio implements Serializable {
 	}
 
 	public Patrimonio(long numero, String fabricante, String marca, String descricao, Byte i,
-			Equipamento tipEquip, Local local) {
+			Equipamento tipEquip, Local patrLocal) {
 		this.numero = numero;
 		this.fabricante = fabricante;
 		this.marca = marca;
 		this.descricao = descricao;
 		this.condicaoUso = i;
 		TipEquip = tipEquip;
-		PatrLocal = local;
+		PatrLocal = patrLocal;
 	}
 
 	public Long getNumero() {
@@ -75,15 +75,15 @@ public class Patrimonio implements Serializable {
 	}
 
 	public void setTipEquip(Equipamento tipEquip) {
-		this.TipEquip = tipEquip;
+		TipEquip = tipEquip;
 	}
 
-	public Local getLocal() {
+	public Local getPatrLocal() {
 		return PatrLocal;
 	}
 	
-	public void setLocal(Local local) {
-		this.PatrLocal = local;
+	public void setPatrLocal(Local patrLocal) {
+		PatrLocal = patrLocal;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class Patrimonio implements Serializable {
 	@Override
 	public String toString() {
 		return "Patrimonio [numero=" + numero + ", fabricante=" + fabricante + ", marca=" + marca + ", descricao="
-				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + ", Localizacao=" + PatrLocal+ "]";
+				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + ", PatrLocal=" + PatrLocal+ "]";
 	}
 
 }

@@ -14,7 +14,7 @@ import db.DbException;
 import model.dao.PatrimonioDao;
 import model.entities.Equipamento;
 import model.entities.Local;
-import model.entities.PatrimonioNovo;
+import model.entities.Patrimonio;
 
 public class PatrimonioDaoJDBC implements PatrimonioDao {
 
@@ -25,7 +25,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 	
 	@Override
-	public void insert(PatrimonioNovo obj) {
+	public void insert(Patrimonio obj) {
 		
 		PreparedStatement st = null;
 		try {
@@ -62,7 +62,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 
 	@Override
-	public void update(PatrimonioNovo obj) {
+	public void update(Patrimonio obj) {
 		
 		PreparedStatement st = null;
 		try {
@@ -109,7 +109,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 
 	@Override
-	public PatrimonioNovo findById(Long id) {
+	public Patrimonio findById(Long id) {
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -126,7 +126,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 			if (rs.next()) {
 				Equipamento equip = instantiateEquipamento(rs);
 				Local local = instantiateLocal(rs);
-				PatrimonioNovo pat = instantiatePatrimonio(rs, equip, local); 
+				Patrimonio pat = instantiatePatrimonio(rs, equip, local); 
 				return pat;				
 			} 
 			return null;					
@@ -141,9 +141,9 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	
 	}
 
-	private PatrimonioNovo instantiatePatrimonio(ResultSet rs, Equipamento equip, Local local) throws SQLException {
+	private Patrimonio instantiatePatrimonio(ResultSet rs, Equipamento equip, Local local) throws SQLException {
 		
-		PatrimonioNovo pat = new PatrimonioNovo();
+		Patrimonio pat = new Patrimonio();
 		pat.setNumero(rs.getLong("PK_Patrimonio"));
 		pat.setMarca(rs.getString("TXT_Marca"));
 		pat.setFabricante(rs.getString("TXT_Fabricante"));
@@ -178,7 +178,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 	}
 	
 	@Override
-	public List<PatrimonioNovo> findAll() {
+	public List<Patrimonio> findAll() {
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -192,7 +192,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 					
 			rs = st.executeQuery();
 			
-			List<PatrimonioNovo> list = new ArrayList<>();
+			List<Patrimonio> list = new ArrayList<>();
 			
 			//Para evitar repetição do Tipo de Equipamento para cada Patrimônio, utilizamos a estrutura de "Map"
 			//Assim, garantimos que Patrimônios do mesmo tipo de Equipamento apontem para um único objeto instanciado
@@ -218,7 +218,7 @@ public class PatrimonioDaoJDBC implements PatrimonioDao {
 					mapLocal.put(rs.getInt("idLocal"),local);
 				}
 				
-				PatrimonioNovo pat = instantiatePatrimonio(rs, equip, local);
+				Patrimonio pat = instantiatePatrimonio(rs, equip, local);
 				list.add(pat);
 			}
 			
