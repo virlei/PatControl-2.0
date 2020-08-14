@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="329.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MovimentacaoListController">
+   <children>
+      <Label text="Registro de Movimentação">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <padding>
+            <Insets left="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="tableViewMovimentacao" prefHeight="200.0" prefWidth="200.0">
+         <columns>
+            <TableColumn fx:id="tableColumnPatrimonio" maxWidth="84.0" prefWidth="84.0" text="Patrimônio" />
+            <TableColumn fx:id="tableColumnDataEntrada" prefWidth="124.0" text="Data de Entrada" />
+            <TableColumn fx:id="tableColumnNumeroGuia" prefWidth="121.0" text="Número da Guia" />
+            <TableColumn fx:id="tableColumnDataDevolucao" prefWidth="123.0" text="Data de Devolução" />
+            <TableColumn fx:id="tableColumnEDIT" maxWidth="76.0" minWidth="0.0" prefWidth="76.0" />
+            <TableColumn fx:id="tableColumnREMOVE" maxWidth="75.0" prefWidth="75.0" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>

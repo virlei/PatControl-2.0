@@ -11,6 +11,8 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Alerts;
+import javafx.scene.control.Alert.AlertType;
 import model.dao.LocalDao;
 import model.entities.Local;
 
@@ -83,12 +85,22 @@ public class LocalDaoJDBC implements LocalDao{
 	public void deleteById(Integer local) {
 		PreparedStatement st = null;
 		try {
+			String sql = "select * from TB_PATRIMONIO where FK_LOCAL = ?";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setInt(1, local);
+			ResultSet rs = pst.executeQuery();
+			String patrimonioAlocado;
 			st = conn.prepareStatement(
 				"DELETE FROM TB_LOCAL WHERE PK_Local = ?");
+			if(rs.next()) {
+			patrimonioAlocado = rs.getString("PK_PATRIMONIO");
+			Alerts.showAlert("Erro de Exclusão", "Há patrimônio nesse local e por isso ele não pode ser excluído", "O patrimônio que está nesse local é o: "+patrimonioAlocado, AlertType.ERROR);
+			}else {
 
 			st.setInt(1, local);
 
 			st.executeUpdate();
+			}
 		}
 		catch (SQLException e) {
 			throw new DbIntegrityException(e.getMessage());

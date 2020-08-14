@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
 import model.services.PatrimonioService;
 import model.services.LocalService;
+import model.services.MovimentacaoService;
 
 public class MainViewController implements Initializable {
 
@@ -63,7 +64,10 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemMovimentacaoAction() {
-		System.out.println("onMenuItemMovimentacaoAction");
+		loadView("/gui/MovimentacaoList.fxml", (MovimentacaoListController controller) -> {
+			controller.setMovimentacaoService(new MovimentacaoService());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML

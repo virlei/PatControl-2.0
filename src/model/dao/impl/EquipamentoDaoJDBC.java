@@ -11,6 +11,8 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Alerts;
+import javafx.scene.control.Alert.AlertType;
 import model.dao.EquipamentoDao;
 import model.entities.Equipamento;
 
@@ -81,12 +83,22 @@ public class EquipamentoDaoJDBC implements EquipamentoDao{
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
+			String sql = "select * from TB_PATRIMONIO where FK_Equipamento = ?";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setInt(1, id);
+			ResultSet rs = pst.executeQuery();
+			String patrimonioEquipamento;
 			st = conn.prepareStatement(
 				"DELETE FROM TB_EQUIPAMENTO WHERE PK_Equipamento = ?");
+			if(rs.next()) {
+				patrimonioEquipamento = rs.getString("PK_PATRIMONIO");
+				Alerts.showAlert("Erro de Exclusão", "Há patrimônio desse equipamento e por isso ele não pode ser excluído", "O patrimônio desse equipamento é o: "+patrimonioEquipamento, AlertType.ERROR);
+				}else {
 
 			st.setInt(1, id);
 
 			st.executeUpdate();
+				}
 		}
 		catch (SQLException e) {
 			throw new DbIntegrityException(e.getMessage());
