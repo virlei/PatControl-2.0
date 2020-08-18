@@ -30,7 +30,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Movimentacao;
+import model.services.EquipamentoService;
+import model.services.LocalService;
 import model.services.MovimentacaoService;
+import model.services.PatrimonioService;
 
 public class MovimentacaoListController implements  Initializable, DataChangeListener {
 	
@@ -63,7 +66,9 @@ public class MovimentacaoListController implements  Initializable, DataChangeLis
     @FXML
     void onBtNewAction(ActionEvent event) {
     	
-    	System.out.println("Button New Clicked");
+    	Stage parentStage = Utils.currentStage(event);
+		Movimentacao obj = new Movimentacao();
+		createDialogForm(obj, "/gui/MovimentacaoForm.fxml", parentStage, true);
 
     }
     
@@ -108,7 +113,7 @@ public class MovimentacaoListController implements  Initializable, DataChangeLis
 			MovimentacaoFormController controller = loader.getController();
 			
 			controller.setMovimentacao(obj);
-			controller.setMovimentacaoService(new MovimentacaoService());
+			controller.setMovimentacaoService(new MovimentacaoService(), new PatrimonioService(),new EquipamentoService(), new LocalService (), insert);
 		
 			controller.subscribeDataChangeListener(this);  
 
@@ -148,7 +153,7 @@ public class MovimentacaoListController implements  Initializable, DataChangeLis
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/PatrimonioForm.fxml", Utils.currentStage(event), false));
+						event -> createDialogForm(obj, "/gui/MovimentacaoForm.fxml", Utils.currentStage(event), false));
 			}
 		});
 	}

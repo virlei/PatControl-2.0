@@ -177,10 +177,9 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-st = conn.prepareStatement(
-		"SELECT TB_MOVIMENTACAO.*,TB_PATRIMONIO.PK_Patrimonio as numeroPatrimonio ,TB_EQUIPAMENTO.PK_Equipamento as idEquip, TB_EQUIPAMENTO.TXT_Descricao AS txtEquip, "
-				+ "TB_LOCAL.PK_Local as idLocal, TB_LOCAL.TXT_Descricao as descricaoLocal "
-				+ "FROM TB_MOVIMENTACAO, TB_PATRIMONIO, TB_EQUIPAMENTO, TB_LOCAL "
+			st = conn.prepareStatement(
+				"SELECT TB_MOVIMENTACAO.*,TB_PATRIMONIO.PK_Patrimonio as numeroPatrimonio "
+				+ "FROM TB_MOVIMENTACAO, TB_PATRIMONIO "
 				+ "WHERE TB_MOVIMENTACAO.PK_PATRIMONIO = TB_PATRIMONIO.PK_Patrimonio ");
 					
 			rs = st.executeQuery();

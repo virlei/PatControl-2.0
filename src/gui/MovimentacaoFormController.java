@@ -13,46 +13,84 @@ import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
 import model.entities.Movimentacao;
+import model.entities.Equipamento;
+import model.entities.Local;
 import model.exceptions.ValidationException;
+import model.services.EquipamentoService;
+import model.services.LocalService;
 import model.services.MovimentacaoService;
+import model.services.PatrimonioService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 public class MovimentacaoFormController {
 	
 	private Movimentacao entity;
 
 	private MovimentacaoService service;
+	
+	private PatrimonioService patrimonioService;
+
+	private EquipamentoService equipamentoService;
+	
+	private LocalService localService;
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
-	  @FXML
-	    private TextField txtDataEntrada;
+	@FXML
+	private ComboBox<Local> comboBoxLocal;	
 
-	    @FXML
-	    private Label labelErrorNrPatrimonio;
+    @FXML
+    private TextField txtCondicaoUso;
 
-	    @FXML
-	    private Button btCancel;
+    @FXML
+    private ComboBox<Equipamento> comboBoxEquipamento;
 
-	    @FXML
-	    private TextField txtNumeroGuia;
+    @FXML
+    private TextField txtDataEntrada;
+    
+    @FXML
+    private Label labelErrorDescricao;
 
-	    @FXML
-	    private Button btSave;
+    @FXML
+    private Button btCancel;
 
-	    @FXML
-	    private Label labelErrorDescricao;
+    @FXML
+    private TextField txtNumeroPatrimonio;
 
-	    @FXML
-	    private TextField txtDataDevolucao;
+    @FXML
+    private TextField txtDescricao;
 
-	    @FXML
-	    private TextField txtPatrimonio;
+    @FXML
+    private Button btSave;
+
+    @FXML
+    private TextField txtFabricante;
+
+    @FXML
+    private TextField txtNumeroGuia;
+
+    @FXML
+    private TextField txtMarca;
+
+    @FXML
+    private TextField txtDataDevolucao;
+    
+    private ObservableList<Equipamento> obsList;
+	
+	private ObservableList<Local> obsLstLocal;
 
 	    @FXML
 	    void onBtSaveAction(ActionEvent event) {
@@ -84,10 +122,14 @@ public class MovimentacaoFormController {
 	    
 	    public void setMovimentacao(Movimentacao entity) {
 			this.entity = entity;
-		}
-		
-		public void setMovimentacaoService(MovimentacaoService service) {
+		}		
+	    
+	    public void setMovimentacaoService(MovimentacaoService service, PatrimonioService patrimonioService, EquipamentoService equipamentoService, LocalService localService, boolean insert) {
 			this.service = service;
+			this.patrimonioService = patrimonioService;
+			this.equipamentoService = equipamentoService;
+			this.localService = localService;
+			MovimentacaoService.Insert = insert;
 		}
 		
 		public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -99,6 +141,8 @@ public class MovimentacaoFormController {
 				listener.onDataChanged();
 			}
 		}
+		
+		
 
 		private Movimentacao getFormData() {
 			Movimentacao obj = new Movimentacao();
@@ -106,22 +150,22 @@ public class MovimentacaoFormController {
 			ValidationException exception = new ValidationException("Erro de Validação");
 
 			if (txtNumeroGuia.getText() == null || txtNumeroGuia.getText().trim().equals("")) {
-				exception.addError("numeroGuia", "Número Guia nulo");
+				exception.addError("nrGuia", "Número da Guia nulo");
 			}
-			obj.setNumeroGuia(Utils.tryParseToInt(txtNumeroGuia.getText()));
-
-			if (txtPatrimonio.getText() == null || txtPatrimonio.getText().trim().equals("")) {
-				exception.addError("patrimonio", "Patrimônio nulo");
-			}
-			obj.setDataDevolucao(txtDataDevolucao.getText()); 
+			obj.setNumeroGuia(Utils.tryParseToInt(txtNumeroGuia.getText()));		
 			
-			obj.setDataEntrada(txtDataEntrada.getText()); 			
+			obj.setDataDevolucao(txtDataDevolucao.getText());
+			
+			obj.setDataEntrada(txtDataEntrada.getText());		
 			
 			if (exception.getErrors().size() > 0) {
 				throw exception;
-			}						
+			}			
+			
 			return obj;
+
 		}
+
 
 		
 		public void initialize(URL url, ResourceBundle rb) {
@@ -130,17 +174,47 @@ public class MovimentacaoFormController {
 		
 		private void initializeNodes() {
 			Constraints.setTextFieldInteger(txtNumeroGuia);
-			Constraints.setTextFieldMaxLength(txtPatrimonio, 30);
+			Constraints.setTextFieldMaxLength(txtNumeroPatrimonio, 30);
+			
+			initializeComboBoxEquipamento();
+			
+			initializeComboBoxLocal();
 		}
 		
 		public void updateFormData() {
 			if (entity == null) {
-				throw new IllegalStateException ("Entidade está vazia");
+				throw new IllegalStateException("Entidade está vazia");
+			}
+
+			txtNumeroGuia.setText(String.valueOf(entity.getNumeroGuia()));
+			if (txtNumeroGuia.getText() == null || txtNumeroGuia.getText().trim().equals("")) {
+				txtNumeroGuia.setEditable(true);
+			}
+			else {
+				txtNumeroGuia.setEditable(false);
 			}
 			
-			txtNumeroGuia.setText(String.valueOf(entity.getNumeroGuia()));
-			txtPatrimonio.setText(String.valueOf(entity.getPatrimonio()));
+			txtDataDevolucao.setText(entity.getDataDevolucao());
+
+			txtDataEntrada.setText(entity.getDataEntrada());
+						
 		}
+		
+		public void loadAssociatedObjects() {
+			if (equipamentoService == null) {
+				throw new IllegalStateException("Lista de Tipos de Equipamentos está vazia");
+			}
+			List<Equipamento> list = equipamentoService.findAll();
+			obsList = FXCollections.observableArrayList(list);
+			comboBoxEquipamento.setItems(obsList);
+			
+			if (localService == null ) {
+				throw new IllegalStateException("Lista de Locais está vazia");
+			}
+			List<Local> lstLocal = localService.findAll();
+			obsLstLocal = FXCollections.observableArrayList(lstLocal);
+			comboBoxLocal.setItems(obsLstLocal);
+		}			
 		
 		private void setErrorMessages(Map<String, String> errors ) {
 			Set<String> fields = errors.keySet();
@@ -149,6 +223,30 @@ public class MovimentacaoFormController {
 				labelErrorDescricao.setText(errors.get("name"));
 			}
 		}
+		private void initializeComboBoxEquipamento() {
+			Callback<ListView<Equipamento>, ListCell<Equipamento>> factory = lv -> new ListCell<Equipamento>() {
+				@Override
+				protected void updateItem(Equipamento item, boolean empty) {
+					super.updateItem(item, empty);
+					setText(empty ? "" : item.getDescricao());
+				}
+			};
+			comboBoxEquipamento.setCellFactory(factory);
+			comboBoxEquipamento.setButtonCell(factory.call(null));
+		}
+
+		private void initializeComboBoxLocal() {
+			Callback<ListView<Local>, ListCell<Local>> factory = lv -> new ListCell<Local>() {
+				@Override
+				protected void updateItem(Local item, boolean empty) {
+					super.updateItem(item, empty);
+					setText(empty ? "" : item.getDescricaoLocal());
+				}
+			};
+			comboBoxLocal.setCellFactory(factory);
+			comboBoxLocal.setButtonCell(factory.call(null));
+		}	
+		
+	}
 
 
-}
