@@ -35,7 +35,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 					+ "Values (?,?,?,?)");
 			st.setLong(1, obj.getPatrimonio().getNumero());
 			st.setString(2, obj.getDataEntrada());
-			st.setInt(3, obj.getNumeroGuia());
+			st.setLong(3, obj.getNumeroGuia());
 			st.setString(4, obj.getDataDevolucao());
 			
 			int rowsAffected = st.executeUpdate();
@@ -66,7 +66,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 			st.setLong(1, obj.getPatrimonio().getNumero());
 			st.setString(2, obj.getDataEntrada());
 			st.setString(3, obj.getDataDevolucao());
-			st.setInt(4, obj.getNumeroGuia());
+			st.setLong(4, obj.getNumeroGuia());
 			
 			st.executeUpdate();
 			
@@ -80,12 +80,12 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		
 	}
 	
-	public void deleteById(Integer numeroGuia) {
+	public void deleteById(Long numeroGuia) {
 		
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("DELETE FROM TB_MOVIMENTACAO WHERE INT_NumeroGuia = ?");
-			st.setInt(1, numeroGuia);
+			st.setLong(1, numeroGuia);
 			st.executeUpdate();
 		}
 		catch (SQLException e) {
@@ -97,7 +97,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		
 	}
 	
-	public Movimentacao findById(Integer id) {
+	public Movimentacao findById(Long id) {
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -107,7 +107,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 					+ "FROM TB_MOVIMENTACAO INNER JOIN TB_PATRIMONIO "
 					+ "ON TB_MOVIMENTACAO.PK_Patrimonio = TB_PATRIMONIO.PK_Patrimonio "
 					+ "where TB_MOVIMENTACAO.PK_Patrimonio = ?");
-			st.setInt(1, id);
+			st.setLong(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				
@@ -117,7 +117,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 				Movimentacao movimentacao = new Movimentacao();
 				movimentacao.setDataDevolucao(rs.getString("Dat_DataDevolucao"));
 				movimentacao.setDataEntrada(rs.getString("PK_DataEntrada"));
-				movimentacao.setNumeroGuia(rs.getInt("INT_NumeroGuia"));
+				movimentacao.setNumeroGuia(rs.getLong("INT_NumeroGuia"));
 				movimentacao.setPatrimonio(patrimonio);
 				return movimentacao;				
 			} 
@@ -137,7 +137,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		Movimentacao movimentacao = new Movimentacao();
 		movimentacao.setPatrimonio(patrimonio);
 		movimentacao.setDataEntrada(rs.getString("PK_DataEntrada"));
-		movimentacao.setNumeroGuia(rs.getInt("INT_NumeroGuia"));
+		movimentacao.setNumeroGuia(rs.getLong("INT_NumeroGuia"));
 		movimentacao.setDataDevolucao(rs.getString("DAT_DataDevolucao"));
 		
 		return movimentacao;
@@ -222,4 +222,5 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 			DB.closeResultSet(rs);
 		}
 	}
+
 }

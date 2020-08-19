@@ -8,8 +8,8 @@ public interface MovimentacaoDao {
 
 	void insert (Movimentacao obj);
 	void update (Movimentacao obj);
-	void deleteById(Integer id);
-	Movimentacao findById(Integer id);
+	void deleteById(Long id);
+	Movimentacao findById(Long id);
 	List<Movimentacao>findAll();
 	
 }

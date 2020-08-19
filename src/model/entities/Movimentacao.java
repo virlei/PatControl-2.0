@@ -5,22 +5,21 @@ import java.io.Serializable;
 public class Movimentacao implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-
 	private Patrimonio patrimonio;
 	private String dataEntrada;
-	private Integer numeroGuia;
+	private Long numeroGuia;
 	private String dataDevolucao;
 	
-	public Movimentacao() {
-		
-	}
-
-	public Movimentacao(Patrimonio patrimonio, String dataEntrada, Integer numeroGuia, String dataDevolucao) {
-		
+	public Movimentacao(Patrimonio patrimonio, String dataEntrada, Long numeroGuia, String dataDevolucao) {
+		super();
 		this.patrimonio = patrimonio;
 		this.dataEntrada = dataEntrada;
 		this.numeroGuia = numeroGuia;
 		this.dataDevolucao = dataDevolucao;
+	}
+	
+	public Movimentacao() {
+		
 	}
 
 	public Patrimonio getPatrimonio() {
@@ -39,11 +38,11 @@ public class Movimentacao implements Serializable{
 		this.dataEntrada = dataEntrada;
 	}
 
-	public Integer getNumeroGuia() {
+	public Long getNumeroGuia() {
 		return numeroGuia;
 	}
 
-	public void setNumeroGuia(Integer numeroGuia) {
+	public void setNumeroGuia(Long numeroGuia) {
 		this.numeroGuia = numeroGuia;
 	}
 
@@ -90,9 +89,6 @@ public class Movimentacao implements Serializable{
 	public String toString() {
 		return "Movimentacao [patrimonio=" + patrimonio + ", dataEntrada=" + dataEntrada + ", numeroGuia=" + numeroGuia
 				+ ", dataDevolucao=" + dataDevolucao + "]";
-	}
-	
-	
-	
+	}	
 	
 }

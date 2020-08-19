@@ -14,6 +14,7 @@ import gui.util.Constraints;
 import gui.util.Utils;
 import model.entities.Movimentacao;
 import model.entities.Equipamento;
+import model.entities.Patrimonio;
 import model.entities.Local;
 import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
@@ -145,14 +146,15 @@ public class MovimentacaoFormController {
 		
 
 		private Movimentacao getFormData() {
+			
 			Movimentacao obj = new Movimentacao();
-
+			
 			ValidationException exception = new ValidationException("Erro de Validação");
 
 			if (txtNumeroGuia.getText() == null || txtNumeroGuia.getText().trim().equals("")) {
 				exception.addError("nrGuia", "Número da Guia nulo");
 			}
-			obj.setNumeroGuia(Utils.tryParseToInt(txtNumeroGuia.getText()));		
+			obj.setNumeroGuia(Utils.tryParseToLong(txtNumeroGuia.getText()));		
 			
 			obj.setDataDevolucao(txtDataDevolucao.getText());
 			
@@ -182,10 +184,11 @@ public class MovimentacaoFormController {
 		}
 		
 		public void updateFormData() {
+			
 			if (entity == null) {
 				throw new IllegalStateException("Entidade está vazia");
 			}
-
+			
 			txtNumeroGuia.setText(String.valueOf(entity.getNumeroGuia()));
 			if (txtNumeroGuia.getText() == null || txtNumeroGuia.getText().trim().equals("")) {
 				txtNumeroGuia.setEditable(true);
@@ -194,9 +197,32 @@ public class MovimentacaoFormController {
 				txtNumeroGuia.setEditable(false);
 			}
 			
+		
 			txtDataDevolucao.setText(entity.getDataDevolucao());
 
 			txtDataEntrada.setText(entity.getDataEntrada());
+			
+			txtDescricao.setText(entity.getPatrimonio().getDescricao());
+
+			txtFabricante.setText(entity.getPatrimonio().getFabricante());
+
+			txtMarca.setText(entity.getPatrimonio().getMarca());
+			
+			txtCondicaoUso.setText(String.valueOf(entity.getPatrimonio().getCondicaoUso()));
+			
+			if (entity.getPatrimonio().getTipEquip() == null) {
+				comboBoxEquipamento.getSelectionModel().selectFirst();
+			}
+			else {
+				comboBoxEquipamento.setValue(entity.getPatrimonio().getTipEquip());
+			}
+
+			if (entity.getPatrimonio().getPatrLocal() == null) {
+				comboBoxLocal.getSelectionModel().selectFirst();
+			}
+			else {
+				comboBoxLocal.setValue(entity.getPatrimonio().getPatrLocal());
+			}
 						
 		}
 		
