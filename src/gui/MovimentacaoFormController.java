@@ -14,7 +14,6 @@ import gui.util.Constraints;
 import gui.util.Utils;
 import model.entities.Movimentacao;
 import model.entities.Equipamento;
-import model.entities.Patrimonio;
 import model.entities.Local;
 import model.exceptions.ValidationException;
 import model.services.EquipamentoService;
@@ -141,9 +140,7 @@ public class MovimentacaoFormController {
 			for (DataChangeListener listener : dataChangeListeners) {
 				listener.onDataChanged();
 			}
-		}
-		
-		
+		}		
 
 		private Movimentacao getFormData() {
 			
@@ -167,8 +164,6 @@ public class MovimentacaoFormController {
 			return obj;
 
 		}
-
-
 		
 		public void initialize(URL url, ResourceBundle rb) {
 			initializeNodes();
@@ -195,8 +190,7 @@ public class MovimentacaoFormController {
 			}
 			else {
 				txtNumeroGuia.setEditable(false);
-			}
-			
+			}			
 		
 			txtDataDevolucao.setText(entity.getDataDevolucao());
 

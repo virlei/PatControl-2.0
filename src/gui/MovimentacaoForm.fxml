@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MovimentacaoFormController">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="384.0" prefWidth="572.0">
@@ -42,7 +41,7 @@
             <Label text="Número da Guia:" GridPane.rowIndex="7" />
             <Label text="Data de Entrada:" GridPane.rowIndex="8" />
             <Label text="Data de Devolução:" GridPane.rowIndex="9" />
-            <TextField fx:id="txtNumeorGuia" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="txtNumeroGuia" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="txtDataEntrada" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="txtDataDevolucao" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="10">

@@ -10,7 +10,7 @@ public class Movimentacao implements Serializable{
 	private Long numeroGuia;
 	private String dataDevolucao;
 	
-	public Movimentacao(Patrimonio patrimonio, String dataEntrada, Long numeroGuia, String dataDevolucao) {
+	public Movimentacao(Patrimonio patrimonio, String dataEntrada, long numeroGuia, String dataDevolucao) {
 		super();
 		this.patrimonio = patrimonio;
 		this.dataEntrada = dataEntrada;

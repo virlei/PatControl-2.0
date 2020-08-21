@@ -31,7 +31,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO TB_MOVIMENTACAO "
-					+ "(PK_Patrimonio, PK_DataEntada, INT_NumeroGuia, DAT_DataDevolucao)"
+					+ "(PK_Patrimonio, PK_DataEntrada, INT_NumeroGuia, DAT_DataDevolucao)"
 					+ "Values (?,?,?,?)");
 			st.setLong(1, obj.getPatrimonio().getNumero());
 			st.setString(2, obj.getDataEntrada());
