@@ -17,7 +17,10 @@
                     <MenuItem fx:id="menuItemPatrimonio" mnemonicParsing="false" onAction="#onMenuItemPatrimonioAction" text="Patrimônio" />
                         <MenuItem fx:id="menuItemTipoEquipamento" mnemonicParsing="false" onAction="#onMenuItemTipoEquipamentoAction" text="Tipo de Equipamento" />
                         <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
-                        <MenuItem fx:id="menuItemMovimentacao" mnemonicParsing="false" onAction="#onMenuItemMovimentacaoAction" text="Movimentação" />
+                        <MenuItem fx:id="menuItemMovimentacao" mnemonicParsing="false" onAction="#onMenuItemMovimentacaoAction" text="Fornecimento" />
+                        <MenuItem mnemonicParsing="false" text="Devolução" />
+                        <MenuItem mnemonicParsing="false" text="Empréstimos" />
+                        <MenuItem mnemonicParsing="false" text="Retorno Empréstimos" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">

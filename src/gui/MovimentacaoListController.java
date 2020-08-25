@@ -113,7 +113,7 @@ public class MovimentacaoListController implements  Initializable, DataChangeLis
 			MovimentacaoFormController controller = loader.getController();
 			
 			controller.setMovimentacao(obj);
-			controller.setMovimentacaoService(new MovimentacaoService(), new PatrimonioService(),new EquipamentoService(), new LocalService (), insert);
+			controller.setServices(new MovimentacaoService(), new PatrimonioService(), new EquipamentoService(), new LocalService (), insert);
 		
 			controller.subscribeDataChangeListener(this);  
 

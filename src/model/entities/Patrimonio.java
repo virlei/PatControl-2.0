@@ -110,8 +110,9 @@ public class Patrimonio implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patrimonio [numero=" + numero + ", fabricante=" + fabricante + ", marca=" + marca + ", descricao="
-				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + ", PatrLocal=" + PatrLocal+ "]";
+//		return "Patrimonio [numero=" + numero + ", fabricante=" + fabricante + ", marca=" + marca + ", descricao="
+//				+ descricao + ", condicaoUso=" + condicaoUso + ", TipEquip=" + TipEquip + ", PatrLocal=" + PatrLocal+ "]";
+		return numero + "-" + descricao;
 	}
 
 }

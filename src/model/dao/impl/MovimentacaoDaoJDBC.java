@@ -146,10 +146,10 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 	private Patrimonio instantiatePatrimonio(ResultSet rs, Equipamento equip, Local local) throws SQLException {
 		
 		Patrimonio pat = new Patrimonio();
-		pat.setNumero(rs.getLong("PK_Patrimonio"));
+		pat.setNumero(rs.getLong("NrPatrim"));
 		pat.setMarca(rs.getString("TXT_Marca"));
 		pat.setFabricante(rs.getString("TXT_Fabricante"));
-		pat.setDescricao(rs.getString("TXT_Descricao"));
+		pat.setDescricao(rs.getString("DescrPatrim"));
 		pat.setCondicaoUso(rs.getByte("INT_condicaoUso"));
 		pat.setTipEquip(equip);
 		pat.setPatrLocal(local);
@@ -160,7 +160,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 
 		Equipamento equip = new Equipamento();
 		equip.setId(rs.getInt("idEquip"));
-		equip.setDescricao(rs.getString("txtEquip"));
+		equip.setDescricao(rs.getString("DescrEquip"));
 		return equip;
 	}
 
@@ -168,20 +168,38 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 		
 		Local local = new Local();
 		local.setIdLocal(rs.getInt("idLocal"));
-		local.setDescricaoLocal(rs.getString("descricaoLocal"));
+		local.setDescricaoLocal(rs.getString("DescrLocal"));
 		return local;
 		
 	}
 	
-	public List<Movimentacao>findAll(){		
+	public List<Movimentacao> findAll(){		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT TB_MOVIMENTACAO.*,TB_PATRIMONIO.PK_Patrimonio as numeroPatrimonio "
-				+ "FROM TB_MOVIMENTACAO, TB_PATRIMONIO "
-				+ "WHERE TB_MOVIMENTACAO.PK_PATRIMONIO = TB_PATRIMONIO.PK_Patrimonio ");
-					
+				"SELECT "
+				+ "	   TB_MOVIMENTACAO.PK_PATRIMONIO as NrPatrim, "
+				+ "	   TB_PATRIMONIO.FK_EQUIPAMENTO as idEquip, " 
+				+ "   TB_EQUIPAMENTO.TXT_DESCRICAO as DescrEquip, "
+				+ "	   TB_PATRIMONIO.TXT_FABRICANTE, "
+				+ "	   TB_PATRIMONIO.TXT_MARCA, "
+				+ "	   TB_PATRIMONIO.TXT_DESCRICAO as DescrPatrim, "
+				+ "	   TB_PATRIMONIO.INT_CONDICAOUSO, "
+				+ "	   TB_PATRIMONIO.FK_LOCAL as idLocal, "
+				+ "	   TB_LOCAL.TXT_DESCRICAO as DescrLocal, "
+				+ "	   TB_MOVIMENTACAO.PK_DataEntrada, "
+				+ "	   TB_MOVIMENTACAO.INT_NumeroGuia, "
+				+ "	   TB_MOVIMENTACAO.DAT_DataDevolucao "
+				+ "	FROM "
+				+ "	   TB_MOVIMENTACAO, " 
+				+ "	   TB_PATRIMONIO, "
+				+ "	   TB_EQUIPAMENTO, "
+				+ "	   TB_LOCAL "
+				+ "	WHERE "
+				+ "	   (TB_MOVIMENTACAO.PK_PATRIMONIO = TB_PATRIMONIO.PK_Patrimonio) AND "
+				+ "	   (TB_PATRIMONIO.FK_EQUIPAMENTO = TB_EQUIPAMENTO.PK_EQUIPAMENTO) AND "
+				+ "	   (TB_PATRIMONIO.FK_LOCAL = TB_LOCAL.PK_LOCAL) ");
 			rs = st.executeQuery();
 			
 			List<Movimentacao> list = new ArrayList<>();
@@ -190,7 +208,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 			Map<Integer, Local> mapLocal = new HashMap<>();		
 				
 			while (rs.next()) {
-				Patrimonio pat = map.get(rs.getLong("numeroPatrimonio"));
+				Patrimonio pat = map.get(rs.getLong("NrPatrim"));
 				Equipamento equip = mapEquip.get(rs.getInt("idEquip"));				
 				Local local = mapLocal.get(rs.getInt("idLocal"));				
 				
@@ -206,7 +224,7 @@ public class MovimentacaoDaoJDBC implements MovimentacaoDao {
 				
 				if(pat == null) {
 					pat = instantiatePatrimonio(rs, equip, local);
-					map.put(rs.getLong("numeroPatrimonio"), pat);
+					map.put(rs.getLong("NrPatrim"), pat);
 				}
 				
 				Movimentacao movimentacao = instantiateMovimentacao(rs, pat);

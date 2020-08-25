@@ -12,28 +12,26 @@ import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
-import model.entities.Movimentacao;
-import model.entities.Equipamento;
-import model.entities.Local;
-import model.exceptions.ValidationException;
-import model.services.EquipamentoService;
-import model.services.LocalService;
-import model.services.MovimentacaoService;
-import model.services.PatrimonioService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import model.entities.Equipamento;
+import model.entities.Local;
+import model.entities.Movimentacao;
+import model.exceptions.ValidationException;
+import model.services.EquipamentoService;
+import model.services.LocalService;
+import model.services.MovimentacaoService;
+import model.services.PatrimonioService;
 
 public class MovimentacaoFormController {
 	
@@ -91,7 +89,40 @@ public class MovimentacaoFormController {
     private ObservableList<Equipamento> obsList;
 	
 	private ObservableList<Local> obsLstLocal;
+	
+	//private ObservableList<Patrimonio> obsLstPatrim;
 
+	@FXML
+	public void onNrPatrimChange () {
+	
+		if (patrimonioService == null) {
+			throw new IllegalStateException("Serviços de patrimonio não inicializado!");
+		}
+
+		Long obj = (long) 0;
+		
+		if (txtNumeroPatrimonio.getText() != null ) {
+			obj = Utils.tryParseToLong(txtNumeroPatrimonio.getText());
+			entity.setPatrimonio(patrimonioService.findById(obj));
+			txtDescricao.setText(entity.getPatrimonio().getDescricao());
+			txtFabricante.setText(entity.getPatrimonio().getFabricante());
+			txtMarca.setText(entity.getPatrimonio().getMarca());
+			txtCondicaoUso.setText(String.valueOf(entity.getPatrimonio().getCondicaoUso()));
+			if (entity.getPatrimonio().getTipEquip() == null) {
+				comboBoxEquipamento.getSelectionModel().selectFirst();
+			}
+			else {
+				comboBoxEquipamento.setValue(entity.getPatrimonio().getTipEquip());
+			}
+			if (entity.getPatrimonio().getPatrLocal() == null) {
+				comboBoxLocal.getSelectionModel().selectFirst();
+			}
+			else {
+				comboBoxLocal.setValue(entity.getPatrimonio().getPatrLocal());
+			}
+		}
+	
+	}
 	    @FXML
 	    void onBtSaveAction(ActionEvent event) {
 			if (entity == null) {
@@ -124,7 +155,7 @@ public class MovimentacaoFormController {
 			this.entity = entity;
 		}		
 	    
-	    public void setMovimentacaoService(MovimentacaoService service, PatrimonioService patrimonioService, EquipamentoService equipamentoService, LocalService localService, boolean insert) {
+	    public void setServices(MovimentacaoService service, PatrimonioService patrimonioService, EquipamentoService equipamentoService, LocalService localService, boolean insert) {
 			this.service = service;
 			this.patrimonioService = patrimonioService;
 			this.equipamentoService = equipamentoService;
@@ -221,9 +252,11 @@ public class MovimentacaoFormController {
 		}
 		
 		public void loadAssociatedObjects() {
+			
 			if (equipamentoService == null) {
 				throw new IllegalStateException("Lista de Tipos de Equipamentos está vazia");
 			}
+			
 			List<Equipamento> list = equipamentoService.findAll();
 			obsList = FXCollections.observableArrayList(list);
 			comboBoxEquipamento.setItems(obsList);

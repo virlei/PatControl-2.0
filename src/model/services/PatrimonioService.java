@@ -16,6 +16,10 @@ public class PatrimonioService {
 		return dao.findAll();
 	}
 	
+	public Patrimonio findById (Long NrPatrim) {
+		return dao.findById(NrPatrim);
+	}
+	
 	public void saveOrUpdate(Patrimonio obj) {
 		if (Insert) {
 			dao.insert(obj);
