@@ -21,4 +21,8 @@ public class DaoFactory {
 	public static MovimentacaoDao createMovimentacaoDao() {
 		return new MovimentacaoDaoJDBC(DB.getConnection());
 	}
+	
+	public static GuiaDeFornecimentoDao createGuiaDeFornecimentoDao() {
+		return new GuiaDeFornecimentoDaoJDBC(DB.getConnection());
+	}
 }
