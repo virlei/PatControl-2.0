@@ -78,7 +78,7 @@ public class GuiaDeFornecimentoListController {
 		tableColumnDtFornecimento.setCellValueFactory(new PropertyValueFactory<>("dtFornecimento"));
 		tableColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));
 		Utils.formatTableColumnDate(tableColumnDtFornecimento, "dd/MM/yyyy");
-		//ColumnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonio"));
+		//ColumnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonios"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewGuiaFornecimento.prefHeightProperty().bind(stage.heightProperty());

@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
+import model.services.GuiaDeFornecimentoService;
 import model.services.PatrimonioService;
 import model.services.LocalService;
 import model.services.MovimentacaoService;
@@ -29,8 +30,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemTipoEquipamento;
 	@FXML
 	private MenuItem menuItemLocal;
-	@FXML
-	private MenuItem menuItemMovimentacao;
+    @FXML
+    private MenuItem menuItemFornecimento;
 	@FXML
 	private MenuItem menuItemRelPatrXLocal;
 	@FXML
@@ -63,9 +64,9 @@ public class MainViewController implements Initializable {
 	}
 	
 	@FXML
-	public void onMenuItemMovimentacaoAction() {
-		loadView("/gui/MovimentacaoList.fxml", (MovimentacaoListController controller) -> {
-			controller.setMovimentacaoService(new MovimentacaoService());
+	public void onMenuItemFornecimentoAction() {
+		loadView("/gui/GuiaFornecimentoList.fxml", (GuiaDeFornecimentoListController controller) -> {
+			controller.setGuiaDeFornecimentoService(new GuiaDeFornecimentoService());
 			controller.updateTableView();
 		});
 	}

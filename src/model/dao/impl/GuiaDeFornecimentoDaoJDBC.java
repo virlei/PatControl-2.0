@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,8 +34,8 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 			st = conn.prepareStatement("INSERT INTO TB_FORNECIMENTO "
 					+ "(INT_NumeroGuia, DAT_Fornecimento) "
 					+ "Values(?,?)");
-			st.setLong(1, obj.getNumeroGuia());
-			st.setString(2, obj.getDataFornecimento());
+			st.setLong(1, obj.getNrGuia());
+			st.setDate(2, (Date) obj.getDtFornecimento()); 
 			
 			int rowsAffected = st.executeUpdate();			
 			if (rowsAffected == 0) {
@@ -58,8 +59,8 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 					+ "SET INT_NumeroGuia=?, DAT_Fornecimento=? "
 					+ "WHERE PK_Guia = ?");
 		
-			st.setLong(1, obj.getNumeroGuia());
-			st.setString(2, obj.getDataFornecimento());
+			st.setLong(1, obj.getNrGuia());
+			st.setDate(2, (Date) obj.getDtFornecimento());
 			
 			st.executeUpdate();
 			
@@ -101,8 +102,8 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 			rs = st.executeQuery();
 			if (rs.next()) {				
 				GuiaDeFornecimento guiaDeFornecimento = new GuiaDeFornecimento();
-				guiaDeFornecimento.setNumeroGuia(rs.getLong("INT_NumeroGuia"));
-				guiaDeFornecimento.setDataFornecimento(rs.getString("DAT_Fornecimento"));
+				guiaDeFornecimento.setNrGuia(rs.getLong("INT_NumeroGuia"));
+				guiaDeFornecimento.setDtFornecimento(rs.getDate("DAT_Fornecimento"));
 				return guiaDeFornecimento;				
 			} 
 			return null;					
@@ -120,8 +121,8 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 	private GuiaDeFornecimento instantiateGuiaDeFornecimento(ResultSet rs) throws SQLException {
 		
 		GuiaDeFornecimento guia = new GuiaDeFornecimento();
-		guia.setNumeroGuia(rs.getLong("INT_NumeroGuia"));
-		guia.setDataFornecimento(rs.getString("DAT_Fornecimento"));
+		guia.setNrGuia(rs.getLong("INT_NumeroGuia"));
+		guia.setDtFornecimento(rs.getDate("DAT_Fornecimento"));	
 		
 		return guia;
 	}

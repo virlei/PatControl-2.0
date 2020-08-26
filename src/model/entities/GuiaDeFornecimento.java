@@ -22,8 +22,7 @@ public class GuiaDeFornecimento implements Serializable {
 		this.patrimonios = patrimonios;
 	}
 
-	public GuiaDeFornecimento() {
-		
+	public GuiaDeFornecimento() {		
 	}
 
 	public Integer getPKey() {
@@ -58,9 +57,36 @@ public class GuiaDeFornecimento implements Serializable {
 		this.patrimonios = patrimonios;
 	}
 
+	
 	@Override
 	public String toString() {
-		return nrGuia + " em " + dtFornecimento;
+		return "GuiaDeFornecimento [pKey=" + pKey + ", nrGuia=" + nrGuia + ", dtFornecimento=" + dtFornecimento
+				+ ", patrimonios=" + patrimonios + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pKey == null) ? 0 : pKey.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GuiaDeFornecimento other = (GuiaDeFornecimento) obj;
+		if (pKey == null) {
+			if (other.pKey != null)
+				return false;
+		} else if (!pKey.equals(other.pKey))
+			return false;
+		return true;
 	}
 
 	

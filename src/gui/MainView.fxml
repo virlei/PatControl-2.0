@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
       <VBox prefHeight="318.0" prefWidth="458.0">
          <children>
@@ -17,7 +20,7 @@
                     <MenuItem fx:id="menuItemPatrimonio" mnemonicParsing="false" onAction="#onMenuItemPatrimonioAction" text="Patrimônio" />
                         <MenuItem fx:id="menuItemTipoEquipamento" mnemonicParsing="false" onAction="#onMenuItemTipoEquipamentoAction" text="Tipo de Equipamento" />
                         <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
-                        <MenuItem fx:id="menuItemMovimentacao" mnemonicParsing="false" onAction="#onMenuItemMovimentacaoAction" text="Fornecimento" />
+                        <MenuItem fx:id="menuItemFornecimento" mnemonicParsing="false" onAction="#onMenuItemFornecimentoAction" text="Fornecimento" />
                         <MenuItem mnemonicParsing="false" text="Devolução" />
                         <MenuItem mnemonicParsing="false" text="Empréstimos" />
                         <MenuItem mnemonicParsing="false" text="Retorno Empréstimos" />
