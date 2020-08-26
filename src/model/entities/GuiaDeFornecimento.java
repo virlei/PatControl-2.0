@@ -1,53 +1,66 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 public class GuiaDeFornecimento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private long numeroGuia;
-	private long patrimonio;
-	private String dataFornecimento;
 	
-	public GuiaDeFornecimento(long numeroGuia, long patrimonio, String dataFornecimento) {
+	private Integer pKey; //Chave primária. Transparente ao usuário.
+	private Long nrGuia;
+	private Date dtFornecimento;
+	private List<Patrimonio> patrimonios;
+	
+	public GuiaDeFornecimento(Integer pKey, Long nrGuia, Date dtFornecimento, List<Patrimonio> patrimonios) {
 		super();
-		this.numeroGuia = numeroGuia;
-		this.patrimonio = patrimonio;
-		this.dataFornecimento = dataFornecimento;
+
+		this.pKey = pKey;
+		this.nrGuia = nrGuia;
+		this.dtFornecimento = dtFornecimento;
+		this.patrimonios = patrimonios;
 	}
 
 	public GuiaDeFornecimento() {
 		
 	}
 
-	public String getDataFornecimento() {
-		return dataFornecimento;
+	public Integer getPKey() {
+		return pKey;
 	}
 
-	public void setDataFornecimento(String dataFornecimento) {
-		this.dataFornecimento = dataFornecimento;
+	public void setPKey(Integer pKey) {
+		this.pKey = pKey;
 	}
 
-	public long getNumeroGuia() {
-		return numeroGuia;
+	public Date getDtFornecimento() {
+		return dtFornecimento;
 	}
 
-	public void setNumeroGuia(long numeroGuia) {
-		this.numeroGuia = numeroGuia;
+	public void setDtFornecimento(Date dtFornecimento) {
+		this.dtFornecimento = dtFornecimento;
 	}
 
-	public long getPatrimonio() {
-		return patrimonio;
+	public Long getNrGuia() {
+		return nrGuia;
 	}
 
-	public void setPatrimonio(long patrimonio) {
-		this.patrimonio = patrimonio;
+	public void setNrGuia(Long nrGuia) {
+		this.nrGuia = nrGuia;
+	}
+
+	public List<Patrimonio> getPatrimonios() {
+		return patrimonios;
+	}
+
+	public void setPatrimonios(List<Patrimonio> patrimonios) {
+		this.patrimonios = patrimonios;
 	}
 
 	@Override
 	public String toString() {
-		return "GuiaDeFornecimento [numeroGuia=" + numeroGuia + ", patrimonio=" + patrimonio + ", dataFornecimento="
-				+ dataFornecimento + "]";
+		return nrGuia + " em " + dtFornecimento;
 	}
 
 	

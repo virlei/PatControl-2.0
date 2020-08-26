@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,22 +41,22 @@ public class GuiaDeFornecimentoListController {
     private ObservableList<GuiaDeFornecimento> obsList;
 
     @FXML
-    private TableColumn<GuiaDeFornecimento, Long> ColumnPatrimonio;
+    private TableView<GuiaDeFornecimento> tableViewGuiaFornecimento;
 
     @FXML
-    private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> TableColumnRemove;
+    private TableColumn<GuiaDeFornecimento, Integer> tableColumnPKey;
 
     @FXML
-    private TableColumn<GuiaDeFornecimento, Long> ColumnNumeroGuia;
+    private TableColumn<GuiaDeFornecimento, Long> tableColumnNrGuia;
 
     @FXML
-    private TableColumn<GuiaDeFornecimento, String> ColumnDataFornecimento;
-
-    @FXML
-    private TableView<GuiaDeFornecimento> TableViewGuiaFornecimento;
+    private TableColumn<GuiaDeFornecimento, Date> tableColumnDtFornecimento;
 
     @FXML
     private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> tableColumnEdit;
+
+    @FXML
+    private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> TableColumnRemove;
 
     @FXML
     void onButtonNewAction(ActionEvent event) {
@@ -73,12 +74,14 @@ public class GuiaDeFornecimentoListController {
 
 	private void initializeNodes() {
 
-		ColumnDataFornecimento.setCellValueFactory(new PropertyValueFactory<>("dataFornecimento"));
-		ColumnNumeroGuia.setCellValueFactory(new PropertyValueFactory<>("numeroGuia"));
-		ColumnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonio"));
+		tableColumnPKey.setCellValueFactory(new PropertyValueFactory<>("pKey"));
+		tableColumnDtFornecimento.setCellValueFactory(new PropertyValueFactory<>("dtFornecimento"));
+		tableColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));
+		Utils.formatTableColumnDate(tableColumnDtFornecimento, "dd/MM/yyyy");
+		//ColumnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonio"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		TableViewGuiaFornecimento.prefHeightProperty().bind(stage.heightProperty());
+		tableViewGuiaFornecimento.prefHeightProperty().bind(stage.heightProperty());
 
 	}
 
@@ -88,7 +91,7 @@ public class GuiaDeFornecimentoListController {
 		}
 		List<GuiaDeFornecimento> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		TableViewGuiaFornecimento.setItems(obsList);
+		tableViewGuiaFornecimento.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
