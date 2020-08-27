@@ -18,9 +18,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
 import model.services.GuiaDeFornecimentoService;
+import model.services.GuiaDeFornecimentoTesteService;
 import model.services.PatrimonioService;
 import model.services.LocalService;
-import model.services.MovimentacaoService;
 
 public class MainViewController implements Initializable {
 
@@ -65,7 +65,7 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemFornecimentoAction() {
-		loadView("/gui/GuiaFornecimentoList.fxml", (GuiaDeFornecimentoListController controller) -> {
+		loadView("/gui/GuiaDeFornecimentoList.fxml", (GuiaDeFornecimentoListController controller) -> {
 			controller.setGuiaDeFornecimentoService(new GuiaDeFornecimentoService());
 			controller.updateTableView();
 		});

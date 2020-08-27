@@ -8,18 +8,23 @@ import java.util.List;
 
 import model.dao.DaoFactory;
 import model.dao.GuiaDeFornecimentoDao;
+import model.dao.GuiaDeFornecimentoTesteDao;
+import model.dao.LocalDao;
 import model.entities.GuiaDeFornecimento;
+import model.entities.GuiaDeFornecimentoTeste;
+import model.entities.Local;
+import model.entities.Patrimonio;
 
-public class GuiaDeFornecimentoService {
+public class GuiaDeFornecimentoTesteService {
 	
 	public static boolean Insert = false;
 	
-	private GuiaDeFornecimentoDao dao = DaoFactory.createGuiaDeFornecimentoDao();
+	private GuiaDeFornecimentoTesteDao dao = (GuiaDeFornecimentoTesteDao) DaoFactory.createGuiaDeFornecimentoDao();
 	
-	public List<GuiaDeFornecimento> findAll() {
+	public List<GuiaDeFornecimentoTeste> findAll() {
 		
 		//MOCK		
-		List<GuiaDeFornecimento> list = new ArrayList<>();
+		List<GuiaDeFornecimentoTeste> list = new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dat = new Date();
 		Date dat1 = new Date();
@@ -31,19 +36,19 @@ public class GuiaDeFornecimentoService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		list.add(new GuiaDeFornecimento(1, (long) 781000, dat, null));		
-		list.add(new GuiaDeFornecimento(1, (long) 881000, dat1, null));		
-		list.add(new GuiaDeFornecimento(1, (long) 981000, dat2, null));		
+		list.add(new GuiaDeFornecimentoTeste(1,(long) 10000, dat,null));	
+		list.add(new GuiaDeFornecimentoTeste(1, (long) 881000, dat1, null));		
+		list.add(new GuiaDeFornecimentoTeste(1, (long) 981000, dat2, null));		
 		return list;
 		
 		//return dao.findAll();
 	}
 	
-	public GuiaDeFornecimento findById (Long numeroGuia) {
+	public GuiaDeFornecimentoTeste findById (Long numeroGuia) {
 		return dao.findById(numeroGuia);
 	}
 	
-	public void saveOrUpdate(GuiaDeFornecimento obj) {		
+	public void saveOrUpdate(GuiaDeFornecimentoTeste obj) {		
 		if (Insert) {
 			dao.insert(obj);
 		}
@@ -52,7 +57,7 @@ public class GuiaDeFornecimentoService {
 		}
 	}
 	
-	public void remove(GuiaDeFornecimento obj) {
+	public void remove(GuiaDeFornecimentoTeste obj) {
 		dao.deleteById(obj.getNrGuia());
 	}
 }

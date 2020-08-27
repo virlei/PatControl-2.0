@@ -3,7 +3,6 @@ package model.dao;
 import db.DB;
 import model.dao.impl.*;
 
-
 public class DaoFactory {
 
 	public static PatrimonioDao createPatrimonioDao() {
@@ -25,4 +24,5 @@ public class DaoFactory {
 	public static GuiaDeFornecimentoDao createGuiaDeFornecimentoDao() {
 		return new GuiaDeFornecimentoDaoJDBC(DB.getConnection());
 	}
+
 }

@@ -82,25 +82,22 @@ public class GuiaDeFornecimentoListController {
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewGuiaFornecimento.prefHeightProperty().bind(stage.heightProperty());
-
 	}
 
-	public void updateTableView() {
-		if (service == null) {
-			throw new IllegalStateException("Serviço nulo");
-		}
-		List<GuiaDeFornecimento> list = service.findAll();
-		obsList = FXCollections.observableArrayList(list);
-		tableViewGuiaFornecimento.setItems(obsList);
-		initEditButtons();
-		initRemoveButtons();
-	}
+	
 
 	private void createDialogForm(GuiaDeFornecimento obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 
+			GuiaDeFornecimentoFormController controller = loader.getController();
+			
+			
+
+			controller.subscribeDataChangeListener(null);
+
+			controller.updateFormData();
 		
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Entre com os dados da Guia de Fornecimento:");
@@ -116,6 +113,17 @@ public class GuiaDeFornecimentoListController {
 		}
 	}
 
+	public void updateTableView() {
+		if (service == null) {
+			throw new IllegalStateException("Serviço nulo");
+		}
+		List<GuiaDeFornecimento> list = service.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewGuiaFornecimento.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
+	}
+		
 	public void onDataChanged() {
 		updateTableView();
 	}
@@ -134,7 +142,7 @@ public class GuiaDeFornecimentoListController {
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/GuiaDeFornecimentoForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}

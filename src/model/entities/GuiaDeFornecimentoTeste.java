@@ -4,39 +4,32 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class GuiaDeFornecimento implements Serializable {
+public class GuiaDeFornecimentoTeste implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer pKey; //Chave primária. Transparente ao usuário.
+	private Integer pKey; 
 	private Long nrGuia;
 	private Date dtFornecimento;
 	private List<Patrimonio> patrimonios;
-	
-	public GuiaDeFornecimento(Integer pKey, Long nrGuia, Date dtFornecimento, List<Patrimonio> patrimonios) {
+	public GuiaDeFornecimentoTeste(Integer pKey, Long nrGuia, Date dtFornecimento, List<Patrimonio> patrimonios) {
+		super();
 		this.pKey = pKey;
 		this.nrGuia = nrGuia;
 		this.dtFornecimento = dtFornecimento;
 		this.patrimonios = patrimonios;
 	}
-
-	public GuiaDeFornecimento() {		
+	
+	public GuiaDeFornecimentoTeste() {
+		
 	}
 
-	public Integer getPKey() {
+	public Integer getpKey() {
 		return pKey;
 	}
 
-	public void setPKey(Integer pKey) {
+	public void setpKey(Integer pKey) {
 		this.pKey = pKey;
-	}
-
-	public Date getDtFornecimento() {
-		return dtFornecimento;
-	}
-
-	public void setDtFornecimento(Date dtFornecimento) {
-		this.dtFornecimento = dtFornecimento;
 	}
 
 	public Long getNrGuia() {
@@ -47,19 +40,20 @@ public class GuiaDeFornecimento implements Serializable {
 		this.nrGuia = nrGuia;
 	}
 
+	public Date getDtFornecimento() {
+		return dtFornecimento;
+	}
+
+	public void setDtFornecimento(Date dtFornecimento) {
+		this.dtFornecimento = dtFornecimento;
+	}
+
 	public List<Patrimonio> getPatrimonios() {
 		return patrimonios;
 	}
 
 	public void setPatrimonios(List<Patrimonio> patrimonios) {
 		this.patrimonios = patrimonios;
-	}
-
-	
-	@Override
-	public String toString() {
-		return "GuiaDeFornecimento [pKey=" + pKey + ", nrGuia=" + nrGuia + ", dtFornecimento=" + dtFornecimento
-				+ ", patrimonios=" + patrimonios + "]";
 	}
 
 	@Override
@@ -78,7 +72,7 @@ public class GuiaDeFornecimento implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GuiaDeFornecimento other = (GuiaDeFornecimento) obj;
+		GuiaDeFornecimentoTeste other = (GuiaDeFornecimentoTeste) obj;
 		if (pKey == null) {
 			if (other.pKey != null)
 				return false;
@@ -87,8 +81,11 @@ public class GuiaDeFornecimento implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "GuiaDeFornecimentoTeste [pKey=" + pKey + ", nrGuia=" + nrGuia + ", dtFornecimento=" + dtFornecimento
+				+ ", patrimonios=" + patrimonios + "]";
+	}
 	
 	
-	
-
 }
