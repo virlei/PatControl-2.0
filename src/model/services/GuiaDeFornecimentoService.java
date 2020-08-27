@@ -1,5 +1,7 @@
 package model.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +22,20 @@ public class GuiaDeFornecimentoService {
 		
 		//MOCK		
 		List<GuiaDeFornecimento> list = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dat = new Date();
-		list.add(new GuiaDeFornecimento(1,null, dat, null));		
+		Date dat1 = new Date();
+		Date dat2 = new Date();
+		try {
+			dat = sdf.parse("10/02/2020");
+			dat = sdf.parse("20/03/2020");
+			dat = sdf.parse("30/04/2020");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		list.add(new GuiaDeFornecimento(1, (long) 781000, dat, null));		
+		list.add(new GuiaDeFornecimento(1, (long) 881000, dat1, null));		
+		list.add(new GuiaDeFornecimento(1, (long) 981000, dat2, null));		
 		return list;
 		
 		//return dao.findAll();

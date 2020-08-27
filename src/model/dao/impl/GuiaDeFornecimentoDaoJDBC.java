@@ -122,7 +122,8 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 		
 		GuiaDeFornecimento guia = new GuiaDeFornecimento();
 		guia.setNrGuia(rs.getLong("INT_NumeroGuia"));
-		guia.setDtFornecimento(rs.getDate("DAT_Fornecimento"));	
+		//guia.setDtFornecimento(rs.getDate("DAT_Fornecimento"));
+		guia.setDtFornecimento(new java.util.Date(rs.getTimestamp("DAT_Fornecimento").getTime()));
 		
 		return guia;
 	}
