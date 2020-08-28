@@ -56,8 +56,19 @@ public class GuiaDeFornecimentoFormController implements Initializable {
 	    @FXML
 	    private Label labelErrorName;
 	    
+	    @FXML
+	    private Button bttIncluirPatrimonio;
+	    
+
+	    @FXML
+	    void onBtIncludePat(ActionEvent event) {
+
+	    }
+
+	    
 	    public void subscribeDataChangeListener(DataChangeListener listener) {
-			dataChangeListeners.add(listener);
+			dataChangeListeners.add(listener);		
+			
 		}
 
 	    @FXML
@@ -130,7 +141,8 @@ public class GuiaDeFornecimentoFormController implements Initializable {
 	}
 	
 	private void initializeNodes() {
-		Constraints.setTextFieldInteger(txtNrGuia);
+		Constraints.setTextFieldInteger(txtNrGuia);		
+		Constraints.setTextFieldInteger(txtPKey);
 	
 		Utils.formatDatePicker(dpDtFornecimento, "dd/MM/yyyy");
 	}

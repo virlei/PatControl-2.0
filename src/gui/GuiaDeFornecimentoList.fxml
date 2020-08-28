@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiaDeFornecimentoListController">
    <children>
       <Label text="Registro da Guia De Fornecimento">
@@ -23,6 +22,7 @@
           <TableColumn fx:id="tableColumnPKey" prefWidth="75.0" text="PKey" />
           <TableColumn fx:id="tableColumnNrGuia" prefWidth="125.0" text="Número da Guia" />
             <TableColumn fx:id="tableColumnDtFornecimento" prefWidth="151.0" text="Data de Fornecimento" />
+            <TableColumn fx:id="tableColumnPat" prefWidth="75.0" text="Patrimônio" />
             <TableColumn fx:id="tableColumnEdit" prefWidth="75.0" text="Editar" />
             <TableColumn fx:id="TableColumnRemove" prefWidth="90.0" text="Remover" />
         </columns>

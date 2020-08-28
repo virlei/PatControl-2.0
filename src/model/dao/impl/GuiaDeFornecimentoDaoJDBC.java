@@ -133,7 +133,7 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM TB_FORNECIMENTO;");
+			st = conn.prepareStatement("SELECT * FROM TB_Fornecimento;");
 					
 			rs = st.executeQuery();
 			
@@ -146,7 +146,7 @@ public class GuiaDeFornecimentoDaoJDBC implements GuiaDeFornecimentoDao {
 			return list;
 		}
 		catch (SQLException e) {
-				throw new DbException (e.getMessage());
+				throw new DbException (e.getMessage());				
 		}
 		finally {
 			DB.closeStatement(st);

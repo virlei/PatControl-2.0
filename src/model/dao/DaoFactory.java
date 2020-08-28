@@ -24,5 +24,9 @@ public class DaoFactory {
 	public static GuiaDeFornecimentoDao createGuiaDeFornecimentoDao() {
 		return new GuiaDeFornecimentoDaoJDBC(DB.getConnection());
 	}
-
+	
+	/*public static GuiaDeFornecimentoTesteDao createGuiadeFornecimentoTesteDao() {
+		return new GuiaDeFornecimentoTesteDaoJDBC(DB.getConnection());
+	}
+	*/
 }

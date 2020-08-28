@@ -31,11 +31,12 @@ public class GuiaDeFornecimentoService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		list.add(new GuiaDeFornecimento(1, (long) 781000, dat, null));		
+		list.add(new GuiaDeFornecimento(1, (long) 781000, dat, null));			
 		list.add(new GuiaDeFornecimento(1, (long) 881000, dat1, null));		
-		list.add(new GuiaDeFornecimento(1, (long) 981000, dat2, null));		
+		list.add(new GuiaDeFornecimento(1, (long) 981000, dat2, null));	
+		System.out.println(list);
 		return list;
-		
+		 
 		//return dao.findAll();
 	}
 	

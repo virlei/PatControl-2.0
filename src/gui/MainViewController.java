@@ -18,7 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
 import model.services.GuiaDeFornecimentoService;
-import model.services.GuiaDeFornecimentoTesteService;
+//import model.services.GuiaDeFornecimentoTesteService;
 import model.services.PatrimonioService;
 import model.services.LocalService;
 

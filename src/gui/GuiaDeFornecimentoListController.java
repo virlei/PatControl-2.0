@@ -29,7 +29,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.GuiaDeFornecimento;
+import model.entities.Patrimonio;
+import model.services.EquipamentoService;
 import model.services.GuiaDeFornecimentoService;
+import model.services.LocalService;
+import model.services.PatrimonioService;
 
 public class GuiaDeFornecimentoListController {
 	
@@ -56,11 +60,16 @@ public class GuiaDeFornecimentoListController {
     private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> tableColumnEdit;
 
     @FXML
-    private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> TableColumnRemove;
+    private TableColumn<GuiaDeFornecimento, GuiaDeFornecimento> TableColumnRemove;    
+
+    @FXML
+    private TableColumn<GuiaDeFornecimento, Patrimonio> tableColumnPat;
 
     @FXML
     void onButtonNewAction(ActionEvent event) {
-    	System.out.println("Btt new Clicked");
+    	Stage parentStage = Utils.currentStage(event);
+		GuiaDeFornecimento obj = new GuiaDeFornecimento();
+		createDialogForm(obj, "/gui/GuiaDeFornecimentoForm.fxml", parentStage);
 
     }
     
@@ -78,10 +87,12 @@ public class GuiaDeFornecimentoListController {
 		tableColumnDtFornecimento.setCellValueFactory(new PropertyValueFactory<>("dtFornecimento"));
 		tableColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));
 		Utils.formatTableColumnDate(tableColumnDtFornecimento, "dd/MM/yyyy");
-		//ColumnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonios"));
-
+		//tableColumnPat.setCellValueFactory(new PropertyValueFactory<>("patrimonios"));
+		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewGuiaFornecimento.prefHeightProperty().bind(stage.heightProperty());
+		
+		
 	}
 
 	
@@ -93,8 +104,10 @@ public class GuiaDeFornecimentoListController {
 
 			GuiaDeFornecimentoFormController controller = loader.getController();
 			
+			controller.setGuiaDeFornecimento(obj);
 			
-
+			controller.setGuiaDeFornecimentoService(new GuiaDeFornecimentoService());			
+		
 			controller.subscribeDataChangeListener(null);
 
 			controller.updateFormData();

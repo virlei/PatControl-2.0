@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiaDeFornecimentoFormController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="160.0" />
@@ -23,8 +26,8 @@
     <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="122.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button alignment="CENTER" mnemonicParsing="false" text="Salvar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" text="Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Button fx:id="btSave" alignment="CENTER" mnemonicParsing="false" onAction="#onBtSaveAction" text="Salvar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" text="Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       <GridPane GridPane.columnIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,7 +56,7 @@
           <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="217.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" text="Incluir Patrimônio" GridPane.halignment="CENTER" />
+            <Button fx:id="bttIncluirPatrimonio" mnemonicParsing="false" onAction="#onBtIncludePat" text="Incluir Patrimônio" GridPane.halignment="CENTER" />
             <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
               <columns>
                 <TableColumn prefWidth="75.0" text="Nr. Patrimônio" />

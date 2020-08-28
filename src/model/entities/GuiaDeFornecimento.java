@@ -7,36 +7,34 @@ import java.util.List;
 public class GuiaDeFornecimento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private Integer pKey; //Chave primária. Transparente ao usuário.
+	private Integer pKey;
 	private Long nrGuia;
 	private Date dtFornecimento;
 	private List<Patrimonio> patrimonios;
 	
+	public GuiaDeFornecimento() {
+}
+
 	public GuiaDeFornecimento(Integer pKey, Long nrGuia, Date dtFornecimento, List<Patrimonio> patrimonios) {
+		super();
 		this.pKey = pKey;
 		this.nrGuia = nrGuia;
 		this.dtFornecimento = dtFornecimento;
 		this.patrimonios = patrimonios;
 	}
 
-	public GuiaDeFornecimento() {		
+	@Override
+	public String toString() {
+		return "GuiaDeFornecimento [pKey=" + pKey + ", nrGuia=" + nrGuia + ", dtFornecimento=" + dtFornecimento
+				+ ", patrimonios=" + patrimonios + "]";
 	}
 
-	public Integer getPKey() {
+	public Integer getpKey() {
 		return pKey;
 	}
 
-	public void setPKey(Integer pKey) {
+	public void setpKey(Integer pKey) {
 		this.pKey = pKey;
-	}
-
-	public Date getDtFornecimento() {
-		return dtFornecimento;
-	}
-
-	public void setDtFornecimento(Date dtFornecimento) {
-		this.dtFornecimento = dtFornecimento;
 	}
 
 	public Long getNrGuia() {
@@ -47,19 +45,20 @@ public class GuiaDeFornecimento implements Serializable {
 		this.nrGuia = nrGuia;
 	}
 
+	public Date getDtFornecimento() {
+		return dtFornecimento;
+	}
+
+	public void setDtFornecimento(Date dtFornecimento) {
+		this.dtFornecimento = dtFornecimento;
+	}
+
 	public List<Patrimonio> getPatrimonios() {
 		return patrimonios;
 	}
 
 	public void setPatrimonios(List<Patrimonio> patrimonios) {
 		this.patrimonios = patrimonios;
-	}
-
-	
-	@Override
-	public String toString() {
-		return "GuiaDeFornecimento [pKey=" + pKey + ", nrGuia=" + nrGuia + ", dtFornecimento=" + dtFornecimento
-				+ ", patrimonios=" + patrimonios + "]";
 	}
 
 	@Override
@@ -86,9 +85,8 @@ public class GuiaDeFornecimento implements Serializable {
 			return false;
 		return true;
 	}
-
 	
 	
 	
-
+	
 }
