@@ -1,7 +1,11 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.*;
+import model.dao.impl.EquipamentoDaoJDBC;
+import model.dao.impl.GFornDaoJDBC;
+import model.dao.impl.LocalDaoJDBC;
+import model.dao.impl.MovimentacaoDaoJDBC;
+import model.dao.impl.PatrimonioDaoJDBC;
 
 public class DaoFactory {
 
@@ -21,12 +25,8 @@ public class DaoFactory {
 		return new MovimentacaoDaoJDBC(DB.getConnection());
 	}
 	
-	public static GuiaDeFornecimentoDao createGuiaDeFornecimentoDao() {
-		return new GuiaDeFornecimentoDaoJDBC(DB.getConnection());
+	public static GFornDao createGFornDao() {
+		return new GFornDaoJDBC(DB.getConnection());
 	}
 	
-	/*public static GuiaDeFornecimentoTesteDao createGuiadeFornecimentoTesteDao() {
-		return new GuiaDeFornecimentoTesteDaoJDBC(DB.getConnection());
-	}
-	*/
 }

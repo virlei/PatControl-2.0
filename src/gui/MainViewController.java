@@ -17,10 +17,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.EquipamentoService;
-import model.services.GuiaDeFornecimentoService;
+import model.services.GFornService;
+import model.services.LocalService;
 //import model.services.GuiaDeFornecimentoTesteService;
 import model.services.PatrimonioService;
-import model.services.LocalService;
 
 public class MainViewController implements Initializable {
 
@@ -65,8 +65,8 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemFornecimentoAction() {
-		loadView("/gui/GuiaDeFornecimentoList.fxml", (GuiaDeFornecimentoListController controller) -> {
-			controller.setGuiaDeFornecimentoService(new GuiaDeFornecimentoService());
+		loadView("/gui/GFornList.fxml", (GFornListController controller) -> {
+			controller.setGFornService(new GFornService());
 			controller.updateTableView();
 		});
 	}

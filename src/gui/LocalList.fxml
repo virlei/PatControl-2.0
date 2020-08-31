@@ -7,7 +7,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LocalListController">
    <children>
-      <Label text="Registro de Locais">
+      <Label text="Registro dos Locais">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -20,7 +20,7 @@
       <TableView fx:id="TableViewLocal" prefHeight="236.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="ColumnLocal" prefWidth="75.0" text="Local" />
-          <TableColumn fx:id="ColumnDescricao" prefWidth="75.0" text="Descriçao" />
+          <TableColumn fx:id="ColumnDescricao" prefWidth="75.0" text="Descrição" />
             <TableColumn fx:id="tableColumnEdit" prefWidth="75.0" />
             <TableColumn fx:id="TableColumnRemove" prefWidth="75.0" />
         </columns>
