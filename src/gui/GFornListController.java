@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -23,6 +26,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.GForn;
 import model.services.GFornService;
@@ -47,7 +52,10 @@ public class GFornListController implements Initializable, DataChangeListener {
 	    private TableColumn<GForn, GForn> TableColumnRemove;
 
 	    @FXML
-	    private TableColumn<GForn, GForn> tableColumnEdit;
+	    private TableColumn<GForn, GForn> tableColumnEdit;	    
+
+	    @FXML
+	    private TableColumn<GForn, String> ColumnDtForn;
 
 	    @FXML
 	    void onButtonNewAction(ActionEvent event) {
@@ -69,9 +77,9 @@ public class GFornListController implements Initializable, DataChangeListener {
 
 	private void initializeNodes() {
 
-		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));
-
+		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));		
 		ColumnPkGuia.setCellValueFactory(new PropertyValueFactory<>("pkGForn"));
+		ColumnDtForn.setCellValueFactory(new PropertyValueFactory<>("dtForn"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		TableViewGForn.prefHeightProperty().bind(stage.heightProperty());
@@ -90,32 +98,32 @@ public class GFornListController implements Initializable, DataChangeListener {
 	}
 
 	private void createDialogForm(GForn obj, String absoluteName, Stage parentStage ) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//			
-//			GFornFormController controller = loader.getController();
-//			
-//			controller.setGForn(obj);
-//			controller.setGFornService(new GFornService());
-//	
-//			//tinha faltado essa inscrição como observer na lista
-//			controller.subscribeDataChangeListener(this);
-//			
-//			controller.updateFormData();
-//			
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Entre com os dados de Tipo de GForn:");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//						
-//		}
-//		catch (IOException e) {
-//			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
+			
+			GFornFormController controller = loader.getController();
+			
+			controller.setGForn(obj);
+			controller.setGFornService(new GFornService());
+	
+			//tinha faltado essa inscrição como observer na lista
+			controller.subscribeDataChangeListener(this);
+			
+			controller.updateFormData();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entre com os dados de Tipo de GForn:");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+						
+		}
+		catch (IOException e) {
+			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
+		}
 	}
 	
 	public void onDataChanged() {

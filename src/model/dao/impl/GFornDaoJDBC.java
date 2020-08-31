@@ -68,6 +68,7 @@ public class GFornDaoJDBC implements GFornDao{
 
 			st.setInt(1, obj.getNrGuia());
 			st.setString(2, obj.getDtForn());
+			st.setInt(3, obj.getPkGForn());
 
 			st.executeUpdate();
 		}
