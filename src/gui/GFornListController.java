@@ -36,35 +36,35 @@ public class GFornListController implements Initializable, DataChangeListener {
 	
 	private GFornService service;
 
-	  @FXML
-	    private Button BtnNew;
+	@FXML
+	private Button BtnNew;
 
-	    @FXML
-	    private TableView<GForn> TableViewGForn;
+	@FXML
+	private TableView<GForn> TableViewGForn;
 
-	    @FXML
-	    private TableColumn<GForn, Integer> ColumnPkGuia;
-	    
-	    @FXML
-	    private TableColumn<GForn, Integer> ColumnNrGuia;
+	@FXML
+	private TableColumn<GForn, Integer> ColumnPkGuia;
 
-	    @FXML
-	    private TableColumn<GForn, GForn> TableColumnRemove;
+	@FXML
+	private TableColumn<GForn, Integer> ColumnNrGuia;
 
-	    @FXML
-	    private TableColumn<GForn, GForn> tableColumnEdit;	    
+	@FXML
+	private TableColumn<GForn, GForn> TableColumnRemove;
 
-	    @FXML
-	    private TableColumn<GForn, String> ColumnDtForn;
+	@FXML
+	private TableColumn<GForn, GForn> tableColumnEdit;
 
-	    @FXML
-	    void onButtonNewAction(ActionEvent event) {
-	    	Stage parentStage = Utils.currentStage(event);
-			GForn obj = new GForn();
-			createDialogForm(obj, "/gui/GFornForm.fxml", parentStage);
-	    }
-	    
-	    private ObservableList<GForn> obsList;
+	@FXML
+	private TableColumn<GForn, String> ColumnDtForn;
+
+	@FXML
+	void onButtonNewAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		GForn obj = new GForn();
+		createDialogForm(obj, "/gui/GFornForm.fxml", parentStage);
+	}
+
+	private ObservableList<GForn> obsList;
 
 	public void setGFornService (GFornService service) {
 		this.service = service;
@@ -76,14 +76,12 @@ public class GFornListController implements Initializable, DataChangeListener {
 	}
 
 	private void initializeNodes() {
-
-		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));		
 		ColumnPkGuia.setCellValueFactory(new PropertyValueFactory<>("pkGForn"));
+		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));		
 		ColumnDtForn.setCellValueFactory(new PropertyValueFactory<>("dtForn"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		TableViewGForn.prefHeightProperty().bind(stage.heightProperty());
-		
 	}
 	
 	public void updateTableView() {
@@ -97,31 +95,29 @@ public class GFornListController implements Initializable, DataChangeListener {
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(GForn obj, String absoluteName, Stage parentStage ) {
+	private void createDialogForm(GForn obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-			
+
 			GFornFormController controller = loader.getController();
-			
+
 			controller.setGForn(obj);
 			controller.setGFornService(new GFornService());
-	
-			//tinha faltado essa inscrição como observer na lista
-			controller.subscribeDataChangeListener(this);
-			
 			controller.updateFormData();
-			
+
+			// tinha faltado essa inscrição como observer na lista
+			controller.subscribeDataChangeListener(this);
+
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Entre com os dados de Tipo de GForn:");
+			dialogStage.setTitle("Entre a Guia de Fornecimento");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
-						
-		}
-		catch (IOException e) {
+
+		} catch (IOException e) {
 			Alerts.showAlert("Exceção de E/S", "Erro de carregamento de Tela", e.getMessage(), AlertType.ERROR);
 		}
 	}

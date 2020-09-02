@@ -36,34 +36,34 @@ public class LocalListController implements Initializable, DataChangeListener {
 	
 	private LocalService service;
 
-	  @FXML
-	    private Button BtnNew;
+	@FXML
+	private Button BtnNew;
 
-	    @FXML
-	    private TableColumn<Local, String> ColumnDescricao;
+	@FXML
+	private TableColumn<Local, String> ColumnDescricao;
 
-	    @FXML
-	    private TableView<Local> TableViewLocal;
+	@FXML
+	private TableView<Local> TableViewLocal;
 
-	    @FXML
-	    private TableColumn<Local, Integer> ColumnLocal;
+	@FXML
+	private TableColumn<Local, Integer> ColumnLocal;
+
+	@FXML
+	private TableColumn<Local, Local> TableColumnRemove;
+
+	@FXML
+	private TableColumn<Local, Local> tableColumnEdit;
+
+	@FXML
+	void onButtonNewAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		Local obj = new Local();
+		createDialogForm(obj, "/gui/LocalForm.fxml", parentStage);
+	}
 	    
-	    @FXML
-	    private TableColumn<Local, Local> TableColumnRemove;
+	private ObservableList<Local> obsList;
 
-	    @FXML
-	    private TableColumn<Local, Local> tableColumnEdit;
-
-	    @FXML
-	    void onButtonNewAction(ActionEvent event) {
-	    	Stage parentStage = Utils.currentStage(event);
-			Local obj = new Local();
-			createDialogForm(obj, "/gui/LocalForm.fxml", parentStage);
-	    }
-	    
-	    private ObservableList<Local> obsList;
-
-	public void setLocalService (LocalService service) {
+	public void setLocalService(LocalService service) {
 		this.service = service;
 	}
 	

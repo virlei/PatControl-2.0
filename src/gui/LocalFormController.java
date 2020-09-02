@@ -101,7 +101,7 @@ public class LocalFormController implements Initializable {
 	private Local getFormData() {
 		Local obj = new Local();
 		
-ValidationException exception = new ValidationException("Erro de Validação");
+		ValidationException exception = new ValidationException("Erro de Validação");
 		
 		obj.setIdLocal(Utils.tryParseToInt(txtLocal.getText()));
 		

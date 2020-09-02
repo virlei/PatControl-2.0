@@ -14,6 +14,7 @@ import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,37 +23,37 @@ import model.entities.GForn;
 import model.exceptions.ValidationException;
 import model.services.GFornService;
 
-public class GFornFormController {
+public class GFornFormController implements Initializable {
 
-    @FXML
-    private Label labelNrGuia;
-
-    @FXML
-    private Button btCancel;
-
-    @FXML
-    private TextField txtDtForn;
-
-    @FXML
-    private Button btSave;
-
-    @FXML
-    private Label labelDtForn;
-
-    @FXML
-    private TextField txtNrGuia;
-
-    @FXML
-    private Label labelErrorName;    
-
-    @FXML
-    private Label labelPKey;
-
-    @FXML
-    private TextField txtPKey;
-    
-    private GForn entity;
+	private GForn entity;
 	
+	@FXML
+	private Label labelNrGuia;
+
+	@FXML
+	private Label labelDtForn;
+
+	@FXML
+	private Label labelPKey;
+
+	@FXML
+	private TextField txtPKey;
+
+	@FXML
+	private TextField txtNrGuia;
+
+	@FXML
+	private TextField txtDtForn;
+
+	@FXML
+	private Label lblErrorGuia;
+
+	@FXML
+	private Button btSave;
+
+	@FXML
+	private Button btCancel;
+
 	private GFornService service;
 	
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
@@ -128,6 +129,7 @@ public class GFornFormController {
 		
 	}	
 
+	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
 	}
@@ -144,18 +146,19 @@ public class GFornFormController {
 		}
 		
 		txtPKey.setText(String.valueOf(entity.getPkGForn()));
-		txtNrGuia.setText(String.valueOf(entity.getNrGuia()));		
-		if (entity.getNrGuia() == null ) {
-			txtNrGuia.setText("");
-		}
+		txtNrGuia.setText(String.valueOf(entity.getNrGuia()));
+		
+//		if (entity.getNrGuia() == null ) {
+//			txtNrGuia.setText("");
+//		}
 		txtDtForn.setText(entity.getDtForn());
 	}
 	
 	private void setErrorMessages(Map<String, String> errors ) {
 		Set<String> fields = errors.keySet();
 		
-		if (fields.contains("name")) {
-			labelErrorName.setText(errors.get("name"));
+		if (fields.contains("Guia")) {
+			lblErrorGuia.setText(errors.get("Guia"));
 		}
 	}
 
