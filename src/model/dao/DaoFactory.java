@@ -1,11 +1,7 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.EquipamentoDaoJDBC;
-import model.dao.impl.GFornDaoJDBC;
-import model.dao.impl.LocalDaoJDBC;
-import model.dao.impl.MovimentacaoDaoJDBC;
-import model.dao.impl.PatrimonioDaoJDBC;
+import model.dao.impl.*;
 
 public class DaoFactory {
 
@@ -27,6 +23,10 @@ public class DaoFactory {
 	
 	public static GFornDao createGFornDao() {
 		return new GFornDaoJDBC(DB.getConnection());
+	}
+	
+	public static DevolucaoDao createDevolucaoDao() {
+		return new DevolucaoDaoJDBC(DB.getConnection());
 	}
 	
 }

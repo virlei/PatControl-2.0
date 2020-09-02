@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DevolucaoListController">
+   <children>
+      <Label text="Registro de Devolução ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="BtnNew" mnemonicParsing="false" onAction="#onButtonNewAction" text="Novo" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="TableViewDevolucao" prefHeight="236.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="ColumnDevolucao" prefWidth="75.0" text="Devolução" />
+            <TableColumn fx:id="ColumnDataDevolucao" prefWidth="75.0" text="Data" />
+            <TableColumn fx:id="ColumnSei" prefWidth="75.0" text="SEI" />
+            <TableColumn fx:id="ColumnMotivo" prefWidth="75.0" text="Motivo" />
+            <TableColumn fx:id="tableColumnEdit" prefWidth="75.0" />
+            <TableColumn fx:id="TableColumnRemove" prefWidth="75.0" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>

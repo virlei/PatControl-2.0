@@ -21,7 +21,7 @@
                         <MenuItem fx:id="menuItemTipoEquipamento" mnemonicParsing="false" onAction="#onMenuItemTipoEquipamentoAction" text="Tipo de Equipamento" />
                         <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
                         <MenuItem fx:id="menuItemFornecimento" mnemonicParsing="false" onAction="#onMenuItemFornecimentoAction" text="Fornecimento" />
-                        <MenuItem mnemonicParsing="false" text="Devolução" />
+                        <MenuItem fx:id="menuItemDevolucao" mnemonicParsing="false" onAction="#onMenuItemDevolucaoAction" text="Devolução" />
                         <MenuItem mnemonicParsing="false" text="Empréstimos" />
                         <MenuItem mnemonicParsing="false" text="Retorno Empréstimos" />
                   </items>

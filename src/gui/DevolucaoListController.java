@@ -19,98 +19,102 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.GForn;
-import model.services.GFornService;
+import model.entities.Devolucao;
+import model.services.DevolucaoService;
 
-public class GFornListController implements Initializable, DataChangeListener {
-	
-	private GFornService service;
 
-	@FXML
-	private Button BtnNew;
+public class DevolucaoListController implements Initializable, DataChangeListener {
 
-	@FXML
-	private TableView<GForn> TableViewGForn;
+    @FXML
+    private Button BtnNew;
 
-	@FXML
-	private TableColumn<GForn, Integer> ColumnPkGuia;
+    @FXML
+    private TableColumn<Devolucao, Devolucao> TableColumnRemove;
 
-	@FXML
-	private TableColumn<GForn, Integer> ColumnNrGuia;
+    @FXML
+    private TableView<Devolucao> TableViewDevolucao;
 
-	@FXML
-	private TableColumn<GForn, GForn> TableColumnRemove;
+    @FXML
+    private TableColumn<Devolucao, String> ColumnDataDevolucao;
 
-	@FXML
-	private TableColumn<GForn, GForn> tableColumnEdit;
+    @FXML
+    private TableColumn<Devolucao, String> ColumnSei;
 
-	@FXML
-	private TableColumn<GForn, String> ColumnDtForn;
+    @FXML
+    private TableColumn<Devolucao, Devolucao> tableColumnEdit;
 
-	@FXML
-	void onButtonNewAction(ActionEvent event) {
-		Stage parentStage = Utils.currentStage(event);
-		GForn obj = new GForn();
-		createDialogForm(obj, "/gui/GFornForm.fxml", parentStage);
-	}
+    @FXML
+    private TableColumn<Devolucao, String> ColumnMotivo;
 
-	private ObservableList<GForn> obsList;
+    @FXML
+    private TableColumn<Devolucao, Integer> ColumnDevolucao;
+    
+    private DevolucaoService service;
+    
+    private ObservableList<Devolucao> obsList;
 
-	public void setGFornService (GFornService service) {
+    @FXML
+    void onButtonNewAction(ActionEvent event) {    	
+    	Stage parentStage = Utils.currentStage(event);
+		Devolucao obj = new Devolucao();
+		createDialogForm(obj, "/gui/DevolucaoForm.fxml", parentStage, true);
+
+    }
+    
+    public void setDevolucaoService (DevolucaoService service) {
 		this.service = service;
-	}
-	
-	@Override
+	}    
+   
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
 	}
 
 	private void initializeNodes() {
-		ColumnPkGuia.setCellValueFactory(new PropertyValueFactory<>("pkGForn"));
-		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));		
-		ColumnDtForn.setCellValueFactory(new PropertyValueFactory<>("dtForn"));
+		ColumnDevolucao.setCellValueFactory(new PropertyValueFactory<>("devolucao"));
+		ColumnDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("datDevolucao"));		
+		ColumnSei.setCellValueFactory(new PropertyValueFactory<>("numSei"));
+		ColumnMotivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		TableViewGForn.prefHeightProperty().bind(stage.heightProperty());
+		TableViewDevolucao.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Serviço nulo");
 		}
-		List<GForn> list = service.findAll();
+		List<Devolucao> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		TableViewGForn.setItems(obsList);
+		TableViewDevolucao.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(GForn obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(Devolucao obj, String absoluteName, Stage parentStage, boolean insert) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 
-			GFornFormController controller = loader.getController();
+			DevolucaoFormController controller = loader.getController();
 
-			controller.setGForn(obj);
-			controller.setGFornService(new GFornService());
+			controller.setDevolucao(obj);
+			controller.setDevolucaoService(new DevolucaoService(), insert);
 			controller.updateFormData();
-
-			// tinha faltado essa inscrição como observer na lista
+			
 			controller.subscribeDataChangeListener(this);
 
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Entre com os dados da Guia de Fornecimento");
+			dialogStage.setTitle("Entre com os dados da devolução");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
@@ -128,11 +132,11 @@ public class GFornListController implements Initializable, DataChangeListener {
 
 	private void initEditButtons() {
 		tableColumnEdit.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEdit.setCellFactory(param -> new TableCell<GForn, GForn>() {
+		tableColumnEdit.setCellFactory(param -> new TableCell<Devolucao, Devolucao>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(GForn obj, boolean empty) {
+			protected void updateItem(Devolucao obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -140,18 +144,18 @@ public class GFornListController implements Initializable, DataChangeListener {
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/GFornForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/DevolucaoForm.fxml", Utils.currentStage(event), false));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		TableColumnRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		TableColumnRemove.setCellFactory(param -> new TableCell<GForn, GForn>() {
+		TableColumnRemove.setCellFactory(param -> new TableCell<Devolucao, Devolucao>() {
 			private final Button button = new Button("Remover");
 
 			@Override
-			protected void updateItem(GForn obj, boolean empty) {
+			protected void updateItem(Devolucao obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -163,7 +167,7 @@ public class GFornListController implements Initializable, DataChangeListener {
 		});
 	}
 
-	private void removeEntity(GForn obj) {
+	private void removeEntity(Devolucao obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir?");
 		
 		if (result.get() == ButtonType.OK) {
@@ -180,6 +184,5 @@ public class GFornListController implements Initializable, DataChangeListener {
 			
 		}
 	}
-
 
 }
