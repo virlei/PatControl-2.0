@@ -10,29 +10,29 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
-import model.dao.DevolucaoDao;
-import model.entities.Devolucao;
+import model.dao.EmprestimoDao;
+import model.entities.Emprestimo;
 
-public class DevolucaoDaoJDBC implements DevolucaoDao {
-
+public class EmprestimoDaoJDBC implements EmprestimoDao {
+	
 private Connection conn;
 	
-	public DevolucaoDaoJDBC(Connection conn) {
+	public EmprestimoDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
 	
 	@Override
-	public void insert (Devolucao obj) {
+	public void insert (Emprestimo obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO TB_Devolucao "
-					+ "(DAT_Devolucao, NUM_SEI, TXT_MOTIVO) "
+					"INSERT INTO TB_Emprestimo "
+					+ "(DAT_Emprestimo, TXT_Setor, TXT_Responsavel) "
 					+ "VALUES (?, ?, ?)");
 						
-			st.setString(1, obj.getDatDevolucao());
-			st.setString(2, obj.getNumSei());
-			st.setString(3, obj.getMotivo());
+			st.setString(1, obj.getDtEmprestimo());
+			st.setString(2, obj.getSetor());
+			st.setString(3, obj.getResponsavel());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -50,18 +50,18 @@ private Connection conn;
 	}
 	
 	@Override
-	public void update(Devolucao obj) {
+	public void update(Emprestimo obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"UPDATE TB_Devolucao " +
-				"SET DAT_Devolucao = ?, NUM_SEI = ?, TXT_MOTIVO = ? " +		
-				"WHERE PK_Devolucao = ?");
+				"UPDATE TB_Emprestimo " +
+				"SET DAT_Emprestimo = ?, TXT_Setor = ?, TXT_Responsavel = ? " +		
+				"WHERE PK_Emprestimo = ?");
 
-			st.setString(1, obj.getDatDevolucao());
-			st.setString(2, obj.getNumSei());
-			st.setString(3, obj.getMotivo());
-			st.setInt(4, obj.getDevolucao());
+			st.setString(1, obj.getDtEmprestimo());
+			st.setString(2, obj.getSetor());
+			st.setString(3, obj.getResponsavel());
+			st.setInt(4, obj.getEmprestimo());
 
 			st.executeUpdate();
 		}
@@ -77,7 +77,7 @@ private Connection conn;
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"DELETE FROM TB_DEVOLUCAO WHERE PK_Devolucao = ?");
+				"DELETE FROM TB_Emprestimo WHERE PK_Emprestimo = ?");
 			st.setInt(1, id);
 
 			st.executeUpdate();
@@ -90,16 +90,16 @@ private Connection conn;
 		}
 	}
 	
-	public Devolucao findById(Integer id) {
+	public Emprestimo findById(Integer id) {
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM TB_Devolucao where PK_Devolucao = ?");
+			st = conn.prepareStatement("SELECT * FROM TB_Emprestimo where PK_Emprestimo = ?");
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Devolucao obj = instantiateDevolucao(rs);
+				Emprestimo obj = instantiateEmprestimo(rs);
 				return obj;
 			} 
 			return null;					
@@ -114,28 +114,28 @@ private Connection conn;
 			
 	}
 	
-	private Devolucao instantiateDevolucao(ResultSet rs) throws SQLException {
-		Devolucao obj = new Devolucao();
-		obj.setDevolucao(rs.getInt("PK_Devolucao"));
-		obj.setDatDevolucao(rs.getString("DAT_Devolucao"));
-		obj.setNumSei(rs.getString("NUM_SEI"));
-		obj.setMotivo(rs.getString("TXT_MOTIVO"));
+	private Emprestimo instantiateEmprestimo(ResultSet rs) throws SQLException {
+		Emprestimo obj = new Emprestimo();
+		obj.setEmprestimo(rs.getInt("PK_Emprestimo"));
+		obj.setDtEmprestimo(rs.getString("DAT_Emprestimo"));
+		obj.setSetor(rs.getString("TXT_Setor"));
+		obj.setResponsavel(rs.getString("TXT_Responsavel"));
 		return obj;
 	}
 	
-	public List<Devolucao>findAll(){
+	public List<Emprestimo>findAll(){
 		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM TB_DEVOLUCAO");
+			st = conn.prepareStatement("SELECT * FROM TB_Emprestimo");
 					
 			rs = st.executeQuery();
 			
-			List<Devolucao> list = new ArrayList<>();
+			List<Emprestimo> list = new ArrayList<>();
 			
 			while (rs.next()) {
-				Devolucao obj = instantiateDevolucao(rs);
+				Emprestimo obj = instantiateEmprestimo(rs);
 				list.add(obj);
 			}
 			return list;
@@ -148,4 +148,5 @@ private Connection conn;
 			DB.closeResultSet(rs);
 		}
 	}
+
 }

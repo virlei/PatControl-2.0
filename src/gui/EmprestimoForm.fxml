@@ -4,18 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DevolucaoFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmprestimoFormController">
    <children>
       <GridPane layoutX="11.0" layoutY="1.0" prefHeight="252.0" prefWidth="525.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label fx:id="labelMotivo" text="Motivo da Devoluçao" GridPane.rowIndex="3" />
-            <Label fx:id="labelChaveDevolucao" text="Chave de Devolução" />
-            <Label fx:id="labelDtDevolucao" text="Data da Devoluçao" GridPane.rowIndex="1" />
-            <Label fx:id="labelNumSei" text="Número SEI" GridPane.rowIndex="2" />
-            <TextField fx:id="txtChaveDevolucao" editable="false" GridPane.columnIndex="1" />
-            <TextField fx:id="txtDtDevolucao" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtNumSei" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtMotivo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="labelResponsavel" text="Responsável" GridPane.rowIndex="3" />
+            <Label fx:id="labelChaveEmprestimo" text="Chave do Empréstimo" />
+            <Label fx:id="labelDtEmprestimo" text="Data do Empréstimo" GridPane.rowIndex="1" />
+            <Label fx:id="labelSetor" text="Setor" GridPane.rowIndex="2" />
+            <TextField fx:id="txtChaveEmprestimo" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDtEmprestimo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtSetor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtResponsavel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="lblErrorGuia" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <HBox prefHeight="93.0" prefWidth="185.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>

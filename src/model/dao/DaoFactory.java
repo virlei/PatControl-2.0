@@ -29,4 +29,8 @@ public class DaoFactory {
 		return new DevolucaoDaoJDBC(DB.getConnection());
 	}
 	
+	public static EmprestimoDao createEmprestimoDao() {
+		return new EmprestimoDaoJDBC(DB.getConnection());
+	}
+	
 }

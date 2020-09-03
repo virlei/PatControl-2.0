@@ -30,48 +30,47 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Devolucao;
-import model.services.DevolucaoService;
+import model.entities.Emprestimo;
+import model.services.EmprestimoService;
 
+public class EmprestimoListController implements Initializable, DataChangeListener{
 
-public class DevolucaoListController implements Initializable, DataChangeListener {
+    @FXML
+    private TableView<Emprestimo> TableViewEmprestimo;
+
+    @FXML
+    private TableColumn<Emprestimo, String> ColumnDataEmprestimo;
 
     @FXML
     private Button BtnNew;
 
     @FXML
-    private TableColumn<Devolucao, Devolucao> TableColumnRemove;
+    private TableColumn<Emprestimo, String> ColumnResponsavel;
 
     @FXML
-    private TableView<Devolucao> TableViewDevolucao;
+    private TableColumn<Emprestimo, Emprestimo> TableColumnRemove;
 
     @FXML
-    private TableColumn<Devolucao, String> ColumnDataDevolucao;
+    private TableColumn<Emprestimo, String> ColumnSetor;
 
     @FXML
-    private TableColumn<Devolucao, String> ColumnSei;
+    private TableColumn<Emprestimo, Emprestimo> tableColumnEdit;
 
     @FXML
-    private TableColumn<Devolucao, Devolucao> tableColumnEdit;
-
-    @FXML
-    private TableColumn<Devolucao, String> ColumnMotivo;
-
-    @FXML
-    private TableColumn<Devolucao, Integer> ColumnDevolucao;
+    private TableColumn<Emprestimo, Integer> ColumnEmprestimo;
     
-    private DevolucaoService service;
+    private EmprestimoService service;
     
-    private ObservableList<Devolucao> obsList;
+    private ObservableList<Emprestimo> obsList;
 
     @FXML
     void onButtonNewAction(ActionEvent event) {    	
     	Stage parentStage = Utils.currentStage(event);
-		Devolucao obj = new Devolucao();
-		createDialogForm(obj, "/gui/DevolucaoForm.fxml", parentStage);
-
+    	Emprestimo obj = new Emprestimo();
+		createDialogForm(obj, "/gui/EmprestimoForm.fxml", parentStage);
     }
     
-    public void setDevolucaoService (DevolucaoService service) {
+    public void setEmprestimoService (EmprestimoService service) {
 		this.service = service;
 	}    
    
@@ -80,41 +79,41 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 	}
 
 	private void initializeNodes() {
-		ColumnDevolucao.setCellValueFactory(new PropertyValueFactory<>("devolucao"));
-		ColumnDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("datDevolucao"));		
-		ColumnSei.setCellValueFactory(new PropertyValueFactory<>("numSei"));
-		ColumnMotivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
+		ColumnEmprestimo.setCellValueFactory(new PropertyValueFactory<>("emprestimo"));
+		ColumnDataEmprestimo.setCellValueFactory(new PropertyValueFactory<>("dtEmprestimo"));		
+		ColumnSetor.setCellValueFactory(new PropertyValueFactory<>("setor"));
+		ColumnResponsavel .setCellValueFactory(new PropertyValueFactory<>("responsavel"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		TableViewDevolucao.prefHeightProperty().bind(stage.heightProperty());
+		TableViewEmprestimo.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Serviço nulo");
 		}
-		List<Devolucao> list = service.findAll();
+		List<Emprestimo> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		TableViewDevolucao.setItems(obsList);
+		TableViewEmprestimo.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Devolucao obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(Emprestimo obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 
-			DevolucaoFormController controller = loader.getController();
+			EmprestimoFormController controller = loader.getController();
 
-			controller.setDevolucao(obj);
-			controller.setDevolucaoService(new DevolucaoService());
+			controller.setEmprestimo(obj);
+			controller.setEmprestimoService(new EmprestimoService());
 			controller.updateFormData();
 			
 			controller.subscribeDataChangeListener(this);
 
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Entre com os dados da devolução");
+			dialogStage.setTitle("Entre com os dados do empréstimo");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
@@ -132,11 +131,11 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 
 	private void initEditButtons() {
 		tableColumnEdit.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEdit.setCellFactory(param -> new TableCell<Devolucao, Devolucao>() {
+		tableColumnEdit.setCellFactory(param -> new TableCell<Emprestimo, Emprestimo>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(Devolucao obj, boolean empty) {
+			protected void updateItem(Emprestimo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -144,18 +143,18 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/DevolucaoForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/EmprestimoForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		TableColumnRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		TableColumnRemove.setCellFactory(param -> new TableCell<Devolucao, Devolucao>() {
+		TableColumnRemove.setCellFactory(param -> new TableCell<Emprestimo, Emprestimo>() {
 			private final Button button = new Button("Remover");
 
 			@Override
-			protected void updateItem(Devolucao obj, boolean empty) {
+			protected void updateItem(Emprestimo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -167,7 +166,7 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 		});
 	}
 
-	private void removeEntity(Devolucao obj) {
+	private void removeEntity(Emprestimo obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir?");
 		
 		if (result.get() == ButtonType.OK) {
@@ -184,5 +183,6 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 			
 		}
 	}
+
 
 }

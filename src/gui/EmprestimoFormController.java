@@ -19,48 +19,48 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import model.entities.Devolucao;
+import model.entities.Emprestimo;
 import model.exceptions.ValidationException;
-import model.services.DevolucaoService;
+import model.services.EmprestimoService;
 
-public class DevolucaoFormController implements Initializable{
+public class EmprestimoFormController implements Initializable{
 
     @FXML
-    private Label labelNumSei;
+    private TextField txtDtEmprestimo;
+
+    @FXML
+    private TextField txtResponsavel;
+
+    @FXML
+    private Label labelDtEmprestimo;
+
+    @FXML
+    private Label labelResponsavel;
+
+    @FXML
+    private TextField txtSetor;
 
     @FXML
     private Label lblErrorGuia;
 
     @FXML
-    private Label labelMotivo;
+    private TextField txtChaveEmprestimo;
 
     @FXML
-    private TextField txtChaveDevolucao;
-
-    @FXML
-    private TextField txtDtDevolucao;
+    private Label labelChaveEmprestimo;
 
     @FXML
     private Button btCancel;
 
     @FXML
-    private TextField txtMotivo;
-
-    @FXML
-    private Label labelChaveDevolucao;
-
-    @FXML
     private Button btSave;
 
     @FXML
-    private Label labelDtDevolucao;
-
-    @FXML
-    private TextField txtNumSei;
+    private Label labelSetor;
     
-	private DevolucaoService service;
+    private EmprestimoService service;
 	
-	private Devolucao entity;
+	private Emprestimo entity;
 	
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
@@ -71,24 +71,25 @@ public class DevolucaoFormController implements Initializable{
     @FXML
     void onBtSaveAction(ActionEvent event) {
     	
-    	if (entity == null) {
-			throw new IllegalStateException("Entidade nula");
-		}
-		if (service == null) {
-			throw new IllegalStateException("Serviço nulo");
-		}
-		try {
-			entity = getFormData();
-			service.saveOrUpdate(entity);
-			notifyDataChangeListeners();
-			Utils.currentStage(event).close();
-		}
-		catch (ValidationException e) {
-			setErrorMessages(e.getErrors());
-		}
-		catch (DbException e) {
-			Alerts.showAlert("Erro ao salvar objeto", null, e.getMessage(), AlertType.ERROR);
-		}
+      	if (entity == null) {
+    			throw new IllegalStateException("Entidade nula");
+    		}
+    		if (service == null) {
+    			throw new IllegalStateException("Serviço nulo");
+    		}
+    		try {
+    			entity = getFormData();
+    			service.saveOrUpdate(entity);
+    			notifyDataChangeListeners();
+    			Utils.currentStage(event).close();
+    		}
+    		catch (ValidationException e) {
+    			setErrorMessages(e.getErrors());
+    		}
+    		catch (DbException e) {
+    			Alerts.showAlert("Erro ao salvar objeto", null, e.getMessage(), AlertType.ERROR);
+    		}
+
     }
 
     @FXML
@@ -102,26 +103,26 @@ public class DevolucaoFormController implements Initializable{
 		}
 	}
 	
-	public void setDevolucao(Devolucao entity) {
+	public void setEmprestimo(Emprestimo entity) {
 		this.entity = entity;
 	}
 	
-	public void setDevolucaoService(DevolucaoService service) {
+	public void setEmprestimoService(EmprestimoService service) {
 		this.service = service;	
 	}
 	
-	private Devolucao getFormData() {
-		Devolucao obj = new Devolucao();
+	private Emprestimo getFormData() {
+		Emprestimo obj = new Emprestimo();
 		
 		ValidationException exception = new ValidationException("Erro de Validação");			
 		
-		obj.setDevolucao(Utils.tryParseToInt(txtChaveDevolucao.getText()));		
+		obj.setEmprestimo(Utils.tryParseToInt(txtChaveEmprestimo.getText()));		
 		
-		obj.setDatDevolucao(txtDtDevolucao.getText());
+		obj.setDtEmprestimo(txtDtEmprestimo.getText());
 		
-		obj.setNumSei(txtNumSei.getText());
+		obj.setSetor(txtSetor.getText());
 		
-		obj.setMotivo(txtMotivo.getText());
+		obj.setResponsavel(txtResponsavel.getText());
 		
 		if (exception.getErrors().size()>0) {
 			throw exception;
@@ -137,8 +138,8 @@ public class DevolucaoFormController implements Initializable{
 	}
 	
 	private void initializeNodes() {		
-		Constraints.setTextFieldInteger(txtChaveDevolucao);
-		Constraints.setTextFieldMaxLength(txtDtDevolucao, 30);
+		Constraints.setTextFieldInteger(txtChaveEmprestimo);
+		Constraints.setTextFieldMaxLength(txtDtEmprestimo, 30);
 	}
 	
 	public void updateFormData() {
@@ -146,10 +147,10 @@ public class DevolucaoFormController implements Initializable{
 			throw new IllegalStateException ("Entidade está vazia");
 		}
 		
-		txtChaveDevolucao.setText(String.valueOf(entity.getDevolucao()));	
-		txtDtDevolucao.setText(entity.getDatDevolucao());
-		txtNumSei.setText(entity.getNumSei());
-		txtMotivo.setText(entity.getMotivo());
+		txtChaveEmprestimo.setText(String.valueOf(entity.getEmprestimo()));	
+		txtDtEmprestimo.setText(entity.getDtEmprestimo());
+		txtSetor.setText(entity.getSetor());
+		txtResponsavel.setText(entity.getResponsavel());
 	}
 	
 	private void setErrorMessages(Map<String, String> errors ) {
@@ -159,5 +160,6 @@ public class DevolucaoFormController implements Initializable{
 			lblErrorGuia.setText(errors.get("Guia"));
 		}
 	}
+
 
 }

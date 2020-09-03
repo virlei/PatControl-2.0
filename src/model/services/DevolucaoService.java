@@ -6,9 +6,8 @@ import model.dao.DaoFactory;
 import model.dao.DevolucaoDao;
 import model.entities.Devolucao;
 
-public class DevolucaoService {
+public class DevolucaoService {	
 	
-	public static boolean Insert = false;
 	
 	private DevolucaoDao dao = DaoFactory.createDevolucaoDao();
 	
@@ -19,7 +18,7 @@ public class DevolucaoService {
 	}
 	
 	public void saveOrUpdate(Devolucao obj) {		
-		if (Insert) {
+		if (obj.getDevolucao() == null) {
 			dao.insert(obj);
 		}
 		else {

@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DevolucaoService;
+import model.services.EmprestimoService;
 import model.services.EquipamentoService;
 import model.services.GFornService;
 import model.services.LocalService;
@@ -39,6 +40,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemAjuda;
     @FXML
     private MenuItem menuItemDevolucao;
+    @FXML
+    private MenuItem menuItemEmprestimo;
 
 	@FXML
 	public void onMenuItemPatrimonioAction() {
@@ -82,6 +85,14 @@ public class MainViewController implements Initializable {
 			controller.updateTableView();
 		});
 	}
+    
+    @FXML
+    void onMenuItemEmprestimoAction() {    	
+    	loadView("/gui/EmprestimoList.fxml", (EmprestimoListController controller) -> {
+			controller.setEmprestimoService(new EmprestimoService());
+			controller.updateTableView();
+		});
+    }
 
 	@FXML
 	public void onMenuItemRelPatrXLocalAction() {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmprestimoListController">
+   <children>
+      <Label text="Registro de Empréstimo">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="BtnNew" mnemonicParsing="false" onAction="#onButtonNewAction" text="Novo" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="TableViewEmprestimo" prefHeight="236.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="ColumnEmprestimo" prefWidth="75.0" text="Empréstimo" />
+            <TableColumn fx:id="ColumnDataEmprestimo" prefWidth="75.0" text="Data" />
+            <TableColumn fx:id="ColumnSetor" prefWidth="75.0" text="Setor" />
+            <TableColumn fx:id="ColumnResponsavel" prefWidth="75.0" text="Responsável" />
+            <TableColumn fx:id="tableColumnEdit" prefWidth="75.0" />
+            <TableColumn fx:id="TableColumnRemove" prefWidth="75.0" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>
