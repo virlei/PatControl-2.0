@@ -29,47 +29,44 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Emprestimo;
-import model.services.EmprestimoService;
+import model.entities.RetornoEmprestimo;
+import model.services.RetornoEmprestimoService;
 
-public class EmprestimoListController implements Initializable, DataChangeListener{
-
-    @FXML
-    private TableView<Emprestimo> TableViewEmprestimo;
+public class RetornoEmprestimoListController implements Initializable, DataChangeListener{
 
     @FXML
-    private TableColumn<Emprestimo, String> ColumnDataEmprestimo;
+    private TableView<RetornoEmprestimo> TableViewRetornoEmprestimo;
 
     @FXML
     private Button BtnNew;
 
     @FXML
-    private TableColumn<Emprestimo, String> ColumnResponsavel;
+    private TableColumn<RetornoEmprestimo, RetornoEmprestimo> TableColumnRemove;
 
     @FXML
-    private TableColumn<Emprestimo, Emprestimo> TableColumnRemove;
+    private TableColumn<RetornoEmprestimo, RetornoEmprestimo> tableColumnEdit;
 
     @FXML
-    private TableColumn<Emprestimo, String> ColumnSetor;
+    private TableColumn<RetornoEmprestimo, String> ColumnDataRetorno;
 
     @FXML
-    private TableColumn<Emprestimo, Emprestimo> tableColumnEdit;
+    private TableColumn<RetornoEmprestimo, Integer> ColumnRetorno;
 
     @FXML
-    private TableColumn<Emprestimo, Integer> ColumnEmprestimo;
+    private TableColumn<RetornoEmprestimo, String> ColumnRecebedor;
     
-    private EmprestimoService service;
+    private RetornoEmprestimoService service;
     
-    private ObservableList<Emprestimo> obsList;
+    private ObservableList<RetornoEmprestimo> obsList;
 
     @FXML
     void onButtonNewAction(ActionEvent event) {    	
     	Stage parentStage = Utils.currentStage(event);
-    	Emprestimo obj = new Emprestimo();
-		createDialogForm(obj, "/gui/EmprestimoForm.fxml", parentStage);
+    	RetornoEmprestimo obj = new RetornoEmprestimo();
+		createDialogForm(obj, "/gui/RetornoEmprestimoForm.fxml", parentStage);
     }
     
-    public void setEmprestimoService (EmprestimoService service) {
+    public void setRetornoEmprestimoService (RetornoEmprestimoService service) {
 		this.service = service;
 	}    
    
@@ -78,35 +75,34 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 	}
 
 	private void initializeNodes() {
-		ColumnEmprestimo.setCellValueFactory(new PropertyValueFactory<>("emprestimo"));
-		ColumnDataEmprestimo.setCellValueFactory(new PropertyValueFactory<>("dtEmprestimo"));		
-		ColumnSetor.setCellValueFactory(new PropertyValueFactory<>("setor"));
-		ColumnResponsavel .setCellValueFactory(new PropertyValueFactory<>("responsavel"));
+		ColumnRetorno.setCellValueFactory(new PropertyValueFactory<>("retorno"));
+		ColumnDataRetorno.setCellValueFactory(new PropertyValueFactory<>("dtRetorno"));		
+		ColumnRecebedor.setCellValueFactory(new PropertyValueFactory<>("recebedor"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		TableViewEmprestimo.prefHeightProperty().bind(stage.heightProperty());
+		TableViewRetornoEmprestimo.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Serviço nulo");
 		}
-		List<Emprestimo> list = service.findAll();
+		List<RetornoEmprestimo> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		TableViewEmprestimo.setItems(obsList);
+		TableViewRetornoEmprestimo.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Emprestimo obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(RetornoEmprestimo obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 
-			EmprestimoFormController controller = loader.getController();
+			RetornoEmprestimoFormController controller = loader.getController();
 
-			controller.setEmprestimo(obj);
-			controller.setEmprestimoService(new EmprestimoService());
+			controller.setRetornoEmprestimo(obj);
+			controller.setRetornoEmprestimoService(new RetornoEmprestimoService());
 			controller.updateFormData();
 			
 			controller.subscribeDataChangeListener(this);
@@ -130,11 +126,11 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 
 	private void initEditButtons() {
 		tableColumnEdit.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEdit.setCellFactory(param -> new TableCell<Emprestimo, Emprestimo>() {
+		tableColumnEdit.setCellFactory(param -> new TableCell<RetornoEmprestimo, RetornoEmprestimo>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(Emprestimo obj, boolean empty) {
+			protected void updateItem(RetornoEmprestimo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -142,18 +138,18 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/EmprestimoForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/RetornoEmprestimoForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		TableColumnRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		TableColumnRemove.setCellFactory(param -> new TableCell<Emprestimo, Emprestimo>() {
+		TableColumnRemove.setCellFactory(param -> new TableCell<RetornoEmprestimo, RetornoEmprestimo>() {
 			private final Button button = new Button("Remover");
 
 			@Override
-			protected void updateItem(Emprestimo obj, boolean empty) {
+			protected void updateItem(RetornoEmprestimo obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -165,7 +161,7 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 		});
 	}
 
-	private void removeEntity(Emprestimo obj) {
+	private void removeEntity(RetornoEmprestimo obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir?");
 		
 		if (result.get() == ButtonType.OK) {
@@ -182,6 +178,5 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 			
 		}
 	}
-
 
 }

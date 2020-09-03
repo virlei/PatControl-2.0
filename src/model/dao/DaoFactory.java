@@ -33,4 +33,8 @@ public class DaoFactory {
 		return new EmprestimoDaoJDBC(DB.getConnection());
 	}
 	
+	public static RetornoEmprestimoDao createRetornoEmprestimoDao() {
+		return new RetornoEmprestimoDaoJDBC(DB.getConnection());
+	}
+	
 }

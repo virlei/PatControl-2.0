@@ -23,6 +23,7 @@ import model.services.GFornService;
 import model.services.LocalService;
 //import model.services.GuiaDeFornecimentoTesteService;
 import model.services.PatrimonioService;
+import model.services.RetornoEmprestimoService;
 
 public class MainViewController implements Initializable {
 
@@ -42,6 +43,8 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemDevolucao;
     @FXML
     private MenuItem menuItemEmprestimo;
+    @FXML
+    private MenuItem menuItemRetornoEmprestimo;
 
 	@FXML
 	public void onMenuItemPatrimonioAction() {
@@ -90,6 +93,15 @@ public class MainViewController implements Initializable {
     void onMenuItemEmprestimoAction() {    	
     	loadView("/gui/EmprestimoList.fxml", (EmprestimoListController controller) -> {
 			controller.setEmprestimoService(new EmprestimoService());
+			controller.updateTableView();
+		});
+    }
+    
+
+    @FXML
+    void onMenuItemRetornoEmprestimoAction() {
+    	loadView("/gui/RetornoEmprestimoList.fxml", (RetornoEmprestimoListController controller) -> {
+			controller.setRetornoEmprestimoService(new RetornoEmprestimoService());
 			controller.updateTableView();
 		});
     }

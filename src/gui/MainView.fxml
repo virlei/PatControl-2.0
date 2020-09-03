@@ -23,7 +23,7 @@
                         <MenuItem fx:id="menuItemFornecimento" mnemonicParsing="false" onAction="#onMenuItemFornecimentoAction" text="Fornecimento" />
                         <MenuItem fx:id="menuItemDevolucao" mnemonicParsing="false" onAction="#onMenuItemDevolucaoAction" text="Devolução" />
                         <MenuItem fx:id="menuItemEmprestimo" mnemonicParsing="false" onAction="#onMenuItemEmprestimoAction" text="Empréstimos" />
-                        <MenuItem mnemonicParsing="false" text="Retorno Empréstimos" />
+                        <MenuItem fx:id="menuItemRetornoEmprestimo" mnemonicParsing="false" onAction="#onMenuItemRetornoEmprestimoAction" text="Retorno Empréstimos" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">

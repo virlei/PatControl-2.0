@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RetornoEmprestimoFormController">
+   <children>
+      <GridPane layoutX="11.0" layoutY="1.0" prefHeight="252.0" prefWidth="525.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label fx:id="labelChaveRetorno" text="Chave de Retorno" />
+            <Label fx:id="labelDtRetorno" text="Data do Retorno" GridPane.rowIndex="1" />
+            <Label fx:id="labelRetorno" text="Recebedor" GridPane.rowIndex="2" />
+            <TextField fx:id="txtChaveRetorno" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDtRetorno" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtRecebedor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="lblErrorGuia" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <HBox prefHeight="93.0" prefWidth="185.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" prefHeight="25.0" prefWidth="64.0" text="Salvar" />
+                  <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" prefHeight="25.0" prefWidth="64.0" text="Cancelar" />
+               </children>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="128.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="10.0" prefWidth="133.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="243.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>
