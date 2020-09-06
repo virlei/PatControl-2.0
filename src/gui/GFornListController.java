@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -55,7 +56,7 @@ public class GFornListController implements Initializable, DataChangeListener {
 	private TableColumn<GForn, GForn> tableColumnEdit;
 
 	@FXML
-	private TableColumn<GForn, String> ColumnDtForn;
+	private TableColumn<GForn, Date> ColumnDtForn;
 
 	@FXML
 	void onButtonNewAction(ActionEvent event) {
@@ -78,8 +79,8 @@ public class GFornListController implements Initializable, DataChangeListener {
 	private void initializeNodes() {
 		ColumnPkGuia.setCellValueFactory(new PropertyValueFactory<>("pkGForn"));
 		ColumnNrGuia.setCellValueFactory(new PropertyValueFactory<>("nrGuia"));		
-		ColumnDtForn.setCellValueFactory(new PropertyValueFactory<>("dtForn"));
-		
+		ColumnDtForn.setCellValueFactory(new PropertyValueFactory<>("dtGForn"));
+		Utils.formatTableColumnDate(ColumnDtForn,"dd/MM/yyyy");
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		TableViewGForn.prefHeightProperty().bind(stage.heightProperty());
 	}

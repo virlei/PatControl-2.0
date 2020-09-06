@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class GForn implements Serializable {
 	
@@ -8,18 +9,26 @@ public class GForn implements Serializable {
 
 	private Integer pkGForn;
 	private Integer nrGuia;
-	private String dtForn;
+	private Date dtGForn;
 //	private List<Patrimonio> patrimonios;
 	
 	public GForn() {
 	}
 
-	public GForn(Integer pkGForn, Integer nrGuia, String dtForn) {
+	public GForn(Integer pkGForn, Integer nrGuia, String dtForn, Date dtGForn) {
 		this.pkGForn = pkGForn;
 		this.nrGuia = nrGuia;
-		this.dtForn = dtForn;
+		this.dtGForn = dtGForn;
 	}
 
+
+	public Date getDtGForn() {
+		return dtGForn;
+	}
+
+	public void setDtGForn(Date dtGForn) {
+		this.dtGForn = dtGForn;
+	}
 
 	public Integer getPkGForn() {
 		return pkGForn;
@@ -37,14 +46,7 @@ public class GForn implements Serializable {
 		this.nrGuia = nrGuia;
 	}
 
-	public String getDtForn() {
-		return dtForn;
-	}
 
-	public void setDtForn(String dtForn) {
-		this.dtForn = dtForn;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,7 +74,7 @@ public class GForn implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GForn [nrGuia=" + nrGuia + ", dtForn=" + dtForn + "]";
+		return nrGuia + "-" + dtGForn;
 	}
 
 }

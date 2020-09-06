@@ -10,6 +10,7 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Utils;
 import model.dao.EmprestimoDao;
 import model.entities.Emprestimo;
 
@@ -30,7 +31,7 @@ private Connection conn;
 					+ "(DAT_Emprestimo, TXT_Setor, TXT_Responsavel) "
 					+ "VALUES (?, ?, ?)");
 						
-			st.setString(1, obj.getDtEmprestimo());
+			st.setString(1, Utils.parseToString(obj.getDatEmprestimo(), "dd/MM/yyyy"));
 			st.setString(2, obj.getSetor());
 			st.setString(3, obj.getResponsavel());
 			
@@ -58,7 +59,7 @@ private Connection conn;
 				"SET DAT_Emprestimo = ?, TXT_Setor = ?, TXT_Responsavel = ? " +		
 				"WHERE PK_Emprestimo = ?");
 
-			st.setString(1, obj.getDtEmprestimo());
+			st.setString(1, Utils.parseToString(obj.getDatEmprestimo(), "dd/MM/yyyy"));
 			st.setString(2, obj.getSetor());
 			st.setString(3, obj.getResponsavel());
 			st.setInt(4, obj.getEmprestimo());
@@ -117,7 +118,7 @@ private Connection conn;
 	private Emprestimo instantiateEmprestimo(ResultSet rs) throws SQLException {
 		Emprestimo obj = new Emprestimo();
 		obj.setEmprestimo(rs.getInt("PK_Emprestimo"));
-		obj.setDtEmprestimo(rs.getString("DAT_Emprestimo"));
+		obj.setDatEmprestimo( Utils.tryParseToDate(rs.getString("DAT_Emprestimo")));
 		obj.setSetor(rs.getString("TXT_Setor"));
 		obj.setResponsavel(rs.getString("TXT_Responsavel"));
 		return obj;

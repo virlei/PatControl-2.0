@@ -1,22 +1,24 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class RetornoEmprestimo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	private Integer retorno;
-	private String dtRetorno;
+	//private String dtRetorno;
+	private Date dtRetornoEmpr;
 	private String recebedor;
 	
 	public RetornoEmprestimo() {
 }
 
-	public RetornoEmprestimo(Integer retorno, String dtRetorno, String recebedor) {
+	public RetornoEmprestimo(Integer retorno, Date dtRetornoEmpr, String recebedor) {
 		super();
 		this.retorno = retorno;
-		this.dtRetorno = dtRetorno;
+		this.dtRetornoEmpr = dtRetornoEmpr;
 		this.recebedor = recebedor;
 	}
 
@@ -28,12 +30,12 @@ public class RetornoEmprestimo implements Serializable {
 		this.retorno = retorno;
 	}
 
-	public String getDtRetorno() {
-		return dtRetorno;
+	public Date getDtRetornoEmpr() {
+		return dtRetornoEmpr;
 	}
 
-	public void setDtRetorno(String dtRetorno) {
-		this.dtRetorno = dtRetorno;
+	public void setDtRetornoEmpr(Date dtRetornoEmpr) {
+		this.dtRetornoEmpr = dtRetornoEmpr;
 	}
 
 	public String getRecebedor() {
@@ -71,7 +73,7 @@ public class RetornoEmprestimo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RetornoEmprestimo [retorno=" + retorno + ", dtRetorno=" + dtRetorno + ", recebedor=" + recebedor + "]";
+		return dtRetornoEmpr + " - "+ recebedor;
 	}
 	
 }

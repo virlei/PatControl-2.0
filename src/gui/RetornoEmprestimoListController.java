@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -47,7 +48,7 @@ public class RetornoEmprestimoListController implements Initializable, DataChang
     private TableColumn<RetornoEmprestimo, RetornoEmprestimo> tableColumnEdit;
 
     @FXML
-    private TableColumn<RetornoEmprestimo, String> ColumnDataRetorno;
+    private TableColumn<RetornoEmprestimo, Date> ColumnDataRetorno;
 
     @FXML
     private TableColumn<RetornoEmprestimo, Integer> ColumnRetorno;
@@ -76,7 +77,8 @@ public class RetornoEmprestimoListController implements Initializable, DataChang
 
 	private void initializeNodes() {
 		ColumnRetorno.setCellValueFactory(new PropertyValueFactory<>("retorno"));
-		ColumnDataRetorno.setCellValueFactory(new PropertyValueFactory<>("dtRetorno"));		
+		ColumnDataRetorno.setCellValueFactory(new PropertyValueFactory<>("dtRetornoEmpr"));
+		Utils.formatTableColumnDate(ColumnDataRetorno,"dd/MM/yyyy");
 		ColumnRecebedor.setCellValueFactory(new PropertyValueFactory<>("recebedor"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();

@@ -10,6 +10,7 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Utils;
 import model.dao.RetornoEmprestimoDao;
 import model.entities.RetornoEmprestimo;
 
@@ -29,7 +30,7 @@ private Connection conn;
 					+ "(DAT_Retorno, TXT_RecebidoPor) "
 					+ "VALUES (?, ?)");
 						
-			st.setString(1, obj.getDtRetorno());
+			st.setString(1, Utils.parseToString(obj.getDtRetornoEmpr(), "dd/MM/yyyy"));
 			st.setString(2, obj.getRecebedor());			
 			int rowsAffected = st.executeUpdate();
 			
@@ -54,7 +55,7 @@ private Connection conn;
 				"SET DAT_Retorno = ?, TXT_RecebidoPor = ? " +		
 				"WHERE PK_Retorno = ?");
 
-			st.setString(1, obj.getDtRetorno());
+			st.setString(1, Utils.parseToString(obj.getDtRetornoEmpr(), "dd/MM/yyyy"));
 			st.setString(2, obj.getRecebedor());
 			st.setInt(3, obj.getRetorno());
 
@@ -112,7 +113,7 @@ private Connection conn;
 	private RetornoEmprestimo instantiateRetornoEmprestimo(ResultSet rs) throws SQLException {
 		RetornoEmprestimo obj = new RetornoEmprestimo();
 		obj.setRetorno(rs.getInt("PK_Retorno"));
-		obj.setDtRetorno(rs.getString("DAT_Retorno"));
+		obj.setDtRetornoEmpr( Utils.tryParseToDate(rs.getString("DAT_Retorno")));
 		obj.setRecebedor(rs.getString("TXT_RecebidoPor"));
 		return obj;
 	}

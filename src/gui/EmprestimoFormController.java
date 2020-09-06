@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -16,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -25,45 +30,48 @@ import model.services.EmprestimoService;
 
 public class EmprestimoFormController implements Initializable{
 
-    @FXML
-    private TextField txtDtEmprestimo;
+	@FXML
+	private Label lblChaveEmprestimo;
 
-    @FXML
-    private TextField txtResponsavel;
+	@FXML
+	private Label lblDtEmprestimo;
 
-    @FXML
-    private Label labelDtEmprestimo;
-
-    @FXML
-    private Label labelResponsavel;
-
-    @FXML
-    private TextField txtSetor;
-
-    @FXML
-    private Label lblErrorGuia;
-
-    @FXML
-    private TextField txtChaveEmprestimo;
-
-    @FXML
-    private Label labelChaveEmprestimo;
-
-    @FXML
-    private Button btCancel;
-
-    @FXML
-    private Button btSave;
-
-    @FXML
-    private Label labelSetor;
-    
-    private EmprestimoService service;
+	@FXML
+	private Label lblResponsavel;
 	
+	@FXML
+	private Label lblSetor;
+
+	@FXML
+	private DatePicker dpDatEmprestimo;
+	
+	@FXML
+	private TextField txtResponsavel;
+
+	@FXML
+	private TextField txtSetor;
+
+	@FXML
+	private TextField txtChaveEmprestimo;
+
+	@FXML
+	private Label lblErrorResponsavel;
+
+	@FXML
+	private Label lblErrorDatEmprestimo;
+
+	@FXML
+	private Button btCancel;
+
+	@FXML
+	private Button btSave;
+
+	private EmprestimoService service;
+
 	private Emprestimo entity;
-	
+
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
-	
+
 	 public void subscribeDataChangeListener(DataChangeListener listener) {
 			dataChangeListeners.add(listener);
 		}
@@ -118,11 +126,20 @@ public class EmprestimoFormController implements Initializable{
 		
 		obj.setEmprestimo(Utils.tryParseToInt(txtChaveEmprestimo.getText()));		
 		
-		obj.setDtEmprestimo(txtDtEmprestimo.getText());
+		if (dpDatEmprestimo.getValue() == null) {
+			exception.addError("DtEmprestimo", "Data da Guia não pode ser nula");
+		}
+		else {
+			Instant instant = Instant.from(dpDatEmprestimo.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDatEmprestimo(Date.from(instant));
+		}
+		
+		if(txtResponsavel.getText() == null || txtResponsavel.getText().trim().equals("")){
+			exception.addError("Responsavel", "Nome do Responsável não pode ser nulo");
+		}
+		obj.setResponsavel(txtResponsavel.getText());
 		
 		obj.setSetor(txtSetor.getText());
-		
-		obj.setResponsavel(txtResponsavel.getText());
 		
 		if (exception.getErrors().size()>0) {
 			throw exception;
@@ -139,7 +156,7 @@ public class EmprestimoFormController implements Initializable{
 	
 	private void initializeNodes() {		
 		Constraints.setTextFieldInteger(txtChaveEmprestimo);
-		Constraints.setTextFieldMaxLength(txtDtEmprestimo, 30);
+		Utils.formatDatePicker(dpDatEmprestimo, "dd/MM/yyyy");
 	}
 	
 	public void updateFormData() {
@@ -148,7 +165,10 @@ public class EmprestimoFormController implements Initializable{
 		}
 		
 		txtChaveEmprestimo.setText(String.valueOf(entity.getEmprestimo()));	
-		txtDtEmprestimo.setText(entity.getDtEmprestimo());
+//		txtDtEmprestimo.setText(entity.getDtEmprestimo());
+		if (entity.getDatEmprestimo() != null) {
+			dpDatEmprestimo.setValue(LocalDate.ofInstant(entity.getDatEmprestimo().toInstant(), ZoneId.systemDefault()));
+		}
 		txtSetor.setText(entity.getSetor());
 		txtResponsavel.setText(entity.getResponsavel());
 	}
@@ -156,9 +176,9 @@ public class EmprestimoFormController implements Initializable{
 	private void setErrorMessages(Map<String, String> errors ) {
 		Set<String> fields = errors.keySet();
 		
-		if (fields.contains("Guia")) {
-			lblErrorGuia.setText(errors.get("Guia"));
-		}
+		lblErrorDatEmprestimo.setText(fields.contains("DtEmprestimo")? errors.get("DtEmprestimo"): "");
+		lblErrorResponsavel.setText(fields.contains("Responsavel")? errors.get("Responsavel"): "");
+		
 	}
 
 

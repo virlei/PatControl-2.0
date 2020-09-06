@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -38,7 +39,7 @@ public class EmprestimoListController implements Initializable, DataChangeListen
     private TableView<Emprestimo> TableViewEmprestimo;
 
     @FXML
-    private TableColumn<Emprestimo, String> ColumnDataEmprestimo;
+    private TableColumn<Emprestimo, Date> ColumnDataEmprestimo;
 
     @FXML
     private Button BtnNew;
@@ -79,7 +80,8 @@ public class EmprestimoListController implements Initializable, DataChangeListen
 
 	private void initializeNodes() {
 		ColumnEmprestimo.setCellValueFactory(new PropertyValueFactory<>("emprestimo"));
-		ColumnDataEmprestimo.setCellValueFactory(new PropertyValueFactory<>("dtEmprestimo"));		
+		ColumnDataEmprestimo.setCellValueFactory(new PropertyValueFactory<>("datEmprestimo"));
+		Utils.formatTableColumnDate(ColumnDataEmprestimo,"dd/MM/yyyy");
 		ColumnSetor.setCellValueFactory(new PropertyValueFactory<>("setor"));
 		ColumnResponsavel .setCellValueFactory(new PropertyValueFactory<>("responsavel"));
 		

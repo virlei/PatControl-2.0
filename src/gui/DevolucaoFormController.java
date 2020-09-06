@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -16,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -25,20 +30,26 @@ import model.services.DevolucaoService;
 
 public class DevolucaoFormController implements Initializable{
 
-    @FXML
-    private Label labelNumSei;
+	@FXML
+	private Label lblPkDevolucao;
+
+	@FXML
+	private Label lblNumSei;
 
     @FXML
-    private Label lblErrorGuia;
+    private Label lblMotivo;
 
     @FXML
-    private Label labelMotivo;
+    private Label lblDtDevolucao;
 
     @FXML
     private TextField txtChaveDevolucao;
 
-    @FXML
-    private TextField txtDtDevolucao;
+	@FXML
+	private DatePicker dpDtDevolucao;
+
+	@FXML
+	private Label lblErrorDtDevolucao;
 
     @FXML
     private Button btCancel;
@@ -46,14 +57,9 @@ public class DevolucaoFormController implements Initializable{
     @FXML
     private TextField txtMotivo;
 
-    @FXML
-    private Label labelChaveDevolucao;
-
+ 
     @FXML
     private Button btSave;
-
-    @FXML
-    private Label labelDtDevolucao;
 
     @FXML
     private TextField txtNumSei;
@@ -115,9 +121,16 @@ public class DevolucaoFormController implements Initializable{
 		
 		ValidationException exception = new ValidationException("Erro de Validação");			
 		
-		obj.setDevolucao(Utils.tryParseToInt(txtChaveDevolucao.getText()));		
+		obj.setDevolucao(Utils.tryParseToInt(txtChaveDevolucao.getText()));
 		
-		obj.setDatDevolucao(txtDtDevolucao.getText());
+//		if (dpDtDevolucao.getValue() == null ) {
+		if (dpDtDevolucao.getValue() == null  || dpDtDevolucao.getValue().toString().trim().equals("") ) {
+			exception.addError("DtDevolucao", "Data da Guia não pode ser nula");
+		}
+		else {
+			Instant instant = Instant.from(dpDtDevolucao.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDtDevolucao(Date.from(instant));
+		}
 		
 		obj.setNumSei(txtNumSei.getText());
 		
@@ -138,7 +151,8 @@ public class DevolucaoFormController implements Initializable{
 	
 	private void initializeNodes() {		
 		Constraints.setTextFieldInteger(txtChaveDevolucao);
-		Constraints.setTextFieldMaxLength(txtDtDevolucao, 30);
+		Utils.formatDatePicker(dpDtDevolucao, "dd/MM/yyyy");
+		
 	}
 	
 	public void updateFormData() {
@@ -147,7 +161,9 @@ public class DevolucaoFormController implements Initializable{
 		}
 		
 		txtChaveDevolucao.setText(String.valueOf(entity.getDevolucao()));	
-		txtDtDevolucao.setText(entity.getDatDevolucao());
+		if (entity.getDtDevolucao() != null) {
+			dpDtDevolucao.setValue(LocalDate.ofInstant(entity.getDtDevolucao().toInstant(), ZoneId.systemDefault()));
+		}
 		txtNumSei.setText(entity.getNumSei());
 		txtMotivo.setText(entity.getMotivo());
 	}
@@ -155,9 +171,8 @@ public class DevolucaoFormController implements Initializable{
 	private void setErrorMessages(Map<String, String> errors ) {
 		Set<String> fields = errors.keySet();
 		
-		if (fields.contains("Guia")) {
-			lblErrorGuia.setText(errors.get("Guia"));
+		if (fields.contains("DtDevolucao")) {
+			lblErrorDtDevolucao.setText(errors.get("DtDevolucao"));
 		}
 	}
-
 }

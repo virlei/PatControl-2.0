@@ -10,6 +10,7 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Utils;
 import model.dao.DevolucaoDao;
 import model.entities.Devolucao;
 
@@ -30,7 +31,8 @@ private Connection conn;
 					+ "(DAT_Devolucao, NUM_SEI, TXT_MOTIVO) "
 					+ "VALUES (?, ?, ?)");
 						
-			st.setString(1, obj.getDatDevolucao());
+			st.setString(1, Utils.parseToString(obj.getDtDevolucao(), "dd/MM/yyyy"));
+
 			st.setString(2, obj.getNumSei());
 			st.setString(3, obj.getMotivo());
 			
@@ -58,7 +60,7 @@ private Connection conn;
 				"SET DAT_Devolucao = ?, NUM_SEI = ?, TXT_MOTIVO = ? " +		
 				"WHERE PK_Devolucao = ?");
 
-			st.setString(1, obj.getDatDevolucao());
+			st.setString(1, Utils.parseToString(obj.getDtDevolucao(), "dd/MM/yyyy"));
 			st.setString(2, obj.getNumSei());
 			st.setString(3, obj.getMotivo());
 			st.setInt(4, obj.getDevolucao());
@@ -117,7 +119,9 @@ private Connection conn;
 	private Devolucao instantiateDevolucao(ResultSet rs) throws SQLException {
 		Devolucao obj = new Devolucao();
 		obj.setDevolucao(rs.getInt("PK_Devolucao"));
-		obj.setDatDevolucao(rs.getString("DAT_Devolucao"));
+//		obj.setDatDevolucao(rs.getString("DAT_Devolucao"));
+		obj.setDtDevolucao( Utils.tryParseToDate(rs.getString("DAT_Devolucao")));
+		
 		obj.setNumSei(rs.getString("NUM_SEI"));
 		obj.setMotivo(rs.getString("TXT_MOTIVO"));
 		return obj;

@@ -1,23 +1,26 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Devolucao implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer devolucao;
-	private String datDevolucao;
+	private Date dtDevolucao;
 	private String numSei;
 	private String motivo;
+//	private List<Patrimonio> patrimonios;	
 	
 	public Devolucao() {		
 	}
 
-	public Devolucao(Integer devolucao, String datDevolucao, String numSei, String motivo) {
+	public Devolucao(Integer devolucao, Date dtDevolucao, String numSei, String motivo) {
 		super();
 		this.devolucao = devolucao;
-		this.datDevolucao = datDevolucao;
+		//this.datDevolucao = datDevolucao;
+		this.dtDevolucao = dtDevolucao;
 		this.numSei = numSei;
 		this.motivo = motivo;
 	}
@@ -30,16 +33,17 @@ public class Devolucao implements Serializable {
 		this.devolucao = devolucao;
 	}
 
-	public String getDatDevolucao() {
-		return datDevolucao;
-	}
-
-	public void setDatDevolucao(String datDevolucao) {
-		this.datDevolucao = datDevolucao;
-	}
-
+	
 	public String getNumSei() {
 		return numSei;
+	}
+
+	public Date getDtDevolucao() {
+		return dtDevolucao;
+	}
+
+	public void setDtDevolucao(Date dtDevolucao) {
+		this.dtDevolucao = dtDevolucao;
 	}
 
 	public void setNumSei(String numSei) {
@@ -81,8 +85,9 @@ public class Devolucao implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Devolucao [devolucao=" + devolucao + ", datDevolucao=" + datDevolucao + ", numSei=" + numSei
-				+ ", motivo=" + motivo + "]";
+//		return "Devolucao [devolucao=" + devolucao + ", datDevolucao=" + datDevolucao + ", numSei=" + numSei
+//				+ ", motivo=" + motivo + "]";
+		return numSei + " - " + dtDevolucao;
 	}
 	
 	

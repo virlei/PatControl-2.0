@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -15,10 +19,11 @@ import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import model.entities.GForn;
 import model.exceptions.ValidationException;
 import model.services.GFornService;
@@ -31,9 +36,6 @@ public class GFornFormController implements Initializable {
 	private Label labelNrGuia;
 
 	@FXML
-	private Label labelDtForn;
-
-	@FXML
 	private Label labelPKey;
 
 	@FXML
@@ -43,10 +45,13 @@ public class GFornFormController implements Initializable {
 	private TextField txtNrGuia;
 
 	@FXML
-	private TextField txtDtForn;
+	private DatePicker dpDtForn;
 
 	@FXML
-	private Label lblErrorGuia;
+	private Label lblErrorNrGuia;
+
+	@FXML
+	private Label lblErrorDtForn;
 
 	@FXML
 	private Button btSave;
@@ -111,15 +116,18 @@ public class GFornFormController implements Initializable {
 		obj.setPkGForn(Utils.tryParseToInt(txtPKey.getText()));
 		
 		if(txtNrGuia.getText() == null || txtNrGuia.getText().trim().equals("")){
-			exception.addError("name", "Campo não pode estar vazio");
+			exception.addError("NrGuia", "Número da Guia não pode ser nulo");
 		}
 		
 		obj.setNrGuia(Utils.tryParseToInt(txtNrGuia.getText()));
 		
-		if (txtDtForn.getText() == null || txtDtForn.getText().trim().equals("")) {
-			exception.addError("name", "Campo não pode estar vazio");
+		if (dpDtForn.getValue() == null) {
+			exception.addError("DtGuia", "Data da Guia não pode ser nula");
 		}
-		obj.setDtForn(txtDtForn.getText());
+		else {
+			Instant instant = Instant.from(dpDtForn.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDtGForn(Date.from(instant));
+		}
 		
 		if (exception.getErrors().size()>0) {
 			throw exception;
@@ -137,7 +145,7 @@ public class GFornFormController implements Initializable {
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtPKey);
 		Constraints.setTextFieldInteger(txtNrGuia);
-		Constraints.setTextFieldMaxLength(txtDtForn, 30);
+		Utils.formatDatePicker(dpDtForn, "dd/MM/yyyy");
 	}
 	
 	public void updateFormData() {
@@ -147,21 +155,18 @@ public class GFornFormController implements Initializable {
 		
 		txtPKey.setText(String.valueOf(entity.getPkGForn()));
 		txtNrGuia.setText(String.valueOf(entity.getNrGuia()));
-		
-//		if (entity.getNrGuia() == null ) {
-//			txtNrGuia.setText("");
-//		}
-		txtDtForn.setText(entity.getDtForn());
+
+		if (entity.getDtGForn() != null) {
+			dpDtForn.setValue(LocalDate.ofInstant(entity.getDtGForn().toInstant(), ZoneId.systemDefault()));
+		}
 	}
 	
 	private void setErrorMessages(Map<String, String> errors ) {
 		Set<String> fields = errors.keySet();
 		
-		if (fields.contains("Guia")) {
-			lblErrorGuia.setText(errors.get("Guia"));
-		}
+		lblErrorNrGuia.setText((fields.contains("NrGuia")? errors.get("NrGuia"): ""));
+		lblErrorDtForn.setText((fields.contains("DtGuia")? errors.get("DtGuia"): ""));
+		
 	}
-
-
 
 }

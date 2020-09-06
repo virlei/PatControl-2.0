@@ -1,23 +1,25 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Emprestimo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer emprestimo;
-	private String dtEmprestimo;
+	private Date datEmprestimo;
 	private String setor;
 	private String responsavel;
+//	private List<patrimonio> patrimonios;
 	
 	public Emprestimo() {		
 	}
 
-	public Emprestimo(Integer emprestimo, String dtEmprestimo, String setor, String responsavel) {
+	public Emprestimo(Integer emprestimo, Date datEmprestimo, String setor, String responsavel) {
 		super();
 		this.emprestimo = emprestimo;
-		this.dtEmprestimo = dtEmprestimo;
+		this.datEmprestimo = datEmprestimo;
 		this.setor = setor;
 		this.responsavel = responsavel;
 	}
@@ -30,12 +32,20 @@ public class Emprestimo implements Serializable {
 		this.emprestimo = emprestimo;
 	}
 
-	public String getDtEmprestimo() {
-		return dtEmprestimo;
+//	public String getDtEmprestimo() {
+//		return dtEmprestimo;
+//	}
+//
+//	public void setDtEmprestimo(String dtEmprestimo) {
+//		this.dtEmprestimo = dtEmprestimo;
+//	}
+
+	public Date getDatEmprestimo() {
+		return datEmprestimo;
 	}
 
-	public void setDtEmprestimo(String dtEmprestimo) {
-		this.dtEmprestimo = dtEmprestimo;
+	public void setDatEmprestimo(Date datEmprestimo) {
+		this.datEmprestimo = datEmprestimo;
 	}
 
 	public String getSetor() {
@@ -81,8 +91,7 @@ public class Emprestimo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Emprestimo [emprestimo=" + emprestimo + ", dtEmprestimo=" + dtEmprestimo + ", setor=" + setor
-				+ ", responsavel=" + responsavel + "]";
+		return datEmprestimo + " - " + responsavel;
 	}
 
 	

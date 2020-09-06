@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -35,33 +36,36 @@ import model.services.DevolucaoService;
 
 public class DevolucaoListController implements Initializable, DataChangeListener {
 
-    @FXML
-    private Button BtnNew;
+	@FXML
+	private Button BtnNew;
 
-    @FXML
-    private TableColumn<Devolucao, Devolucao> TableColumnRemove;
+	@FXML
+	private TableView<Devolucao> TableViewDevolucao;
 
-    @FXML
-    private TableView<Devolucao> TableViewDevolucao;
+//	@FXML
+//	private TableColumn<Devolucao, String> ColumnDataDevolucao;
 
-    @FXML
-    private TableColumn<Devolucao, String> ColumnDataDevolucao;
+	@FXML
+	private TableColumn<Devolucao, Date> ColumnDtDevolucao;
 
-    @FXML
-    private TableColumn<Devolucao, String> ColumnSei;
+	@FXML
+	private TableColumn<Devolucao, String> ColumnSei;
 
-    @FXML
-    private TableColumn<Devolucao, Devolucao> tableColumnEdit;
+	@FXML
+	private TableColumn<Devolucao, String> ColumnMotivo;
 
-    @FXML
-    private TableColumn<Devolucao, String> ColumnMotivo;
+	@FXML
+	private TableColumn<Devolucao, Integer> ColumnDevolucao;
 
-    @FXML
-    private TableColumn<Devolucao, Integer> ColumnDevolucao;
-    
-    private DevolucaoService service;
-    
-    private ObservableList<Devolucao> obsList;
+	@FXML
+	private TableColumn<Devolucao, Devolucao> tableColumnEdit;
+
+	@FXML
+	private TableColumn<Devolucao, Devolucao> TableColumnRemove;
+
+	private DevolucaoService service;
+
+	private ObservableList<Devolucao> obsList;
 
     @FXML
     void onButtonNewAction(ActionEvent event) {    	
@@ -81,7 +85,8 @@ public class DevolucaoListController implements Initializable, DataChangeListene
 
 	private void initializeNodes() {
 		ColumnDevolucao.setCellValueFactory(new PropertyValueFactory<>("devolucao"));
-		ColumnDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("datDevolucao"));		
+		ColumnDtDevolucao.setCellValueFactory(new PropertyValueFactory<>("dtDevolucao"));
+		Utils.formatTableColumnDate(ColumnDtDevolucao,"dd/MM/yyyy");
 		ColumnSei.setCellValueFactory(new PropertyValueFactory<>("numSei"));
 		ColumnMotivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
 		

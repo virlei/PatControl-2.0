@@ -11,6 +11,7 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
+import gui.util.Utils;
 import model.dao.GFornDao;
 import model.entities.GForn;
 
@@ -34,7 +35,8 @@ public class GFornDaoJDBC implements GFornDao{
 				Statement.RETURN_GENERATED_KEYS);
 
 			st.setInt(1, obj.getNrGuia());
-			st.setString(2, obj.getDtForn());
+			
+			st.setString(2, Utils.parseToString(obj.getDtGForn(), "dd/MM/yyyy"));
 
 			int rowsAffected = st.executeUpdate();
 			
@@ -67,7 +69,7 @@ public class GFornDaoJDBC implements GFornDao{
 				"WHERE PK_Guia = ?");
 
 			st.setInt(1, obj.getNrGuia());
-			st.setString(2, obj.getDtForn());
+			st.setString(2, Utils.parseToString(obj.getDtGForn(), "dd/MM/yyyy"));
 			st.setInt(3, obj.getPkGForn());
 
 			st.executeUpdate();
@@ -125,7 +127,8 @@ public class GFornDaoJDBC implements GFornDao{
 		GForn obj = new GForn();
 		obj.setPkGForn(rs.getInt("PK_Guia"));
 		obj.setNrGuia(rs.getInt("INT_NrGuia"));
-		obj.setDtForn(rs.getString("DAT_Fornecimento"));
+		obj.setDtGForn( Utils.tryParseToDate(rs.getString("DAT_Fornecimento")));
+				
 		return obj;
 	}
 	
